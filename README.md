@@ -29,6 +29,7 @@ octave-cli 03-publicidad-utilidad.m         # pregunta x0 y la cota de error
 | `lab-2/` | Guide 2 — errores, redondeo y truncamiento | `Tp2.m` |
 | `lab-3/` | Guide 3 — métodos numéricos de raíces | `01-`, `02-`, `03-*.m` |
 | `lab-4/` | Guide 4 — sin consignas cargadas todavía | — |
+| `herramientas/informe/` | Generador de informes con capturas y PDF | `generar_informe.py` |
 | `tp-evaluativo-1-metodos-de-raices/` | Evaluación: punto fijo, Newton-Raphson, Aitken | `principal.m` |
 
 ## Detalle por laboratorio
@@ -71,6 +72,20 @@ Dos capas, separadas por nombre: los scripts llevan el número y el problema que
 `newton_raphson.m`, `iteracion.m` y `aceleracion.m` son la implementación de referencia: validan entradas, están documentadas y devuelven un flag `convergio`.
 
 La tolerancia **siempre es argumento**, no está fija en el cuerpo de ninguna función. La consigna pide probar con distintas cotas de error y comparar, así que el caller decide cuánto error acepta.
+
+**Informe** — `lab-3/informe.md` y `lab-3/informe.pdf` se generan con las herramientas de `herramientas/informe/`. Ver esa carpeta.
+
+### `herramientas/informe/`
+
+Genera el informe de cada laboratorio: captura la salida de consola y las figuras de los scripts de Octave, inyecta el código real en el markdown y renderiza un PDF A4 paginado.
+
+```bash
+python3 herramientas/informe/generar_informe.py herramientas/informe/lab-3.json
+```
+
+El markdown fuente (`lab-3/informe-plantilla.md`) lleva marcadores `{{CODE:archivo.m}}` y `{{IMG:tag-consola}}`, así que el informe nunca puede quedar desactualizado respecto del código: se edita el `.m`, se regenera, y el PDF se actualiza. La [guía completa](herramientas/informe/README.md) está en esa carpeta.
+
+Requiere Octave, Python con Pillow, WeasyPrint, y gnuplot con terminal `pngcairo`.
 
 ### `tp-evaluativo-1-metodos-de-raices/`
 

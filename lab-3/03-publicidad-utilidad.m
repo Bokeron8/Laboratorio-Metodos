@@ -12,6 +12,11 @@
 %
 % La consigna pide aplicar el método de iteración Y el mismo método acelerado
 % con Aitken, ambos con E < 1e-4, y graficar ambas curvas en un mismo gráfico.
+%
+% Este script entrega los resultados crudos de cada método (raíz, iteraciones,
+% tiempo) y el valor de |g'(x0)|. La comparación entre ambos y las conclusiones
+% van en el informe, no acá.
+%
 % Los algoritmos viven en iteracion.m y aceleracion.m.
 
 clc;
@@ -70,8 +75,6 @@ endif
 % Método de iteración acelerado con Aitken (Steffensen)
 % ----------------------------------------------------------------------
 fprintf('\n--- b) Método de Iteración con Aceleración de Aitken ---\n');
-fprintf('En cada paso se evalúa g dos veces y se extrapola:\n');
-fprintf('  x1 = g(x),  x2 = g(x1),  x_acel = x - (x1 - x)^2 / (x2 - 2*x1 + x)\n\n');
 
 tic;
 [x_aitken, iter_aitken, ok_aitken] = aceleracion(g, x0, tol);
@@ -118,39 +121,3 @@ if (ok_simple)
 endif
 legend(leyenda, 'Location', 'NorthWest');
 hold off;
-
-% ----------------------------------------------------------------------
-% Comparación
-% ----------------------------------------------------------------------
-fprintf('\n================== COMPARACIÓN ==================\n');
-fprintf('%-32s %-16s %-10s %-12s\n', 'Método', 'Raíz', 'Iteraciones', 'Tiempo (s)');
-fprintf('%-32s %-16.6f %-10d %-12.6f\n', 'Iteración simple', ...
-        x_simple, iter_simple, tiempo_simple);
-fprintf('%-32s %-16.6f %-10d %-12.6f\n', 'Iteración con Aitken', ...
-        x_aitken, iter_aitken, tiempo_aitken);
-
-fprintf('\n--- Conclusiones ---\n');
-if (ok_simple && ok_aitken)
-  fprintf('Diferencia entre ambas raíces: %.3e\n', abs(x_simple - x_aitken));
-  if (iter_simple > 0)
-    fprintf('Aitken necesitó %.2f veces menos iteraciones (%d contra %d).\n', ...
-            iter_simple / iter_aitken, iter_simple, iter_aitken);
-  endif
-endif
-fprintf(['Steffensen/Aitken es cuadrático porque corrige a mano el error lineal de\n' ...
-         'la iteración: en vez de dar un paso g(x) - x y repetir, extrapola usando\n' ...
-         'TRES valores. Cuesta el doble de evaluaciones de g por paso, pero como la\n' ...
-         'convergencia es lineal en el punto fijo simple y cuadrática en Aitken, el\n' ...
-         'número total de evaluaciones termina siendo menor. El detalle es que solo\n' ...
-         'funciona si g es "regular" cerca de la raíz: si el denominador x2-2*x1+x\n' ...
-         'se acerca a cero, la aceleración se desarma.\n']);
-if (ok_aitken)
-  fprintf(['Ojo con el gráfico: y = g(x) tiene pendiente g''(x) = 40/(500 - x) en la\n' ...
-           'raíz. Como vale %.4f, es una pendiente SUAVE: por eso la intersección con\n' ...
-           'y = x es transversal y el punto fijo es estable. Si el problema tuviera\n' ...
-           'una pendiente más empinada, la curva cruzaría la recta de lado y el punto\n' ...
-           'fijo sería inestable, que es justo lo que hace divergir la iteración.\n'], ...
-          dg(x_aitken));
-else
-  fprintf('Sin raíz no hay gráfico del punto fijo que comentar.\n');
-endif

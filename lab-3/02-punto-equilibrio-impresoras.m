@@ -10,6 +10,11 @@
 %      las condiciones de convergencia en los intervalos iniciales.
 %
 % La consigna propone los intervalos [24; 26] y [250; 252]. Tanteo los confirma.
+%
+% Este script entrega los resultados crudos (raíz, iteraciones, tiempo) y el
+% estado de cada condición de Fourier. La comparación entre intervalos y las
+% conclusiones van en el informe, no acá.
+%
 % Los algoritmos viven en tanteo.m y newton_raphson.m.
 
 clc;
@@ -72,11 +77,7 @@ fprintf('Compare con los intervalos de la consigna: [24, 26] y [250, 252].\n');
 % ----------------------------------------------------------------------
 tol = input(sprintf('\nIngrese la cota de error a usar (la consigna pide 0.001): '));
 
-resultados = zeros(rows(intervalos), 4);
-%              | intervalo | raíz | iteraciones | tiempo |
-
-for k = 1:rows(intervalos)
-  a = intervalos(k, 1);
+for k = 1:rows(intervalos)  a = intervalos(k, 1);
   b = intervalos(k, 2);
 
   fprintf('\n============ Intervalo %d: [%.2f, %.2f] ============\n', k, a, b);
@@ -142,27 +143,6 @@ for k = 1:rows(intervalos)
   plot(raiz, 0, 'ko', 'MarkerSize', 8, 'LineWidth', 2);
   text(raiz, 0, sprintf('  x_%.0f = %.2f', k, raiz), ...
        'VerticalAlignment', 'bottom', 'FontSize', 9);
-
-  resultados(k, :) = [k, raiz, iter, tiempo];
 endfor
-
-% ----------------------------------------------------------------------
-% Comparación
-% ----------------------------------------------------------------------
-fprintf('\n================== RESUMEN ==================\n');
-fprintf('%-14s %-16s %-10s %-12s\n', 'Intervalo', 'Raíz', 'Iteraciones', 'Tiempo (s)');
-for k = 1:rows(resultados)
-  fprintf('[%.2f, %.2f]%s%-16.4f %-10d %-12.6f\n', ...
-          intervalos(k, 1), intervalos(k, 2), repmat(' ', 1, 3), ...
-          resultados(k, 2), resultados(k, 3), resultados(k, 4));
-endfor
-
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Newton-Raphson es cuadrático: a cada iteración se duplican los dígitos correctos.\n');
-fprintf('Por eso acá llega al resultado en pocas iteraciones, sin importar el ancho\n');
-fprintf('del intervalo. El precio es que NO hay garantía de convergencia: hace falta\n');
-fprintf('x0 bien elegido por Fourier y F'' != 0. Bisección es lo contrario: lenta pero\n');
-fprintf('siempre que haya cambio de signo. Por eso el punto de equilibrio de cerca\n');
-fprintf('y el de lejos se resuelven igual de rápido acá, algo que bisección no logra.\n');
 
 hold off;

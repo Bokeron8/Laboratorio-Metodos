@@ -4,3 +4,7 @@
 
 # Octave escribe esto al salir de una sesión interactiva.
 .octave_hist
+
+# Bytecode de Python de las herramientas de informe.
+__pycache__/
+*.pyc

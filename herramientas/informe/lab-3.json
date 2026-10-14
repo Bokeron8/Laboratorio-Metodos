@@ -1,0 +1,29 @@
+{
+  "laboratorio": "lab-3",
+  "titulo": "Informe — Guía 3: Raíces de ecuaciones por métodos numéricos",
+  "subtitulo": "Métodos Computacionales · Laboratorio 3 · Octave 6.4.0",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-tanque-esferico.m",
+      "titulo": "Ejercicio 1 - Tanque esferico",
+      "entradas": "0.5,0.001"
+    },
+    {
+      "tag": "ej2",
+      "script": "02-punto-equilibrio-impresoras.m",
+      "titulo": "Ejercicio 2 - Punto de equilibrio",
+      "entradas": "20,0.001"
+    },
+    {
+      "tag": "ej3",
+      "script": "03-publicidad-utilidad.m",
+      "titulo": "Ejercicio 3 - Publicidad y utilidad",
+      "entradas": "200,0.0001"
+    }
+  ]
+}
