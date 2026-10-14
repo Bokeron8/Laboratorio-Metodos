@@ -94,7 +94,7 @@ for k = 1:rows(intervalos)
   fprintf('  raíz = %.6f m | f(raíz) = %.3e | iteraciones = %d | tiempo = %.6f s\n', ...
           raiz_im, f(raiz_im), iter_im, tiempo_im);
 
-  % --- Método de Interpolación Lineal (falsa posición) ---
+  % --- Método de Interpolación Lineal ---
   tic;
   [raiz_il, iter_il, tabla_il] = interpolacion_lineal(f, a, b, tol);
   tiempo_il = toc;

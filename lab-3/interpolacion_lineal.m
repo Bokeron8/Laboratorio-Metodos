@@ -1,5 +1,5 @@
 function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
-  % INTERPOLACION_LINEAL - Falsa posición (regla delBatman).
+  % INTERPOLACION_LINEAL - Método de interpolación lineal.
   % Aproxima la raíz con la intersección de la cuerda entre (a, f(a)) y (b, f(b))
   % con el eje x, en vez de con el punto medio como hace la bisección:
   %   c = b - f(b)*(b - a)/(f(b) - f(a))
@@ -12,8 +12,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
   %   raiz  - última intersección con el eje x calculada
   %   iter  - cantidad de iteraciones realizadas
   %   tabla - matriz Nx4 con [iter, a, b, c] por iteración, para mostrar el avance
-  % Nota: hereda el problema clásico de la falsa posición: si f es muy curva en un
-  % extremo, la cuerda queda casi paralela al eje y un extremo se queda pegado.
+  % Nota: si f es muy curva en un extremo, la cuerda queda casi paralela al eje y
+  % un extremo se queda pegado sin avanzar.
   % Converge MÁS RÁPIDO que bisección si f es suave, pero puede ser LENTA si f es
   % convexa de forma extrema. Por eso se usa |c_n - c_(n-1)| y no (b-a)/2 como error.
 

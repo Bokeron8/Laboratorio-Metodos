@@ -8,3 +8,6 @@
 # Bytecode de Python de las herramientas de informe.
 __pycache__/
 *.pyc
+
+# Octave guarda esto al recibir SIGTERM en una corrida interactiva.
+octave-workspace

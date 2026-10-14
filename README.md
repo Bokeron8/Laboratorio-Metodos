@@ -64,10 +64,10 @@ Dos capas, separadas por nombre: los scripts llevan el número y el problema que
 | :--- | :--- | :--- |
 | `tanteo.m` | `(f, a, b)` → matriz Nx2 | Separa raíces barriendo `[a, b]`; el paso se pide por teclado |
 | `intervalo_medio.m` | `(f, a, b, tol)` → `(raiz, iter)` | Bisección, frena con `(b-a)/2 <= tol` |
-| `interpolacion_lineal.m` | `(f, a, b, tol)` → `(raiz, iter, tabla)` | Falsa posición, frena con `\|c_n - c_(n-1)\| <= tol` |
+| `interpolacion_lineal.m` | `(f, a, b, tol)` → `(raiz, iter, tabla)` | Interpolación lineal, frena con `\|c_n - c_(n-1)\| <= tol` |
 | `newton_raphson.m` | `(F, x0, tol)` → `(x_raiz, iter, convergio)` | Newton con derivada por diferencia central |
 | `iteracion.m` | `(g, x0, tol)` → `(x_raiz, iter, convergio)` | Punto fijo, exige \|g'(x0)\| < 1 |
-| `aceleracion.m` | `(g, x0, tol)` → `(x_raiz, iter, convergio)` | Steffensen (Aitken Δ²) |
+| `aceleracion.m` | `(g, x0, tol)` → `(x_raiz, iter, convergio)` | Aceleración de Aitken (Δ²) |
 
 `newton_raphson.m`, `iteracion.m` y `aceleracion.m` son la implementación de referencia: validan entradas, están documentadas y devuelven un flag `convergio`.
 

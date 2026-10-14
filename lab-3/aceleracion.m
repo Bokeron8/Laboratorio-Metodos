@@ -1,5 +1,5 @@
 function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
-  % ACELERACION - Metodo de Steffensen (aceleracion de Aitken delta-cuadrado).
+  % ACELERACION - Aceleracion de Aitken delta-cuadrado.
   % Acelera la iteracion de punto fijo x_{k+1} = g(x_k) con:
   %   x1 = g(x_act), x2 = g(x1)
   %   x_sig = x_act - (x1 - x_act)^2 / (x2 - 2*x1 + x_act)
@@ -14,7 +14,7 @@ function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
   % Ejemplo (usar ./ elemento a elemento para que fplot evalue vectores):
   %   g = @(x) 200 + 40*log(400./(500-x));
   %   [x, it, ok] = aceleracion(g, 0, 1e-4);
-  % Nota: no se exige |g'(x0)| < 1 como en punto fijo simple, porque Steffensen
+  % Nota: no se exige |g'(x0)| < 1 como en punto fijo simple, porque este metodo
   % converge (cuadraticamente) aun donde el punto fijo diverge; solo pide den != 0.
 
   % Validacion de tipos: g handle, x0 escalar finito, tol positiva.

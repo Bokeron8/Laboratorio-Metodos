@@ -62,7 +62,7 @@ Métodos Computacionales · Laboratorio 3 · Octave 6.4.0
 
 `{{CODE:intervalo_medio.m}}`
 
-## Interpolación Lineal (falsa posición)
+## Interpolación Lineal
 
 `{{CODE:interpolacion_lineal.m}}`
 
@@ -74,6 +74,6 @@ Métodos Computacionales · Laboratorio 3 · Octave 6.4.0
 
 `{{CODE:iteracion.m}}`
 
-## Aceleración de Aitken (Steffensen)
+## Aceleración de Aitken
 
 `{{CODE:aceleracion.m}}`

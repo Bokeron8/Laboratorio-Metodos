@@ -72,7 +72,7 @@ else
 endif
 
 % ----------------------------------------------------------------------
-% Método de iteración acelerado con Aitken (Steffensen)
+% Método de iteración acelerado con Aitken
 % ----------------------------------------------------------------------
 fprintf('\n--- b) Método de Iteración con Aceleración de Aitken ---\n');
 

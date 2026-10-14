@@ -32,13 +32,13 @@ El script queda bloqueado en el último paso (`waitfor`) hasta que cierres la ve
 | :--- | :--- | :--- | :--- |
 | 1 | Punto fijo | `g(x)` y `F(x)` | \|g'(x0)\| < 1 |
 | 2 | Newton-Raphson | `F(x)` | `F'(x) ≠ 0`; elegir `x0` por Fourier |
-| 3 | Aitken (Steffensen) | `g(x)` y `F(x)` | Denominador `Δ²` no nulo |
+| 3 | Aceleración de Aitken | `g(x)` y `F(x)` | Denominador `Δ²` no nulo |
 
 Todos devuelven la misma tupla: `(x_raiz, iter, convergio)`.
 
 **Newton no exige `F(a)*F(b) < 0`.** Esa condición es para bisección. Para Newton lo que importa es elegir `x0` donde `F(x0)*F''(x0) > 0`, porque ahí la parábola tangente no toca el eje antes de la raíz.
 
-**Aitken no exige `|g'(x0)| < 1`.** Steffensen acelera y puede converger donde el punto fijo simple diverge. Solo pide que el denominador no se anule.
+**Aitken no exige `|g'(x0)| < 1`.** La aceleración converge (cuadráticamente) aun donde el punto fijo simple diverge. Solo pide que el denominador no se anule.
 
 ## Ejemplo — el caso de la guía
 
@@ -63,7 +63,7 @@ Nótese el `400./(500-x)`: es obligatorio. `fplot` evalúa la función sobre vec
 | `tanteo.m` | Separa raíces barriendo `[a, b]` con paso `delta_x`, detectando cambios de signo. |
 | `iteracion.m` | Punto fijo. Verifica `\|g'(x0)\| < 1` antes de arrancar. |
 | `newton_raphson.m` | Newton-Raphson con `F'` por diferencia central (`h = 1e-4`). |
-| `aceleracion.m` | Steffensen: `x1 = g(x)`, `x2 = g(x1)`, `x_sig = x - (x1-x)² / (x2 - 2·x1 + x)`. |
+| `aceleracion.m` | Aceleración de Aitken: `x1 = g(x)`, `x2 = g(x1)`, `x_sig = x - (x1-x)² / (x2 - 2·x1 + x)`. |
 
 Las tres funciones de método **no imprimen ni grafican**: solo calculan y devuelven. Todo eso vive en `principal.m`.
 

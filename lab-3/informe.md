@@ -105,7 +105,7 @@ for k = 1:rows(intervalos)
   fprintf('  raíz = %.6f m | f(raíz) = %.3e | iteraciones = %d | tiempo = %.6f s\n', ...
           raiz_im, f(raiz_im), iter_im, tiempo_im);
 
-  % --- Método de Interpolación Lineal (falsa posición) ---
+  % --- Método de Interpolación Lineal ---
   tic;
   [raiz_il, iter_il, tabla_il] = interpolacion_lineal(f, a, b, tol);
   tiempo_il = toc;
@@ -381,7 +381,7 @@ else
 endif
 
 % ----------------------------------------------------------------------
-% Método de iteración acelerado con Aitken (Steffensen)
+% Método de iteración acelerado con Aitken
 % ----------------------------------------------------------------------
 fprintf('\n--- b) Método de Iteración con Aceleración de Aitken ---\n');
 
@@ -582,11 +582,11 @@ function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
 endfunction
 ````
 
-## Interpolación Lineal (falsa posición)
+## Interpolación Lineal
 
 ````octave
 function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
-  % INTERPOLACION_LINEAL - Falsa posición (regla delBatman).
+  % INTERPOLACION_LINEAL - Método de interpolación lineal.
   % Aproxima la raíz con la intersección de la cuerda entre (a, f(a)) y (b, f(b))
   % con el eje x, en vez de con el punto medio como hace la bisección:
   %   c = b - f(b)*(b - a)/(f(b) - f(a))
@@ -599,8 +599,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
   %   raiz  - última intersección con el eje x calculada
   %   iter  - cantidad de iteraciones realizadas
   %   tabla - matriz Nx4 con [iter, a, b, c] por iteración, para mostrar el avance
-  % Nota: hereda el problema clásico de la falsa posición: si f es muy curva en un
-  % extremo, la cuerda queda casi paralela al eje y un extremo se queda pegado.
+  % Nota: si f es muy curva en un extremo, la cuerda queda casi paralela al eje y
+  % un extremo se queda pegado sin avanzar.
   % Converge MÁS RÁPIDO que bisección si f es suave, pero puede ser LENTA si f es
   % convexa de forma extrema. Por eso se usa |c_n - c_(n-1)| y no (b-a)/2 como error.
 
@@ -815,11 +815,11 @@ function [x_raiz, iter, convergio] = iteracion(g, x0, tol)
 endfunction
 ````
 
-## Aceleración de Aitken (Steffensen)
+## Aceleración de Aitken
 
 ````octave
 function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
-  % ACELERACION - Metodo de Steffensen (aceleracion de Aitken delta-cuadrado).
+  % ACELERACION - Aceleracion de Aitken delta-cuadrado.
   % Acelera la iteracion de punto fijo x_{k+1} = g(x_k) con:
   %   x1 = g(x_act), x2 = g(x1)
   %   x_sig = x_act - (x1 - x_act)^2 / (x2 - 2*x1 + x_act)
@@ -834,7 +834,7 @@ function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
   % Ejemplo (usar ./ elemento a elemento para que fplot evalue vectores):
   %   g = @(x) 200 + 40*log(400./(500-x));
   %   [x, it, ok] = aceleracion(g, 0, 1e-4);
-  % Nota: no se exige |g'(x0)| < 1 como en punto fijo simple, porque Steffensen
+  % Nota: no se exige |g'(x0)| < 1 como en punto fijo simple, porque este metodo
   % converge (cuadraticamente) aun donde el punto fijo diverge; solo pide den != 0.
 
   % Validacion de tipos: g handle, x0 escalar finito, tol positiva.
