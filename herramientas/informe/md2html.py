@@ -153,11 +153,7 @@ def convertir(md):
 CSS = """
 @page {
   size: A4;
-  margin: 18mm 16mm 16mm 16mm;
-  @top-left  { content: "Metodos Computacionales - Guia 3";
-               font: 8pt sans-serif; color: #888; }
-  @top-right { content: "Informe de raices de ecuaciones";
-               font: 8pt sans-serif; color: #888; }
+  margin: 14mm 16mm 16mm 16mm;
   @bottom-center { content: counter(page) " / " counter(pages);
                font: 8pt sans-serif; color: #888; }
 }

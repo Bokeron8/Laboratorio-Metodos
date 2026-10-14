@@ -1,5 +1,7 @@
 # Informe — Guía 3: Raíces de ecuaciones por métodos numéricos
 
+**Alumnos:** Franco Zambrano · Gabriel Bazzola
+
 Métodos Computacionales · Laboratorio 3 · Octave 6.4.0
 
 ---
