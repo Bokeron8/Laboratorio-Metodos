@@ -67,7 +67,7 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
 
   % Resultado: el ultimo x_act es la raiz aproximada y se marca como convergido.
   % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
-  % El que llama decide si mostrar o graficar (ver principal.m).
+  % El que llama decide si mostrar o graficar (ver 02-punto-equilibrio-impresoras.m).
   x_raiz = x_act;
   convergio = true;
 endfunction

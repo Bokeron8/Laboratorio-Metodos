@@ -5,11 +5,20 @@ Soluciones en Octave de las guías de laboratorio de Métodos Computacionales. C
 ## Quick path
 
 1. Abrí la carpeta del laboratorio que te corresponda.
-2. Corré el script principal en Octave.
+2. Corré el script del ejercicio en Octave.
 3. Ingresá los datos por teclado cuando los pida.
 
 ```bash
 cd lab-1 && octave-cli Tp1.m
+```
+
+En `lab-3/` hay tres entry points, uno por ejercicio:
+
+```bash
+cd lab-3
+octave-cli 01-tanque-esferico.m             # pregunta el incremento y la cota de error
+octave-cli 02-punto-equilibrio-impresoras.m # pregunta el incremento y la cota de error
+octave-cli 03-publicidad-utilidad.m         # pregunta x0 y la cota de error
 ```
 
 ## Estructura
@@ -18,7 +27,7 @@ cd lab-1 && octave-cli Tp1.m
 | :--- | :--- | :--- |
 | `lab-1/` | Guide 1 — aritmética básica, sucesiones, series | `Tp1.m` |
 | `lab-2/` | Guide 2 — errores, redondeo y truncamiento | `Tp2.m` |
-| `lab-3/` | Guide 3 — métodos numéricos de raíces | `Tp3.m`, `Ejercicio1-3.m` |
+| `lab-3/` | Guide 3 — métodos numéricos de raíces | `01-`, `02-`, `03-*.m` |
 | `lab-4/` | Guide 4 — sin consignas cargadas todavía | — |
 | `tp-evaluativo-1-metodos-de-raices/` | Evaluación: punto fijo, Newton-Raphson, Aitken | `principal.m` |
 
@@ -38,48 +47,45 @@ Las funciones auxiliares (`normalizar`, `redondear`, `truncar`) están defined a
 
 ### `lab-3/` — Guide 3
 
-Contiene dos capas de archivos:
+Dos capas, separadas por nombre: los scripts llevan el número y el problema que resuelven, las funciones llevan el método que implementan.
 
 **Ejercicios resueltos** — un script por ejercicio de la guía.
 
-| Archivo | Qué resuelve |
-| :--- | :--- |
-| `Ejercicio1.m` | Tanque esférico: tanteo, intervalo medio e interpolación lineal |
-| `Ejercicio2.m` | Punto de equilibrio de impresoras: gráfico + Newton-Raphson con Fourier |
-| `Ejercicio3.m` | Publicidad y utilidad: punto fijo y aceleración de Aitken |
-| `Tp3.m` | Integración de tanteo + intervalo medio con marcado de raíces |
+| Archivo | Qué resuelve | Resultado con los datos de la consigna |
+| :--- | :--- | :--- |
+| `01-tanque-esferico.m` | Tanque esférico: gráfico, tanteo, intervalo medio vs interpolación lineal | `h ≈ 2.0269 m` |
+| `02-punto-equilibrio-impresoras.m` | Punto de equilibrio: gráfico, tanteo, Fourier + Newton-Raphson | `x ≈ 25.23` y `x ≈ 250.76` |
+| `03-publicidad-utilidad.m` | Publicidad: punto fijo y punto fijo acelerado con Aitken | `x ≈ 213.32` unidades |
 
 **Métodos numéricos** — funciones reutilizables.
 
 | Archivo | Firma | Qué hace |
 | :--- | :--- | :--- |
-| `intervalo_medio.m` | `(f, a, b)` → `(raiz, iter, a, b)` | Bisección con tolerancia fija de `0.001` |
-| `iteracion_punto_fijo.m` | `(g, x0, tol, max_iter, usar_aitken)` → `(x, iter)` | Punto fijo simple o acelerado en un solo archivo |
-| `tanteo.m` | `(f)` → matriz Nx2 | Separa raíces barriendo el rango |
+| `tanteo.m` | `(f, a, b)` → matriz Nx2 | Separa raíces barriendo `[a, b]`; el paso se pide por teclado |
+| `intervalo_medio.m` | `(f, a, b, tol)` → `(raiz, iter)` | Bisección, frena con `(b-a)/2 <= tol` |
+| `interpolacion_lineal.m` | `(f, a, b, tol)` → `(raiz, iter, tabla)` | Falsa posición, frena con `\|c_n - c_(n-1)\| <= tol` |
 | `newton_raphson.m` | `(F, x0, tol)` → `(x_raiz, iter, convergio)` | Newton con derivada por diferencia central |
 | `iteracion.m` | `(g, x0, tol)` → `(x_raiz, iter, convergio)` | Punto fijo, exige \|g'(x0)\| < 1 |
 | `aceleracion.m` | `(g, x0, tol)` → `(x_raiz, iter, convergio)` | Steffensen (Aitken Δ²) |
-| `principal.m` | script | Conductor que pregunta todo por teclado y grafica |
 
-`tanteo.m`, `newton_raphson.m`, `iteracion.m`, `aceleracion.m` y `principal.m` vienen copiados del `tp-evaluativo-1-metodos-de-raices/` y son la implementación de referencia: tienen validación de entradas, documentación y devuelven un flag `convergio`. Preferilos sobre las versiones `_old`.
+`newton_raphson.m`, `iteracion.m` y `aceleracion.m` son la implementación de referencia: validan entradas, están documentadas y devuelven un flag `convergio`.
 
-**Versiones `_old`** — `tanteo_old.m`, `Tanteo_old.m`, `newton_raphson_old.m`, `aceleracion_old.m`, `intervalo_medio_old.m`, `interpolacion_lineal_old.m`. Se conservan porque están acopladas a un ejercicio concreto (hacen sus propios `input` y `printf`). Los scripts de ejercicio igual las llaman explícitamente.
-
-`interpolacion_lineal_old.m` es la única implementación de interpolación lineal aislada en un archivo propio. `Ejercicio1.m` la resuelve inline, así que ese es el único lugar donde compararla lado a lado con intervalo medio.
+La tolerancia **siempre es argumento**, no está fija en el cuerpo de ninguna función. La consigna pide probar con distintas cotas de error y comparar, así que el caller decide cuánto error acepta.
 
 ### `tp-evaluativo-1-metodos-de-raices/`
 
-Programa autónomo con menú de tres métodos. Mismas funciones que la capa canónica de `lab-3/`. Ver su [README](tp-evaluativo-1-metodos-de-raices/README.md) para el detalle de uso.
+Programa autónomo con menú de tres métodos. `newton_raphson.m`, `iteracion.m` y `aceleracion.m` son idénticos a los de `lab-3/`; `tanteo.m` **no**, porque acá toma `a` y `b` por teclado (`tanteo(f)`) mientras que el de `lab-3/` los recibe como argumentos. Cada carpeta mantiene su propia copia a propósito: son dos entregables separados. Ver su [README](tp-evaluativo-1-metodos-de-raices/README.md) para el detalle de uso.
 
 ## Gotchas conocidos
 
 Estos no son errores de tipeo, son trampas reales del código:
 
-- **Usá `./` y `.*` en las funciones que se pasan a `fplot`.** `fplot` evalúa vectores; con `/` y `*` escala Octave explota. `principal.m` lo advierte en pantalla.
-- **El chequeo de convergencia es local, no global.** `iteracion.m`, `newton_raphson.m` y `aceleracion.m` verifican `|g'(x0)| < 1` (o `F'(x) ≠ 0`) **una sola vez, en `x0`**. Eso es una afirmación sobre un punto, no sobre toda la trayectoria: las iteradas pueden salirse de la región donde la condición se cumple. Y ninguna de las tres tiene `max_iter`, así que si eso pasa el script queda colgado en loop infinito. Para las funciones de estas guías el riesgo es bajo: los puntos fijos están donde `|g'| < 1` siempre y convergen en pocas iteraciones. Cuidado igual si cargás un `x0` raro a mano.
-- **`ezplot` e `inline` son legado.** Se usan en `lab-1/Tp1.m` (ejercicio 4) y `lab-3/prueba.m`. Octave 6.4 los soporta con warnings; en Octave 9+ fueron eliminados. Si actualizás Octave, migrá esas partes a `fplot` y `@(x)`.
-- **`intervalo_medio.m` tiene la tolerancia fija en `0.001`** dentro del cuerpo de la función, no como argumento.
-- **`Tanteo_old.m` y `tanteo_old.m` son dos archivos distintos**, con firmas distintas: la primera pide los datos por teclado, la segunda los recibe como argumentos. No son duplicados.
+- **Usá `./` y `.*` en las funciones que se pasan a `fplot`.** `fplot` evalúa vectores; con `/` y `*` escalar Octave explota. Todos los scripts de `lab-3/` ya lo hacen bien, pero es la trampa más fácil de reintroducir al escribir una función nueva.
+- **`input` no interpreta `\n` en strings de comillas simples.** Octave lo trata como los dos caracteres literales. `fprintf` sí lo interpreta. Si querés un salto de línea antes de un prompt, hacé `fprintf('\n')` aparte.
+- **El escapado de comilla simple dentro de `fprintf` es confuso.** `''` produce una comilla simple y `\'` **rompe el parseo** dentro de comillas simples. Para texto con apóstrofos (como `g'(x0)`), usá comillas dobles: `fprintf("|g'(x0)| = %.4f\n", x)`.
+- **El tanque esférico del ejercicio 1 tiene una sola raíz física, no dos.** Con `R = 3` y `V = 30`, el volumen máximo del tanque es `V(2R/3) = 29.32 m³ < 30 m³`. Como polinomio, `f` tiene una segunda raíz cerca de `h = 8.61 m`, pero está más allá del ecuador y la fórmula ya no describe un volumen de agua. El barrido se limita a `[0, 2R]` a propósito.
+- **El chequeo de convergencia es local, no global.** `iteracion.m`, `newton_raphson.m` y `aceleracion.m` verifican `|g'(x0)| < 1` (o `F'(x) ≠ 0`) **una sola vez, en `x0`**. Eso es una afirmación sobre un punto, no sobre toda la trayectoria: las iteradas pueden salirse de la región donde la condición se cumple. Y ninguna de las tres tiene `max_iter`, así que si eso pasa el script queda colgado en loop infinito. Para las funciones de estas guías el riesgo es bajo: los puntos fijos están donde `|g'| < 1` siempre y convergen en pocas iteraciones. Cuidado igual si cargás un `x0` raro a mano — `03-publicidad-utilidad.m` imprime `|g'(x0)|` antes de correr justamente para que se vea.
+- **`ezplot` e `inline` son legado.** Quedan solo en `lab-1/Tp1.m` (ejercicio 4). Octave 6.4 los soporta con warnings; en Octave 9+ fueron eliminados. Si actualizás Octave, migrá esas partes a `fplot` y `@(x)`.
 
 ## Requisitos
 

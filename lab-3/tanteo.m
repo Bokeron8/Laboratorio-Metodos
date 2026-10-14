@@ -1,20 +1,22 @@
-function intervalos = tanteo(f)
+function intervalos = tanteo(f, a, b)
   % TANTEO - Separa raices barriendo [a, b] con paso delta_x y detectando cambios de signo.
-  % Entrada:
+  % Entradas:
   %   f - funcion a la que se le buscan raices, ej: @(x) x.^2 - 2
+  %   a - extremo inferior del barrido
+  %   b - extremo superior del barrido
   % Salida:
   %   intervalos - matriz de Nx2 con los [a, b] donde f cambia de signo (vacia si no hay)
-  % Nota: pide a, b y delta_x por teclado; el que llama usa los intervalos para elegir x0.
-  % Ingreso de datos por teclado con validacion: a y b numeros con b > a.
+  % Nota: el paso delta_x se pide por teclado a proposito, porque la consigna pide
+  % probar el metodo con distintos incrementos y comparar que tan bien separa.
+  % El rango [a, b] lo fija el ejercicio, que es quien conoce el dominio fisico.
+  if (nargin != 3)
+    error("tanteo: se requieren 3 argumentos (f, a, b)");
+  endif
+  if (!isa(f, "function_handle"))
+    error("tanteo: f debe ser un function_handle, ej: @(x) x.^2 - 2");
+  endif
+
   disp('--- METODO DE TANTEO ---');
-  while (true)
-    a = str2double(input('Ingrese el extremo inferior del intervalo (a): ', 's')); % ej: 2.0
-    b = str2double(input('Ingrese el extremo superior del intervalo (b): ', 's')); % ej: 2.5 o 3.0
-    if (isscalar(a) && isfinite(a) && isscalar(b) && isfinite(b) && b > a)
-      break;
-    endif
-    disp('Rango invalido: a y b deben ser numeros con b mayor que a');
-  endwhile
 
   % El paso debe ser un numero positivo menor que el ancho del intervalo.
   while (true)
@@ -26,10 +28,7 @@ function intervalos = tanteo(f)
   endwhile
 
   % Punto de partida: se arranca en el extremo inferior.
-  x_min = a;
-  x_max = b;
-
-  x_act = x_min;
+  x_act = a;
   f_act = f(x_act);
 
   % Tabla de valores: muestra como evoluciona f en el barrido.
@@ -41,7 +40,7 @@ function intervalos = tanteo(f)
   intervalos_encontrados = [];
 
   % Barrido: se avanza de a delta_x hasta cubrir [a, b].
-  while (x_act + delta_x) <= x_max
+  while (x_act + delta_x) <= b
     x_sig = x_act + delta_x; % siguiente punto del barrido
     f_sig = f(x_sig);
     fprintf('%-10.4f %-15.4f\n', x_sig, f_sig);
