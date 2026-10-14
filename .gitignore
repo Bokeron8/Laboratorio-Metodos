@@ -1,0 +1,6 @@
+# Cache y skill registry del harness gentle-ai. Se regeneran solos y no son
+# parte de las soluciones, así que no van al repo.
+/.atl/
+
+# Octave escribe esto al salir de una sesión interactiva.
+.octave_hist
