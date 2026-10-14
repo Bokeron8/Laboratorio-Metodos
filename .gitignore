@@ -2,6 +2,10 @@
 # parte de las soluciones, así que no van al repo.
 /.atl/
 
+# Documentos de trabajo ODD (task files). Mismo criterio: tracking del proceso,
+# no parte de las soluciones.
+/odd/
+
 # Octave escribe esto al salir de una sesión interactiva.
 .octave_hist
 

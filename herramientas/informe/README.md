@@ -67,9 +67,9 @@ cp herramientas/informe/informe-base.md lab-1/informe-plantilla.md
 
 ## Ejercicio 1 — Suma de N números
 
-### `Tp1.m`
+### `01-suma-n-numeros.m`
 
-{{CODE:Tp1.m}}
+{{CODE:01-suma-n-numeros.m}}
 
 ### Salida de ejecución
 
@@ -101,7 +101,7 @@ Marcadores disponibles:
   "capturas": [
     {
       "tag": "ej1",
-      "script": "Tp1.m",
+      "script": "01-suma-n-numeros.m",
       "titulo": "Ejercicio 1 - Suma de N numeros",
       "entradas": "5,10,0.001"
     }
