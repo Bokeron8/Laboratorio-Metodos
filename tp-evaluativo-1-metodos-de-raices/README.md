@@ -40,6 +40,20 @@ Todos devuelven la misma tupla: `(x_raiz, iter, convergio)`.
 
 **Aitken no exige `|g'(x0)| < 1`.** La aceleración converge (cuadráticamente) aun donde el punto fijo simple diverge. Solo pide que el denominador no se anule.
 
+## Comparación de los resultados de los 3 algoritmos
+
+1. **Newton-Raphson (`newton_raphson.m`)**
+   - **Velocidad de convergencia:** **Cuadrática**. Es el método más rápido, duplicando las cifras decimales correctas en cada iteración y alcanzando la tolerancia en muy pocos pasos (típicamente 3 a 5).
+   - **Comportamiento:** Requiere derivada $F'(x)$ y es muy sensible a la elección de $x_0$. Si no se cumple la condición de Fourier $F(x_0) \cdot F''(x_0) > 0$ o si la derivada se anula, puede oscilar o divergir.
+
+2. **Aceleración de Aitken (`aceleracion.m`)**
+   - **Velocidad de convergencia:** **Cuadrática**. Acelera drásticamente la convergencia lineal del punto fijo clásico aplicando $\Delta^2$.
+   - **Comportamiento:** Logra una velocidad comparable a Newton pero sin requerir derivadas explícitas. Además, **puede converger incluso en zonas donde el punto fijo simple diverge**, siempre que el denominador no sea cero.
+
+3. **Punto Fijo clásico (`iteracion.m`)**
+   - **Velocidad de convergencia:** **Lineal**. Es el más lento de los tres y requiere mayor cantidad de iteraciones.
+   - **Comportamiento:** Exige estrictamente que $|g'(x_0)| < 1$; si no se cumple, diverge inmediatamente. Es útil principalmente como base teórica y punto de partida para Aitken.
+
 ## Ejemplo — el caso de la guía
 
 ```text
