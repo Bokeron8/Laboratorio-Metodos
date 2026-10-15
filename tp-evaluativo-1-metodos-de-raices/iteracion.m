@@ -34,7 +34,13 @@ function [x_raiz, iter, convergio] = iteracion(g, F, x0, tol)
   h = 1e-4;
   dg = @(x) (g(x + h) - g(x - h)) / (2 * h);
 
-  if (abs(dg(x0)) >= 1)
+  dg0 = abs(dg(x0));
+  fprintf('\n--- Análisis de Convergencia (Punto Fijo) ---\n');
+  fprintf('  x0 = %.4f\n', x0);
+  fprintf('  |g''(x0)| = %.4f -> %s\n', dg0, ...
+          merge_str(dg0 < 1, 'Cumple (< 1): convergencia asegurada', 'No cumple (>= 1): diverge'));
+
+  if (dg0 >= 1)
     disp("El metodo no converge (|g'(x0)| >= 1)");
     convergio = false;
     x_raiz = x0;
@@ -46,17 +52,16 @@ function [x_raiz, iter, convergio] = iteracion(g, F, x0, tol)
   iter = 0;
 
   fprintf('\n--- Tabla de Iteraciones (Punto Fijo) ---\n');
-  fprintf('%-6s %-18s %-14s %-14s %-14s\n', 'Iter', 'Cond. |g''(x)|', 'x', 'f(x)', 'Error');
-  fprintf('%-6d %-18.4f %-14.4f %-14.4f %-14s\n', 0, abs(dg(x0)), x0, F(x0), '-');
+  fprintf('%-6s %-14s %-14s %-14s\n', 'Iter', 'x', 'f(x)', 'Error');
+  fprintf('%-6d %-14.4f %-14.4f %-14s\n', 0, x0, F(x0), '-');
 
   while (true)
     x_sig = g(x_act);
     iter++;
     error_k = abs(x_sig - x_act);
-    cond_k = abs(dg(x_act));
     fx_k = F(x_sig);
 
-    fprintf('%-6d %-18.4f %-14.4f %-14.4f %-14.4f\n', iter, cond_k, x_sig, fx_k, error_k);
+    fprintf('%-6d %-14.4f %-14.4f %-14.4f\n', iter, x_sig, fx_k, error_k);
 
     if (error_k < tol)
       break;
@@ -66,4 +71,12 @@ function [x_raiz, iter, convergio] = iteracion(g, F, x0, tol)
 
   x_raiz = x_sig;
   convergio = true;
+endfunction
+
+function s = merge_str(cond, a, b)
+  if (cond)
+    s = a;
+  else
+    s = b;
+  endif
 endfunction
