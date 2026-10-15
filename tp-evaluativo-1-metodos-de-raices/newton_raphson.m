@@ -37,8 +37,8 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
   endif
 
   fprintf('\n--- Tabla de Iteraciones (Newton-Raphson) ---\n');
-  fprintf('%-6s %-22s %-14s %-14s %-14s\n', 'Iter', 'Fourier F(x)*F''(x)', 'x', 'f(x)', 'Error');
-  fprintf('%-6d %-22.4e %-14.4f %-14.4f %-14s\n', 0, F(x0) * d2F(x0), x0, F(x0), '-');
+  fprintf('%-6s %-20s %-14s %-14s %-14s\n', 'Iter', 'Fourier F(x)*F''(x)', 'x', 'f(x)', 'Error');
+  fprintf('%-6d %-20.4f %-14.4f %-14.4f %-14s\n', 0, F(x0) * d2F(x0), x0, F(x0), '-');
 
   error_k = 1;
   while (error_k > tol)
@@ -59,7 +59,7 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     fx_sig = F(x_sig);
 
     iter++;
-    fprintf('%-6d %-22.4e %-14.4f %-14.4f %-14.4e\n', iter, cond_k, x_sig, fx_sig, error_k);
+    fprintf('%-6d %-20.4f %-14.4f %-14.4f %-14.4f\n', iter, cond_k, x_sig, fx_sig, error_k);
 
     x_act = x_sig;
   endwhile
