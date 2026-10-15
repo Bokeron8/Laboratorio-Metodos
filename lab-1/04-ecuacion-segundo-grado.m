@@ -25,7 +25,7 @@
 %     por fplot.
 %   - Se elimina la variable string "y", que quedaba definida y sin usar.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Armar la ecuación de segundo grado a partir del enunciado.
 %   b) Calcular las dos raíces.
 %   c) Verificarlas sobre la ecuación original y graficar.
@@ -114,13 +114,8 @@ legend({'residuo', 'y = 0', 'x1 = 1/3', 'x2 = -1'}, 'Location', 'southeast');
 hold off;
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Las dos raíces son racionales: x1 = 1/3 y x2 = -1, y satisfacen la\n');
-fprintf('ecuación original con una diferencia del orden de la precisión de la\n');
-fprintf('máquina, tal como corresponde a operaciones exactas.\n');
-fprintf('El enunciado enuncia un problema "de segundo grado" pero no garantiza\n');
-fprintf('que tenga dos raíces reales: eso depende del signo del discriminante.\n');
-fprintf('Delta > 0 da dos raíces reales distintas, Delta = 0 da una raíz doble y\n');
-fprintf('Delta < 0 no tiene soluciones reales.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('Las raíces obtenidas satisfacen la ecuación con error de orden de máquina.\n');
+fprintf('La existencia de soluciones reales depende exclusivamente del signo del discriminante.\n');

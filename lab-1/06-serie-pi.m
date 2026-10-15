@@ -13,7 +13,7 @@
 %   |pi - 4*S_n| <= 4 / (2n + 1)
 % es decir, el error decae como 1/n. Para ganar un dígito decimal hace falta
 % multiplicar n por 10. Esa es la razón de que el punto ii pida tanto tiempo de
-% cómputo y es lo que la consigna pide comparar.
+% cómputo y es lo que el problema requiere comparar.
 %
 % Criterio de "dígitos exactos"
 % -----------------------------
@@ -159,23 +159,9 @@ fprintf('requiere %d términos y por sí solo consume %.6f s de los %.6f s total
         resultados(5, 2), resultados(5, 4), tiempo_total);
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Los dos puntos de la consigna piden 3, 4 y 5 dígitos. Da igual cuál de las\n');
-fprintf('dos lecturas se tome, porque el patrón es el mismo: pasar de un dígito al\n');
-fprintf('siguiente multiplica la cantidad de términos por un factor cercano a 10, y\n');
-fprintf('el tiempo de cómputo crece con esa misma proporción, de forma lineal.\n');
-fprintf('Eso es la firma de una convergencia de orden 1/n: el error decae como\n');
-fprintf('1/n, que es exactamente lo que predice el resto acotado por el primer\n');
-fprintf('término omitido. La serie converge, pero es de las más lentas que se\n');
-fprintf('conoce para pi.\n');
-fprintf('El contraste con el ejercicio 5 es el punto: la serie de e converge a\n');
-fprintf('velocidad factorial y alcanza toda la precisión de un double con unos 20\n');
-fprintf('términos, mientras que esta necesita del orden de 10^5 para cinco\n');
-fprintf('decimales. Elegir un desarrollo que converja rápido importa mucho más que\n');
-fprintf('agregar términos.\n');
-fprintf('Nota sobre los valores heredados: los comentarios de la versión anterior\n');
-fprintf('mencionaban 613, 1690 y 10800 términos. Ninguno coincide con los valores\n');
-fprintf('medidos arriba ni con ninguna de las dos lecturas del enunciado, así que\n');
-fprintf('no se los reproduce.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('La serie de Leibniz para pi tiene convergencia lenta O(1/n): ganar un dígito\n');
+fprintf('exige multiplicar los términos por ~10, evidenciando que elegir un método\n');
+fprintf('de rápida convergencia es fundamental frente a la fuerza bruta.\n');

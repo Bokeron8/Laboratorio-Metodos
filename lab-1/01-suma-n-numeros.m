@@ -3,7 +3,7 @@
 % Problema: dado N números positivos X1, X2, ..., XN, hallar
 %   S = X1 + X2 + ... + XN.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Probar con N comprendido en el rango de representación de enteros
 %      de 0 a 255.
 %   b) Luego repetir la prueba con N = 10000 y comparar los tiempos.
@@ -38,7 +38,7 @@ N = 0;
 entrada_valida = false;
 intentos_maximos = 5;    % tope para no quedar repreguntando si se agota la entrada
 for intento = 1:intentos_maximos
-  texto = input(sprintf('\nIngrese la cantidad de números a sumar (la consigna pide un N entre 0 y 255): '), 's');
+  texto = input(sprintf('\nIngrese la cantidad de números a sumar (se requiere un N entre 0 y 255): '), 's');
   N = str2double(texto);
   if (isscalar(N) && isfinite(N) && N == fix(N) && N >= 0 && N <= 255)
     entrada_valida = true;
@@ -98,16 +98,8 @@ fprintf('Suma total = %d\n', total);
 fprintf('Tiempo de ejecución: %.6f s (tic/toc), %.6f s de CPU (cputime)\n', tiempo_b, cpu_b);
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('El algoritmo es lineal en N: cada iteración aporta un único término y el\n');
-fprintf('acumulado necesita N adiciones, que es el mínimo posible porque todos los\n');
-fprintf('datos tienen que recorrerse. El cociente de datos entre los dos casos es\n');
-fprintf('de %.2f, mientras que el cociente de tiempos medido es de %.2f.\n', ...
-        N / N_primer_caso, tiempo_b / max(tiempo_a, eps));
-fprintf('La diferencia entre ambos cocientes es el costo fijo del lazo y del\n');
-fprintf('intérprete, que pesa mucho cuando N es chico y se amortiza cuando N crece.\n');
-fprintf('El costo no viene del acumulado en sí, sino de que cada iteración hace\n');
-fprintf('una lectura del arreglo y una adición: el hardware resuelve N iteraciones\n');
-fprintf('que una instrucción vectorizada resolvería en una sola.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('El algoritmo es lineal en N (O(N)). Al crecer N, los costos fijos del\n');
+fprintf('intérprete se amortizan y el tiempo escala proporcionalmente a los datos.\n');

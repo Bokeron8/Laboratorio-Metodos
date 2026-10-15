@@ -8,7 +8,7 @@ function resultado = fibonacci(n)
   % Convencion del repositorio: fibonacci(1) = 0 y fibonacci(2) = 1, es decir
   % la sucesion es 0, 1, 1, 2, 3, 5, 8, ... (el termino 0 seria 1).
   %
-  % La consigna del Guia 1 pide los N primeros terminos con N = 200. Con la
+  % El enunciado de la Guía 1 pide los N primeros terminos con N = 200. Con la
   % recursion ingenua esa cuenta no es viable: el numero de llamadas crece como
   % phi^n y para n = 30 ya se demora alrededor de 8 segundos, de modo que
   % n = 200 exigiria del orden de 5.6e41 llamadas.

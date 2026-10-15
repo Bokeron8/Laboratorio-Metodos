@@ -3,7 +3,7 @@
 % Problema: dados 200 números positivos X1, X2, ..., X200, hallar la suma de
 % todos los valores pares de la sucesión.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Recorrer los 200 valores y acumular solo los que son pares.
 %   b) Reportar la suma y el tiempo de ejecución.
 %
@@ -31,7 +31,7 @@ generar_valor = @(i) mod(i * 7919, 1000) + 1;
 % ----------------------------------------------------------------------
 % Datos del problema
 % ----------------------------------------------------------------------
-% La consigna fija la cantidad de datos en 200.
+% Se fija la cantidad de datos en 200.
 N = 200;
 
 fprintf('\n========================================================\n');
@@ -80,11 +80,8 @@ fprintf('Suma vectorizada   = %d\n', total_verificado);
 fprintf('Ambas coinciden: %s\n', mat2str(total == total_verificado));
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('El filtro se resuelve con una sola condición por dato, así que el tiempo\n');
-fprintf('depende de N y no de cuántos valores sean pares: descartar un valor cuesta\n');
-fprintf('lo mismo que aceptarlo. El lazo recorre la secuencia una única vez, lo que\n');
-fprintf('lo hace más costoso que la versión vectorizada pero evita reservar memoria\n');
-fprintf('para el arreglo completo.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('El filtrado por lazo recorre la secuencia una vez con complejidad O(N).\n');
+fprintf('Es más costoso que la vectorización pero evita reservar memoria adicional.\n');

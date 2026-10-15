@@ -6,7 +6,7 @@
 % Considerando x^2 + 62.10x + 1 = 0, y sabiendo que los valores de referencia
 % son x1 = -0.01610723 y x2 = -62.08390:
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Calcular x1 y x2 con redondeo a cuatro dígitos, normalizando los valores
 %      con que se trabaja. Calcular los errores absolutos y relativos.
 %   b) Racionalizar el numerador de la fórmula para obtener una forma
@@ -57,7 +57,7 @@ a = 1;
 b = 62.10;
 c = 1;
 
-% Valores de referencia dados por la consigna.
+% Valores de referencia dados por el problema.
 referencia_x1 = -0.01610723;
 referencia_x2 = -62.08390;
 
@@ -186,46 +186,15 @@ fprintf('Para x2, la misma forma lo empeora por un factor de  %.4e\n', ...
         err_x2_racionalizada / max(err_x2_directa, eps));
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Este es el punto central del ejercicio: NO hay una fórmula mejor que la\n');
-fprintf('otra. Cada una es precisa para una raíz y mala para la otra.\n');
-
-fprintf('\nLa raíz CHICA, x1 = %.8f, se gana con la forma RACIONALIZADA.\n', referencia_x1);
-fprintf('En la fórmula directa su numerador es -b + sqrt(Delta) = -%.2f + %.8f,\n', ...
-        b, sqrt(b^2 - 4 * a * c));
-fprintf('o sea %.8f: una resta de dos números casi iguales cuyo resultado es un\n', ...
-        -b + sqrt(b^2 - 4 * a * c));
-fprintf('número diminuto. Ahí se pierde casi toda la precisión: con cuatro dígitos\n');
-fprintf('el numerador queda en %.10g y la raíz sale en %.10g.\n', paso2, x1_directa);
-fprintf('Al racionalizar, ese mismo numerador se convierte en el DENOMINADOR de x2,\n');
-fprintf('y x1 pasa a ser 2c / (-b - sqrt(Delta)) = %.2f / %.8f, un cociente entre\n', ...
-        2 * c, -b - sqrt(b^2 - 4 * a * c));
-fprintf('números de magnitud parecida, sin cancelación alguna. El error cae de\n');
-fprintf('%.4e a %.4e.\n', err_x1_directa, err_x1_racionalizada);
-
-fprintf('\nLa raíz GRANDE, x2 = %.5f, se PIERDE con la forma racionalizada.\n', referencia_x2);
-fprintf('Su numerador en la fórmula directa es -b - sqrt(Delta) = %.8f, una suma de\n', ...
-        -b - sqrt(b^2 - 4 * a * c));
-fprintf('magnitudes donde no hay nada que cancelar, y por eso x2 sale bastante\n');
-fprintf('bien: %.10g. Pero al racionalizar, el denominador pasa a ser\n', x2_directa);
-fprintf('-b + sqrt(Delta) = %.8f, que es justamente la resta catastrófica. Con la\n', ...
-        -b + sqrt(b^2 - 4 * a * c));
-fprintf('aritmética de cuatro dígitos ese denominador queda en %.10g, que es un\n', r2_denominador);
-fprintf('orden de magnitud entero, y dividir 2 por eso da %.10g en vez de %.5f.\n', ...
-        x2_racionalizada, referencia_x2);
-
-fprintf('\nLa razón de fondo: la resta catastrófica no se elimina, se muda de lado.\n');
-fprintf('En la fórmula directa vive en el numerador de x1; en la racionalizada vive\n');
-fprintf('en el denominador de x2. Racionalizar no agrega información, solo reparte\n');
-fprintf('la misma resta en otro lugar.\n');
-fprintf('\nLa moraleja práctica: cuando una cuadrática tiene dos raíces de magnitud\n');
-fprintf('muy distinta, hay que elegir la forma que evita la resta catastrófica para\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('No existe una única fórmula óptima. La forma directa es precisa para la raíz grande,\n');
+fprintf('mientras que la forma racionalizada (conjugada) evita la cancelación catastrófica para la raíz pequeña.\n');
 fprintf('cada una por separado, o calcular una raíz con la forma segura y obtener\n');
 fprintf('la otra con el producto de las raíces, x1 * x2 = c/a, que para este caso\n');
 fprintf('daría %.8f y no sufre ninguna resta.\n', c / a * referencia_x2);
-fprintf('\nLa consigna pide comparar los errores "a partir de las nuevas\n');
+fprintf('\nEl enunciado pide comparar los errores "a partir de las nuevas\n');
 fprintf('aproximaciones", y la comparación muestra que la mejora de una raíz se\n');
 fprintf('paga exactamente con el empeoramiento de la otra. Ese intercambio es la\n');
 fprintf('respuesta, no un defecto del método.\n');

@@ -15,7 +15,7 @@
 % un término iterativo t = t/i da un resultado idéntico para N = 20, 50, 170,
 % 171, 200 y 250, de modo que se conserva la expresión original.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Calcular la serie con un N ingresado por el usuario.
 %   b) Comparar contra el valor exacto exp(1) y reportar el error.
 %   c) Probar con distintas cantidades de sumandos y sacar conclusiones.
@@ -69,7 +69,7 @@ fprintf('Tiempo de ejecución: %.6f s\n', tiempo);
 % ----------------------------------------------------------------------
 % b) Barrido de distintas cantidades de sumandos
 % ----------------------------------------------------------------------
-% La consigna pide probar con diferentes cantidades de sumandos. El barrido
+% El enunciado pide probar con diferentes cantidades de sumandos. El barrido
 % muestra cómo el error decrece a medida que crece N.
 fprintf('\n--- b) Comportamiento según la cantidad de sumandos ---\n');
 fprintf('%-10s %-22s %-14s %s\n', 'N', 'e por la serie', 'Error abs.', 'Error rel.');
@@ -85,14 +85,8 @@ for N_actual = valores_N
 endfor
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('La serie es una aproximación de la velocidad máxima de convergencia entre\n');
-fprintf('las series elementales: cada término es del orden del factorial del anterior,\n');
-fprintf('de modo que la cola de la suma se reduce casi por mitades en cada paso y la\n');
-fprintf('precisión de un double se alcanza en apenas unos veinte sumandos.\n');
-fprintf('En contraste, la serie de Leibniz del ejercicio 6 avanza a velocidad 1/n y\n');
-fprintf('necesita del orden de 130000 términos para cinco decimales: toda serie\n');
-fprintf('converge, pero no todas convergen al mismo ritmo, y acá la elección del\n');
-fprintf('desarrollo pesa mucho más que la cantidad de términos.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('La serie de e converge rapidísimo (orden factorial), alcanzando la\n');
+fprintf('precisión double en ~20 términos, superando ampliamente a series lentas como Leibniz.\n');

@@ -4,12 +4,12 @@
 %   P(x) = 8x + 0.3x^2 - 0.0013x^3 - 372
 % Se pide el punto de equilibrio, es decir las raíces de
 %   F(x) = P(x) = 0.
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Hallar las raíces en forma gráfica (fplot) y separarlas con Tanteo.
 %   b) Aproximar los dos puntos con Newton-Raphson y E < 1e-3, analizando antes
 %      las condiciones de convergencia en los intervalos iniciales.
 %
-% La consigna propone los intervalos [24; 26] y [250; 252]. Tanteo los confirma.
+% El enunciado propone los intervalos [24; 26] y [250; 252]. Tanteo los confirma.
 %
 % Este script entrega los resultados crudos (raíz, iteraciones, tiempo) y el
 % estado de cada condición de Fourier. La comparación entre intervalos y las
@@ -70,12 +70,12 @@ if (isempty(intervalos))
 endif
 
 fprintf('\nSe separaron %d punto(s) de equilibrio.\n', rows(intervalos));
-fprintf('Compare con los intervalos de la consigna: [24, 26] y [250, 252].\n');
+fprintf('Compare con los intervalos del problema: [24, 26] y [250, 252].\n');
 
 % ----------------------------------------------------------------------
 % b) Newton-Raphson con análisis previo de las condiciones de Fourier
 % ----------------------------------------------------------------------
-tol = input(sprintf('\nIngrese la cota de error a usar (la consigna pide 0.001): '));
+tol = input(sprintf('\nIngrese la cota de error a usar (se sugiere 0.001): '));
 
 for k = 1:rows(intervalos)  a = intervalos(k, 1);
   b = intervalos(k, 2);

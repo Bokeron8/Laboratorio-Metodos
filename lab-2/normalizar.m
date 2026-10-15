@@ -11,7 +11,7 @@ function [exponente, resultado] = normalizar(numero)
   %
   % Ejemplo: normalizar(133.921) devuelve exponente = 3 y resultado = 0.133921.
   %
-  % La consigna de la Guía 2 distingue dos cosas que suelen confundirse:
+  % El enunciado de la Guía 2 distingue dos cosas que suelen confundirse:
   %   - Trabajar con valores NORMALIZADOS (lo piden los ejercicios 2 y 4).
   %   - Trabajar SIN NORMALIZARLOS (lo pide el ejercicio 5).
   % Esta función es la que permite distinguir ambas cosas. Ver tambien

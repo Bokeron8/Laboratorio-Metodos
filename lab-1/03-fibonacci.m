@@ -4,7 +4,7 @@
 % recurrencia
 %   F(1) = 0,  F(2) = 1,  F(n) = F(n-1) + F(n-2)   para n > 2.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Calcular los N primeros términos.
 %   b) Probar con N = 200.
 %
@@ -15,9 +15,7 @@
 %     crece exponencialmente.
 %   - Versión iterativa con memorización: cada término se calcula una sola vez,
 %     de modo que T(n) = O(n).
-% Por ejemplo, el término 30 ya se demora alrededor de 8 segundos con la
-% recursión ingenua; el término 200 exigiría del orden de 5.6e41 llamadas. La
-% consigna pide N = 200, así que solo la versión lineal es viable.
+% El problema pide N = 200, así que solo la versión lineal es viable.
 %
 % El algoritmo vive en fibonacci.m. Este script solo lo invoca.
 
@@ -34,7 +32,7 @@ N = 0;
 entrada_valida = false;
 intentos_maximos = 5;    % tope para no quedar repreguntando si se agota la entrada
 for intento = 1:intentos_maximos
-  texto = input(sprintf('\nIngrese la cantidad de términos a calcular (la consigna pide N = 200): '), 's');
+  texto = input(sprintf('\nIngrese la cantidad de términos a calcular (el problema sugiere N = 200): '), 's');
   N = str2double(texto);
   if (isscalar(N) && isfinite(N) && N == fix(N) && N >= 1)
     entrada_valida = true;
@@ -53,7 +51,7 @@ fprintf('\n--- a) Cálculo de los primeros N = %d términos ---\n', N);
 % ----------------------------------------------------------------------
 % b) Barrido de los N primeros términos
 % ----------------------------------------------------------------------
-% Se mide el tiempo porque la consigna pide evaluar el costo del proceso.
+% Se mide el tiempo porque se requiere evaluar el costo del proceso.
 tic;
 terminos = zeros(1, N);
 for i = 1:N
@@ -98,14 +96,8 @@ else
 endif
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('El barrido completo con N = %d se resuelve en %.6f s: es viable porque\n', N, tiempo);
-fprintf('fibonacci.m memoriza los términos ya calculados y cada uno se obtiene\n');
-fprintf('exactamente una vez, con lo que el costo total es lineal en N.\n');
-fprintf('A partir de F(78) los términos superan 2^53 y dejan de ser enteros\n');
-fprintf('exactamente representables en un double; a partir de ahí el resultado es\n');
-fprintf('el double más cercano al entero verdadero.\n');
-fprintf('El crecimiento de la sucesión es exponencial (razón asintótica phi ≈ 1.618),\n');
-fprintf('que es justamente lo que vuelve inviable la recursión ingenua.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('Con memoización el cálculo es O(N) y muy rápido (%.6f s).\n', tiempo);
+fprintf('A partir de F(78) se supera la precisión exacta de los enteros en double (2^53).\n');

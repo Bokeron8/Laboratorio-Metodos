@@ -148,5 +148,6 @@ xlabel('x');
 ylabel('F(x)');
 legend({"F(x)", "y = 0", "F(raiz)", "raiz"}, "Location", "northeast");
 hold off;
+drawnow;
 % Se queda frenado hasta que cerras la ventana del grafico (no hace falta tocar teclas).
 waitfor(hFig);

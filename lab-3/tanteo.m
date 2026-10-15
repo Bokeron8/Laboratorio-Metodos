@@ -6,8 +6,8 @@ function intervalos = tanteo(f, a, b)
   %   b - extremo superior del barrido
   % Salida:
   %   intervalos - matriz de Nx2 con los [a, b] donde f cambia de signo (vacia si no hay)
-  % Nota: el paso delta_x se pide por teclado a proposito, porque la consigna pide
-  % probar el metodo con distintos incrementos y comparar que tan bien separa.
+  % Nota: el paso delta_x se pide por teclado a propósito, porque se requiere
+  % probar el método con distintos incrementos y comparar que tan bien separa.
   % El rango [a, b] lo fija el ejercicio, que es quien conoce el dominio fisico.
   if (nargin != 3)
     error("tanteo: se requieren 3 argumentos (f, a, b)");

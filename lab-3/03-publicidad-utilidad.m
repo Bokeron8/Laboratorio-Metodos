@@ -10,7 +10,7 @@
 %   x  = 200 + 40*ln(400/(500 - x))
 % es decir g(x) = 200 + 40*ln(400/(500 - x)), con x0 = 200.
 %
-% La consigna pide aplicar el método de iteración Y el mismo método acelerado
+% El problema pide aplicar el método de iteración Y el mismo método acelerado
 % con Aitken, ambos con E < 1e-4, y graficar ambas curvas en un mismo gráfico.
 %
 % Este script entrega los resultados crudos de cada método (raíz, iteraciones,
@@ -39,8 +39,8 @@ h = 1e-4;
 dg = @(x) (g(x + h) - g(x - h)) / (2 * h);
 
 fprintf('\n');
-x0      = input('Ingrese el valor inicial x0 (la consigna propone 200): ');
-tol     = input('Ingrese la cota de error a usar (la consigna pide 0.0001): ');
+x0      = input('Ingrese el valor inicial x0 (el problema propone 200): ');
+tol     = input('Ingrese la cota de error a usar (se sugiere 0.0001): ');
 
 % Condición de convergencia del punto fijo simple: |g'(x0)| < 1.
 % g'(x) = 40/(500 - x), que en x0 = 200 vale 0.133: converge, pero solo porque

@@ -13,7 +13,7 @@ function resultado = redondear_n(numero, n)
   %                  lo que piden los ejercicios 2 y 4 de la Guia 2.
   %   redondear_n.m  redondea a n digitos significativos SIN normalizar, y es
   %                  lo que pide explicitamente el punto 5.a: "usando la
-  %                  aritmética de tres digitos y consignar los valores en la
+  %                  aritmética de tres digitos y registrar los valores en la
   %                  siguiente tabla, sin normalizarlos".
   %
   % Que significa "sin normalizar"

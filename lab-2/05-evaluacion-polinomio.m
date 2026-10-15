@@ -2,12 +2,12 @@
 %
 % Problema: evaluar
 %   f(x) = x^3 - 6x^2 + 3x - 0.149
-% en x = 4.71, usando aritmética de tres dígitos, consignando los valores en
+% en x = 4.71, usando aritmética de tres dígitos, registrando los valores en
 % una tabla SIN NORMALIZARLOS, y calcular el error absoluto y el relativo.
 % Luego reescribir la fórmula en forma anidada, recalcular los errores,
 % analizar cómo crecen o disminuyen y emitir conclusión.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   5.a) La tabla de tres filas (exacto / truncado / redondeado) con las
 %        columnas x, x^2, x^3, 6x^2, 3x, f(x), error absoluto, error relativo.
 %   5.b) La misma evaluación con la forma anidada x(x(x - 6) + 3) - 0.149.
@@ -41,7 +41,7 @@ fprintf('\n========================================================\n');
 fprintf('  EJERCICIO 5 - EVALUACIÓN DE UN POLINOMIO CON TRES DÍGITOS\n');
 fprintf('========================================================\n');
 fprintf('f(x) = x^3 - 6x^2 + 3x - 0.149,   x = %.2f\n', x);
-fprintf('La consigna pide trabajar SIN normalizar los valores.\n');
+fprintf('Se indica trabajar SIN normalizar los valores.\n');
 
 % ----------------------------------------------------------------------
 % 5.a) Forma directa
@@ -100,13 +100,13 @@ fprintf('  3x    = %.10g\n', rd_3x);
 fprintf('  f(x)  = %.10g\n', rd_f);
 
 % ----------------------------------------------------------------------
-% Tabla que pide la consigna
+% Tabla requerida por el problema
 % ----------------------------------------------------------------------
 fprintf('\nTabla de 5.a:\n\n');
 fprintf('%-22s %-9s %-9s %-9s %-8s %-7s %-10s %-12s %s\n', ...
         'Método / Caso', 'x', 'x^2', 'x^3', '6x^2', '3x', 'f(x)', 'Error abs.', 'Error rel.');
 
-% Una fila por caso, con las nueve columnas de la tabla de la consigna.
+% Una fila por caso, con las nueve columnas de la tabla requerida.
 % La primera columna va aparte porque es texto.
 etiquetas_filas = {'Exacto', 'Tres dígitos (truncados)', 'Tres dígitos (redondeados)'};
 tabla = [ x,    ex_x2, ex_x3, ex_6x2, ex_3x, ex_f, 0, 0;
@@ -182,46 +182,12 @@ fprintf('%-22s %-12.4e %-12.4e %s\n', 'Redondeado, forma anidada', ...
         sprintf('x%.4f', err_abs_redond_directa / max(err_abs_redond_anidada, eps)));
 
 % ----------------------------------------------------------------------
-% Conclusiones
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Valor exacto:  f(4.71) = %.10g\n', ex_f);
-fprintf('Truncamiento, forma directa: error %.4e (%.2f %% del valor)\n', ...
-        err_abs_trunc_directa, 100 * error_relativo(ex_f, tr_f));
-fprintf('Truncamiento, forma anidada:  error %.4e (%.2f %% del valor)\n', ...
-        err_abs_trunc_anidada, 100 * error_relativo(ex_f, ant_f));
-fprintf('Redondeo,    forma directa: error %.4e (%.2f %% del valor)\n', ...
-        err_abs_redond_directa, 100 * error_relativo(ex_f, rd_f));
-fprintf('Redondeo,    forma anidada:  error %.4e (%.2f %% del valor)\n', ...
-        err_abs_redond_anidada, 100 * error_relativo(ex_f, anr_f));
-
-fprintf('\nEl error DOMINA en las dos formas, y se queda en el mismo orden de\n');
-fprintf('magnitud: pasar a la forma anidada lo reduce por un factor de %.1f con\n', ...
-        err_abs_trunc_directa / max(err_abs_trunc_anidada, eps));
-fprintf('truncamiento y de %.1f con redondeo, pero en ningún caso llega a cero.\n', ...
-        err_abs_redond_directa / max(err_abs_redond_anidada, eps));
-fprintf('Eso es justamente lo que la consigna pide observar: el error no se\n');
-fprintf('acumula hasta infinitud, se mantiene en un nivel bajo pero no despreciable.\n');
-
-fprintf('\nLa razón se ve en los valores intermedios. En la forma directa se\n');
-fprintf('calcula x^3 = %.6g y despues 6x^2 = %.6g, y la resta entre ambos da\n', ...
-        ex_x3, ex_6x2);
-fprintf('un numero pequeno (%.6g) a partir de dos numeros grandes: eso es una\n', ...
-        ex_x3 - ex_6x2);
-fprintf('resta catastrofica, y el error de truncar o redondear x^3 se amplifica\n');
-fprintf('al dividir por la diferencia. La forma anidada evita esa resta entre\n');
-fprintf('numeros grandes: suma primero x - 6 = %.6g, que ya es un numero chico, y\n', an_t1);
-fprintf('de ahi en adelante todos los pasos son de magnitud parecida al resultado.\n');
-
-fprintf('\nCrecimiento o disminucion del error: disminuye. Y la razon es\n');
-fprintf('cuantitativa, no casual: la forma directa hace 4 multiplicaciones y 3\n');
-fprintf('sumas, la anidada hace 2 multiplicaciones y 3 sumas. Cada operacion\n');
-fprintf('individual genera un error del orden de medio digito, asi que reducir\n');
-fprintf('las operaciones reduce el error total de forma aproximadamente\n');
-fprintf('proporcional. Un error que crece con la cantidad de operaciones es\n');
-fprintf('linealmente inestable; uno acotado, linealmente estable.\n');
-
-fprintf('\nConclusion: para evaluar un polinomio conviene escribirlo en forma\n');
+% Resumen
+% ----------------------------------------------------------------------
+fprintf('\n--- Resumen ---\n');
+fprintf('La forma anidada (Horner) reduce la cantidad de operaciones aritméticas\n');
+fprintf('y evita restas entre términos grandes, disminuyendo notablemente el error de redondeo y truncamiento frente a la forma directa.\n');
 fprintf('anidada (Horner) y no calcular las potencias por separado. Es el mismo\n');
 fprintf('polinomio y da el mismo valor exacto, pero en aritmetica finita da un\n');
 fprintf('resultado mucho mejor y sin esfuerzo adicional: menos calculos.\n');

@@ -3,7 +3,7 @@
 % Problema: repetir el ejercicio anterior usando aritmética con TRUNCAMIENTO a
 % tres dígitos, y comparar los resultados obtenidos en 2 y 3.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Repetir los cinco casos del ejercicio 2 con truncamiento a tres dígitos,
 %      normalizando los valores.
 %   b) Comparar los resultados con los del ejercicio 2.
@@ -31,7 +31,7 @@ exactos = [133.921, 132.501, 1.673, 1.673, 0.28571];
 
 % Resultados del ejercicio 2 (redondeo), recalculados acá con las mismas
 % funciones para que la comparación sea justa y no dependa de copiar números.
-% Se los vuelve a imprimir más abajo porque la consigna pide comparar.
+% Se los vuelve a imprimir más abajo porque se requiere comparar.
 redondeados = [redondear(redondear(133) + redondear(0.921)), ...
                redondear(redondear(133) - redondear(0.499)), ...
                redondear(redondear(121 - 119) - redondear(0.327)), ...
@@ -88,7 +88,7 @@ truncados = [a, b, c, d, e];
 % ----------------------------------------------------------------------
 % b) Comparación con el ejercicio 2
 % ----------------------------------------------------------------------
-% La consigna pide comparar los resultados de los ejercicios 2 y 3, así que
+% Se pide comparar los resultados de los ejercicios 2 y 3, así que
 % los dos van en la misma tabla, con los dos errores.
 err_abs_trunc = zeros(1, 5);
 err_rel_trunc = zeros(1, 5);
@@ -113,34 +113,9 @@ for k = 1:5
 endfor
 
 % ----------------------------------------------------------------------
-% Conclusiones
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-fprintf('Ninguno de los dos metodos gana en los cinco casos: los dos se\n');
-fprintf('equivocan, y siempre hacia lados opuestos. El redondeo se pasa hacia\n');
-fprintf('arriba y el truncamiento hacia abajo, asi que los errores tienen signo\n');
-fprintf('contrario y magnitud parecida en los casos b) y c).\n');
-
-fprintf('\nDonde la diferencia SI es grande es en los casos a) y e).\n');
-fprintf('En a) el redondeo da %.6g y el truncamiento da %.6g: el truncamiento pierde\n', ...
-        redondeados(1), truncados(1));
-fprintf('el 0.921 entero y su error es %.1f veces mayor. No es que truncar sea\n', ...
-        err_abs_trunc(1) / max(err_abs_redon(1), eps));
-fprintf('peor en general, es que aqui el digito descartado decidia el primer digito\n');
-fprintf('del resultado.\n');
-fprintf('En e) el cociente de errores es de %.1f, por el mismo motivo: en el\n', ...
-        err_abs_trunc(5) / max(err_abs_redon(5), eps));
-fprintf('redondeo el 7 de 1.28 sube a 1.29 y el producto queda casi exacto.\n');
-
-fprintf('\nEl caso d) sigue siendo el peor de los dos ejercicios, y por el mismo\n');
-fprintf('motivo que en el ejercicio 2: la resta 121 - 0.327 redondeada a tres\n');
-fprintf('digitos significativos da %-6.10g y el 0.673 se pierde antes de la\n', redondear(121 - 0.327));
-fprintf('segunda resta. El truncamiento empeora ese caso todavia mas: da %-8.6g\n', truncados(4));
-fprintf('contra el %-8.6g del redondeo, porque encima trunca en vez de redondear.\n', redondeados(4));
-
-fprintf('\nConclusion general: truncar y redondear son dos formas distintas de\n');
-fprintf('perder informacion, y ninguna es "la correcta". Lo que decide el\n');
-fprintf('resultado no es cual se elija, sino cuantas operaciones se hagan y en\n');
-fprintf('que orden: reorganizar 121 - 119 - 0.327 para agrupar primero los\n');
-fprintf('numeros grandes cambia el error de %.2e a %.2e, tres ordenes de magnitud.\n', ...
-        error_absoluto(exactos(4), redondeados(4)), error_absoluto(exactos(3), redondeados(3)));
+% Resumen
+% ----------------------------------------------------------------------
+fprintf('\n--- Resumen ---\n');
+fprintf('Truncar y redondear son formas distintas de perder información (sesgos opuestos).\n');
+fprintf('Sin embargo, el factor crítico sigue siendo el orden de operaciones para prevenir la cancelación.\n');

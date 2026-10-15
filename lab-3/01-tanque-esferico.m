@@ -5,7 +5,7 @@
 % Se busca la profundidad h que cumple V = 30, es decir la raíz de
 %   f(h) = pi * h^2 * (3R - h)/3 - V = 0.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) Evaluación gráfica de las raíces con fplot.
 %   b) Separación de todas las raíces con el Método de Tanteo.
 %   c) Aproximación con Intervalo Medio e Interpolación Lineal, E < 0.001.
@@ -77,7 +77,7 @@ fprintf('\nSe separaron %d raíz/raíces.\n', rows(intervalos));
 % ----------------------------------------------------------------------
 % c) Aproximación con Intervalo Medio e Interpolación Lineal
 % ----------------------------------------------------------------------
-tol = input(sprintf('\nIngrese la cota de error a usar (la consigna pide 0.001): '));
+tol = input(sprintf('\nIngrese la cota de error a usar (se sugiere 0.001): '));
 
 for k = 1:rows(intervalos)
   a = intervalos(k, 1);

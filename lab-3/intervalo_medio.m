@@ -11,7 +11,7 @@ function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
   %   iter - cantidad de iteraciones realizadas
   % Nota: el método es INDEPENDIENTE de la velocidad de f, pero converge lento
   % (~log2((b-a)/tol) iteraciones). Ese contraste con interpolación lineal es
-  % justamente lo que pide comparar la consigna.
+  % justamente lo que resulta interesante comparar.
 
   if (nargin < 4)
     error("intervalo_medio: se requieren al menos 4 argumentos (f, a, b, tol)");

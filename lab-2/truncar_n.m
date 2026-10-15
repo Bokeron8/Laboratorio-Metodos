@@ -13,7 +13,7 @@ function resultado = truncar_n(numero, n)
   %                que piden los ejercicios 2 y 3 de la Guia 2.
   %   truncar_n.m  trunca a n digitos significativos SIN normalizar, y es lo
   %                que pide explicitamente el punto 5.a: "usando la
-  %                aritmetica de tres digitos y consignar los valores en la
+  %                aritmetica de tres digitos y registrar los valores en la
   %                siguiente tabla, sin normalizarlos".
   %
   % Que significa "sin normalizar"

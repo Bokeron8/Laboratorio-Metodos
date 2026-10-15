@@ -3,7 +3,7 @@
 % Problema: calcular el error absoluto y el error relativo en seis
 % aproximaciones de p por p*.
 %
-% Estructura de la consigna:
+% Estructura del problema:
 %   a) p = pi,    p* = 22/7
 %   b) p = pi,    p* = 3.1416
 %   c) p = e,     p* = 2.718
@@ -70,7 +70,7 @@ endfor
 % ----------------------------------------------------------------------
 % Ordenamiento por error relativo
 % ----------------------------------------------------------------------
-% La consigna pide comparar los resultados. La tabla ordena los casos de
+% El enunciado pide comparar los resultados. La tabla ordena los casos de
 % peor a mejor aproximacion, que es la lectura que deja en claro que el error
 % absoluto y el relativo cuentan historias distintas.
 fprintf('\n--- Ordenamiento por error relativo (de peor a mejor) ---\n\n');
@@ -84,30 +84,8 @@ for j = 1:numel(orden)
 endfor
 
 % ----------------------------------------------------------------------
-% Conclusiones
+% Resumen
 % ----------------------------------------------------------------------
-fprintf('\n--- Conclusiones ---\n');
-[~, peor] = max(errores_relativos);
-[~, mejor] = min(errores_relativos);
-
-fprintf('La peor aproximacion en terminos relativos es %s, con %.4e.\n', ...
-        etiquetas{peor}, errores_relativos(peor));
-fprintf('La mejor es %s, con %.4e.\n', etiquetas{mejor}, errores_relativos(mejor));
-
-fprintf('\nEl caso e) es el que mejor muestra para que sirve cada error: p* = 22000\n');
-fprintf('contra un valor exacto de %.4f tiene un error absoluto de %.1f, enorme\n', ...
-        casos(5, 1), errores_absolutos(5));
-fprintf('comparado con los demas casos, pero su error relativo es de %.4e, el mas\n', ...
-        errores_relativos(5));
-fprintf('bajo de los seis. Mismo fenómeno en el caso f). O sea: para comparar\n');
-fprintf('aproximaciones de magnitudes distintas hay que mirar el error RELATIVO;\n');
-fprintf('el absoluto solo tiene sentido cuando las unidades son comparables.\n');
-fprintf('Para un mismo problema, en cambio, el error relativo siempre es el\n');
-fprintf('absoluto dividido por una constante, asi que dan la misma informacion.\n');
-
-fprintf('\nTodos los casos salen de truncar o redondear el valor exacto, asi que\n');
-fprintf('el error absoluto no supera la mitad de la ultima cifra escrita. En los\n');
-fprintf('casos a) a d) se ve ademas que el error relativo crece a medida que baja\n');
-fprintf('la cantidad de cifras, que es la forma cuantitativa de "menos cifras,\n');
-fprintf('menos exactitud": 22/7 conserva nueve cifras y es mucho mejor que\n');
-fprintf('3.1416, que solo conserva cinco.\n');
+fprintf('\n--- Resumen ---\n');
+fprintf('El error relativo es la métrica adecuada para comparar aproximaciones\n');
+fprintf('de distinta magnitud. A menor cantidad de cifras significativas, mayor error relativo.\n');
