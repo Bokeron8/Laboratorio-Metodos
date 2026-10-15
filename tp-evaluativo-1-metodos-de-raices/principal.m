@@ -100,13 +100,13 @@ endwhile
 % Llamada al metodo elegido: los 3 devuelven (raiz, iteraciones, flag de convergencia).
 switch (opcion)
   case 1 % punto fijo: itera x = g(x)
-    [x_raiz, iter, convergio] = iteracion(G, x0, tol);
+    [x_raiz, iter, convergio] = iteracion(G, F, x0, tol);
     nombre = "Punto fijo";
   case 2 % Newton: itera con F y su derivada aproximada
     [x_raiz, iter, convergio] = newton_raphson(F, x0, tol);
     nombre = "Newton-Raphson";
   case 3 % Aitken: acelera la iteracion x = g(x)
-    [x_raiz, iter, convergio] = aceleracion(G, x0, tol);
+    [x_raiz, iter, convergio] = aceleracion(G, F, x0, tol);
     nombre = "Aitken";
   otherwise
     disp("Opcion invalida");

@@ -8,16 +8,12 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
   %   x_raiz    - aproximacion de la raiz
   %   iter      - cantidad de iteraciones realizadas
   %   convergio - false si la derivada se anula (no se puede continuar)
-  % Ejemplo:
-  %   F = @(x) x.^2 - 2;
-  %   [x, it, ok] = newton_raphson(F, 1, 1e-4);
 
-  % Validacion de tipos: F handle, x0 escalar finito, tol positiva.
   if (nargin != 3)
     error("newton_raphson: se requieren 3 argumentos (F, x0, tol)");
   endif
   if (!isa(F, "function_handle"))
-    error("newton_raphson: F debe ser un function_handle, ej: @(x) x.^2 - 2");
+    error("newton_raphson: F debe ser un function_handle");
   endif
   if (!isnumeric(x0) || !isscalar(x0) || !isfinite(x0))
     error("newton_raphson: x0 debe ser un numero escalar");
@@ -26,17 +22,13 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     error("newton_raphson: tol debe ser un numero positivo");
   endif
 
-  % Paso para aproximar la derivada primera por diferencia central.
   h = 1e-4;
-
-  % Primera derivada aproximada (Diferencia central).
   dF = @(x) (F(x + h) - F(x - h)) / (2 * h);
+  d2F = @(x) (F(x + h) - 2 * F(x) + F(x - h)) / (h ^ 2);
 
-  % Inicializacion: se parte de x0.
   x_act = x0;
   iter = 0;
-
-  % Chequeo inicial: si la derivada se anula en x0 no se puede avanzar.
+  
   if (dF(x_act) == 0)
     disp("Derivada nula en x0, el metodo no puede continuar");
     convergio = false;
@@ -44,14 +36,16 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     return;
   endif
 
-  % Bucle principal: en cada paso se calcula x_sig una sola vez
-  % y se frena cuando dos aproximaciones sucesivas difieran menos que tol.
+  fprintf('\n--- Tabla de Iteraciones (Newton-Raphson) ---\n');
+  fprintf('%-6s %-22s %-14s %-14s %-14s\n', 'Iter', 'Fourier F(x)*F''(x)', 'x', 'f(x)', 'Error');
+  fprintf('%-6d %-22.4e %-14.4f %-14.4f %-14s\n', 0, F(x0) * d2F(x0), x0, F(x0), '-');
+
   error_k = 1;
   while (error_k > tol)
     fx = F(x_act);
     dfx = dF(x_act);
+    d2fx = d2F(x_act);
 
-    % Si la derivada se anula a mitad de camino, se sale sin romper todo.
     if (dfx == 0)
       disp("Derivada nula durante la iteracion, el metodo se detiene");
       convergio = false;
@@ -59,15 +53,17 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
       return;
     endif
 
-    x_sig = x_act - (fx / dfx); % paso de Newton-Raphson
-    error_k = abs(x_sig - x_act); % medida del avance
-    x_act = x_sig; % se avanza al siguiente punto
+    x_sig = x_act - (fx / dfx);
+    error_k = abs(x_sig - x_act);
+    cond_k = fx * d2fx; % Condicion de Fourier F(x)*F''(x)
+    fx_sig = F(x_sig);
+
     iter++;
+    fprintf('%-6d %-22.4e %-14.4f %-14.4f %-14.4e\n', iter, cond_k, x_sig, fx_sig, error_k);
+
+    x_act = x_sig;
   endwhile
 
-  % Resultado: el ultimo x_act es la raiz aproximada y se marca como convergido.
-  % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
-  % El que llama decide si mostrar o graficar (ver principal.m).
   x_raiz = x_act;
   convergio = true;
 endfunction
