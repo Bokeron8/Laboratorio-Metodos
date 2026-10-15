@@ -97,7 +97,8 @@ while (true)
   disp('La tolerancia debe ser un numero positivo');
 endwhile
 
-% Llamada al metodo elegido: los 3 devuelven (raiz, iteraciones, flag de convergencia).
+% Llamada al metodo elegido con medicion de tiempo.
+tic;
 switch (opcion)
   case 1 % punto fijo: itera x = g(x)
     [x_raiz, iter, convergio] = iteracion(G, F, x0, tol);
@@ -112,6 +113,7 @@ switch (opcion)
     disp("Opcion invalida");
     return;
 endswitch
+tiempo = toc;
 
 if (!convergio)
   printf("%s no converge para ese x0\n", nombre);
@@ -121,6 +123,7 @@ endif
 % Muestra del resultado en consola.
 printf("\n>>> %s: raiz aproximada: %.4f\n", nombre, x_raiz);
 printf(">>> Cantidad de iteraciones: %d\n", iter);
+printf(">>> Tiempo de ejecucion: %.6f segundos\n", tiempo);
 
 % Grafico unico: la funcion original F(x) contra y = 0, con la raiz marcada.
 % Vale para los 3 metodos porque los 3 devuelven la raiz de F(x) = 0.
