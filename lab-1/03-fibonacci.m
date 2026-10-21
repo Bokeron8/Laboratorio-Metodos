@@ -1,23 +1,14 @@
 % 03-fibonacci.m - Ejercicio 3 de la Guía 1: los N primeros términos de Fibonacci.
 %
-% Problema: obtener los N primeros números de la sucesión de Fibonacci, con la
-% recurrencia
-%   F(1) = 0,  F(2) = 1,  F(n) = F(n-1) + F(n-2)   para n > 2.
+% Problema: obtener los N primeros números de la sucesión, con la recurrencia
+%   F(1) = 0,  F(2) = 1,  F(n) = F(n-1) + F(n-2)   para n > 2,
+% y probarlo con N = 200.
 %
-% Estructura del problema:
-%   a) Calcular los N primeros términos.
-%   b) Probar con N = 200.
+% La recursión ingenua cuesta O(phi^n) con phi = (1 + sqrt(5))/2, así que para
+% n = 200 no termina. Por eso fibonacci.m calcula de forma iterativa y memoriza:
+% cada término se resuelve una sola vez.
 %
-% Modelo matemático: sucesión recursiva lineal. El algoritmo tiene dos versiones
-% posibles y la diferencia de complejidad es brutal:
-%   - Recursión ingenua: T(n) = T(n-1) + T(n-2) + O(1), que resuelve a
-%     T(n) = O(phi^n) con phi = (1 + sqrt(5))/2 ≈ 1.618. El número de llamadas
-%     crece exponencialmente.
-%   - Versión iterativa con memorización: cada término se calcula una sola vez,
-%     de modo que T(n) = O(n).
-% El problema pide N = 200, así que solo la versión lineal es viable.
-%
-% El algoritmo vive en fibonacci.m. Este script solo lo invoca.
+% El algoritmo vive en fibonacci.m; este script lo invoca término a término.
 
 clc;
 
@@ -49,9 +40,8 @@ endif
 fprintf('\n--- a) Cálculo de los primeros N = %d términos ---\n', N);
 
 % ----------------------------------------------------------------------
-% b) Barrido de los N primeros términos
+% b) Cálculo de los N términos
 % ----------------------------------------------------------------------
-% Se mide el tiempo porque se requiere evaluar el costo del proceso.
 tic;
 terminos = zeros(1, N);
 for i = 1:N
@@ -62,8 +52,7 @@ tiempo = toc;
 % ----------------------------------------------------------------------
 % Los términos calculados
 % ----------------------------------------------------------------------
-% Con N grande no tiene sentido imprimir 200 filas: se muestran los primeros
-% términos y los últimos cinco, que son los que crecen.
+% Con N grande no se imprimen 200 filas: van los primeros términos y los últimos cinco.
 fprintf('\nPrimeros términos de la sucesión: ');
 fprintf('%d ', terminos(1:min(10, N)));
 fprintf('\n');

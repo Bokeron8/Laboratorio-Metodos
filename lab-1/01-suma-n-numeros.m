@@ -3,22 +3,11 @@
 % Problema: dado N números positivos X1, X2, ..., XN, hallar
 %   S = X1 + X2 + ... + XN.
 %
-% Estructura del problema:
-%   a) Probar con N comprendido en el rango de representación de enteros
-%      de 0 a 255.
-%   b) Luego repetir la prueba con N = 10000 y comparar los tiempos.
+% Se prueba con N dentro del rango de enteros de 0 a 255 y después con
+% N = 10000, para comparar los tiempos.
 %
-% Modelo matemático: el acumulado es una suma que crece de a un término por
-% iteración, así que el número de operaciones crece linealmente con N: el
-% algoritmo es de clase O(N). No se puede obtener la suma con menos de N
-% adiciones, porque cada dato tiene que recorrerse una vez.
-%
-% Sobre los datos: el enunciado dice "dado N números positivos", y la versión
-% original de este ejercicio los pedía uno por uno por teclado. Acá se generan
-% con una secuencia determinista para que el script se pueda ejecutar no
-% interactivo y el tiempo sea reproducible entre corridas. Reemplazando la
-% línea marcada abajo por "x = input(...)" se recupera el comportamiento
-% interactivo original.
+% El acumulado crece de a un término por iteración, así que el algoritmo es
+% O(N): cada dato se recorre una sola vez.
 
 clc;
 
@@ -26,8 +15,8 @@ clc;
 % Generador de los datos del problema
 % ----------------------------------------------------------------------
 % Secuencia determinista de enteros positivos: (i * 7919) mod 1000 + 1.
-% No usa el estado del generador aleatorio, de modo que la suma es siempre la
-% misma y el tiempo de ejecución depende solo de N.
+% No usa el generador aleatorio, así que la suma es siempre la misma y el tiempo
+% depende solo de N.
 generar_valor = @(i) mod(i * 7919, 1000) + 1;
 
 fprintf('\n========================================================\n');

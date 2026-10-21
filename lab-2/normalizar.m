@@ -1,24 +1,18 @@
 function [exponente, resultado] = normalizar(numero)
-  % NORMALIZAR - Lleva un numero a la forma normalizada d1.d2d3... x 10^exponente.
+  % NORMALIZAR - Lleva un número a la forma normalizada 0.d1d2d3... x 10^exponente.
   % Entradas:
   %   numero - valor a normalizar
   % Salidas:
-  %   exponente  - exponente decimal del numero
-  %   resultado  - mantisa normalizada, con el valor absoluto en el intervalo
-  %                 [0.1, 1)
+  %   exponente - exponente decimal del número
+  %   resultado - mantisa normalizada, con el valor absoluto en [0.1, 1)
   % Relación:
   %   numero = resultado * 10^exponente
   %
   % Ejemplo: normalizar(133.921) devuelve exponente = 3 y resultado = 0.133921.
+  % El cero no se puede escribir como mantisa: devuelve exponente = 0 y
+  % resultado = 0.
   %
-  % El enunciado de la Guía 2 distingue dos cosas que suelen confundirse:
-  %   - Trabajar con valores NORMALIZADOS (lo piden los ejercicios 2 y 4).
-  %   - Trabajar SIN NORMALIZARLOS (lo pide el ejercicio 5).
-  % Esta función es la que permite distinguir ambas cosas. Ver tambien
-  % redondear_n.m y truncar_n.m, que operan sin normalizar.
-  %
-  % El cero es un caso particular: no se puede escribir como mantisa de tres
-  % dígitos, así que se devuelve exponente = 0 y resultado = 0.
+  % truncar_n.m y redondear_n.m operan sin pasar por acá.
 
   if (nargin != 1)
     error("normalizar: se requiere exactamente 1 argumento (numero)");
@@ -30,7 +24,7 @@ function [exponente, resultado] = normalizar(numero)
   exponente = 0;
   resultado = 0;
 
-  % El cero no se puede normalizar; se devuelve tal cual.
+  % El cero no se puede normalizar.
   if (numero == 0)
     return;
   endif

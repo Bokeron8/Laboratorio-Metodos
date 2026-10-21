@@ -1,19 +1,13 @@
 function error_abs = error_absoluto(valor_exacto, valor_calculado)
-  % ERROR_ABSOLUTO - Error absoluto de una aproximacion.
+  % ERROR_ABSOLUTO - Error absoluto de una aproximación.
   % Entradas:
   %   valor_exacto    - valor de referencia p
-  %   valor_calculado - aproximacion p*
+  %   valor_calculado - aproximación p*
   % Salidas:
   %   error_abs - |p - p*|
   %
-  % El error absoluto mide la distancia entre el valor verdadero y el
-  % calculado, en las mismas unidades del problema. Como es una distancia, nunca
-  % es negativo: por eso se devuelve el valor absoluto de la diferencia y no la
-  % diferencia con signo.
-  %
-  % Ojo con la division por el valor exacto: si el valor de referencia es cero,
-% el error relativo no esta definido. Eso se resuelve en error_relativo.m, que
-% avisa en lugar de devolver Inf silencioso.
+  % Es una distancia, así que nunca es negativa, y se mide en las mismas
+  % unidades del problema.
 
   if (nargin != 2)
     error("error_absoluto: se requieren exactamente 2 argumentos (valor_exacto, valor_calculado)");

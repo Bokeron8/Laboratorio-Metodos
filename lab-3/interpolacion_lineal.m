@@ -12,10 +12,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
   %   raiz  - última intersección con el eje x calculada
   %   iter  - cantidad de iteraciones realizadas
   %   tabla - matriz Nx4 con [iter, a, b, c] por iteración, para mostrar el avance
-  % Nota: si f es muy curva en un extremo, la cuerda queda casi paralela al eje y
-  % un extremo se queda pegado sin avanzar.
-  % Converge MÁS RÁPIDO que bisección si f es suave, pero puede ser LENTA si f es
-  % convexa de forma extrema. Por eso se usa |c_n - c_(n-1)| y no (b-a)/2 como error.
+  % Suele converger más rápido que la bisección, pero si f es muy curva un extremo
+  % se queda pegado; por eso el error se mide como |c_n - c_(n-1)| y no como (b-a)/2.
 
   if (nargin < 4)
     error("interpolacion_lineal: se requieren al menos 4 argumentos (f, a, b, tol)");
@@ -44,9 +42,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
     f_a = f(a);
     f_b = f(b);
 
-    % Intersección de la cuerda con el eje x. La forma a - f(a)*(b-a)/(f(b)-f(a))
-    % es equivalente a la del enunciado pero evita pérdida de precisión cuando
-    % f(a) y f(b) son grandes y b-a chico.
+    % c = a - f(a)*(b-a)/(f(b)-f(a)): la misma cuerda, pero sin cancelar
+    % cuando f(a) y f(b) son grandes y b - a es chico.
     raiz = a - f_a * (b - a) / (f_b - f_a);
     f_raiz = f(raiz);
 

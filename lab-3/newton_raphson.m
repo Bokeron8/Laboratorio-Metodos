@@ -3,16 +3,14 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
   % Entradas:
   %   F   - funcion a la que se le busca la raiz, ej: @(x) x.^2 - 2
   %   x0  - valor inicial (elegir segun Fourier: F(x0)*F''(x0) > 0)
-  %   tol - tolerancia de parada, se frena cuando |x_sig - x_act| < tol
+  %   tol - tolerancia de parada: se frena cuando |x_sig - x_act| < tol
   % Salidas:
   %   x_raiz    - aproximacion de la raiz
   %   iter      - cantidad de iteraciones realizadas
   %   convergio - false si la derivada se anula (no se puede continuar)
   % Ejemplo:
-  %   F = @(x) x.^2 - 2;
-  %   [x, it, ok] = newton_raphson(F, 1, 1e-4);
+  %   F = @(x) x.^2 - 2;  [x, it, ok] = newton_raphson(F, 1, 1e-4);
 
-  % Validacion de tipos: F handle, x0 escalar finito, tol positiva.
   if (nargin != 3)
     error("newton_raphson: se requieren 3 argumentos (F, x0, tol)");
   endif
@@ -26,13 +24,11 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     error("newton_raphson: tol debe ser un numero positivo");
   endif
 
-  % Paso para aproximar la derivada primera por diferencia central.
+  % F'(x) se aproxima por diferencia central, con paso h.
   h = 1e-4;
 
-  % Primera derivada aproximada (Diferencia central).
   dF = @(x) (F(x + h) - F(x - h)) / (2 * h);
 
-  % Inicializacion: se parte de x0.
   x_act = x0;
   iter = 0;
 
@@ -44,8 +40,7 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     return;
   endif
 
-  % Bucle principal: en cada paso se calcula x_sig una sola vez
-  % y se frena cuando dos aproximaciones sucesivas difieran menos que tol.
+  % error_k arranca en 1 para entrar al bucle y se actualiza con |x_sig - x_act|.
   error_k = 1;
   while (error_k > tol)
     fx = F(x_act);
@@ -65,9 +60,6 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     iter++;
   endwhile
 
-  % Resultado: el ultimo x_act es la raiz aproximada y se marca como convergido.
-  % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
-  % El que llama decide si mostrar o graficar (ver 02-punto-equilibrio-impresoras.m).
   x_raiz = x_act;
   convergio = true;
 endfunction

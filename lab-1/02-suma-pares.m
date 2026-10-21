@@ -1,24 +1,13 @@
 % 02-suma-pares.m - Ejercicio 2 de la Guía 1: suma de los valores pares.
 %
 % Problema: dados 200 números positivos X1, X2, ..., X200, hallar la suma de
-% todos los valores pares de la sucesión.
+% todos los valores pares de la sucesión y reportar el tiempo de ejecución.
 %
-% Estructura del problema:
-%   a) Recorrer los 200 valores y acumular solo los que son pares.
-%   b) Reportar la suma y el tiempo de ejecución.
+% El predicado de pertenencia es mod(Xi, 2) == 0. Una sola pasada, con una
+% comparación y una posible adición por dato: O(N).
 %
-% Modelo matemático: S = sum sobre { i : Xi par } de Xi. El predicado de
-% pertenencia es "mod(Xi, 2) == 0", es decir, divisible por 2. El algoritmo es
-% de clase O(N): una sola pasada, con una comparación y una posible adición por
-% dato. Igual que en el ejercicio 1, no hay forma de evitar recorrer los datos.
-%
-% Corrección respecto de la versión original: el enunciado dice 200 números y el
-% código anterior tenía N = 5 hardcodeado, de modo que no resolvía lo pedido.
-%
-% Sobre los datos: la versión original los pedía por teclado. Acá se generan con
-% una secuencia determinista para poder ejecutar el script no interactivo y que
-% el tiempo sea reproducible. La línea marcada se puede reemplazar por
-% "x = input(...)" para el modo interactivo.
+% Los datos se generan con una secuencia determinista, no aleatoria, para que la
+% suma y el tiempo sean reproducibles entre corridas.
 
 clc;
 
@@ -31,7 +20,6 @@ generar_valor = @(i) mod(i * 7919, 1000) + 1;
 % ----------------------------------------------------------------------
 % Datos del problema
 % ----------------------------------------------------------------------
-% Se fija la cantidad de datos en 200.
 N = 200;
 
 fprintf('\n========================================================\n');
@@ -52,8 +40,6 @@ for i = 1:N
   % Reemplazar por "x = input('Ingrese el valor a sumar: ')" para el modo interactivo.
   x = generar_valor(i);
 
-  % Un valor es par si es divisible por 2. El enunciado pide sumar los positivos,
-  % así que además se descarta cualquier valor no positivo.
   if (x > 0 && mod(x, 2) == 0)
     total = total + x;
     cantidad_pares = cantidad_pares + 1;
@@ -69,8 +55,7 @@ fprintf('Tiempo de ejecución: %.6f s (tic/toc), %.6f s de CPU (cputime)\n', tie
 % ----------------------------------------------------------------------
 % Verificación
 % ----------------------------------------------------------------------
-% Se recalcula la suma con una expresión vectorizada, que no usa el mismo
-% recorrido que el lazo. Si ambos caminos coinciden, el lazo está bien.
+% Contraste: la misma suma se recalcula vectorizada, sin recorrer el lazo.
 valores = generar_valor(1:N);
 total_verificado = sum(valores(mod(valores, 2) == 0));
 

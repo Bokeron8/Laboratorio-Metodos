@@ -1,34 +1,23 @@
 % 02-aritmetica-redondeo.m - Ejercicio 2 de la Guía 2: aritmética de redondeo.
 %
-% Problema: usando aritmética con redondeo a tres dígitos, realizar los cinco
-% cálculos que siguen. Considerando como valor exacto el resultado con cinco
-% dígitos decimales, obtener el error absoluto y el error relativo. Trabajar
-% con los valores NORMALIZADOS.
+% Se redondean a tres dígitos significativos los operandos de cada cálculo, se
+% opera y se redondea otra vez el resultado. Los valores se normalizan antes de
+% redondear.
 %
-% Estructura del problema:
-%   a) 133 + 0.921
-%   b) 133 - 0.499
+%   a) 133 + 0.921        b) 133 - 0.499
 %   c) (121 - 119) - 0.327
 %   d) (121 - 0.327) - 119
 %   e) (2/9) * (9/7)
 %
-% Modelo matemático: en cada caso se redondea a tres dígitos significativos
-% CADA operando, se efectúa la operación, y el resultado se redondea otra vez a
-% tres dígitos. El redondeo no es distributivo con la resta: redondear los
-% operandos por separado y redondear el resultado no da lo mismo que redondear
-% solo el resultado. Por eso los casos c) y d) tienen exactamente los mismos
-% números escritos y dan resultados muy distintos, y esa es la observación
-% central del ejercicio.
-%
-% El redondeo vive en redondear.m y depende de normalizar.m, porque se pide
-% error_absoluto.m y error_relativo.m.
+% El redondeo no es distributivo con la resta: redondear los operandos por
+% separado no da lo mismo que redondear solo el resultado. Por eso c) y d) usan
+% los mismos números y dan resultados muy distintos.
 
 clc;
 
 % ----------------------------------------------------------------------
 % Datos del problema
 % ----------------------------------------------------------------------
-% Cantidad de dígitos a los que se redondea.
 digitos = 3;
 
 % Valor exacto de referencia: el resultado con cinco dígitos decimales.
@@ -53,9 +42,6 @@ fprintf('resultado        = %.10g\n', a);
 % ----------------------------------------------------------------------
 % b) 133 - 0.499
 % ----------------------------------------------------------------------
-% Nota: la versión anterior de este script usaba 0.501 como operando y
-% 132.499 como valor exacto, que es internamente consistente pero NO es lo que
-% pide el enunciado, que dice 133 - 0.499. Acá se sigue el enunciado.
 fprintf('\n--- b) 133 - 0.499 ---\n');
 b_operandos = redondear(133) - redondear(0.499);
 b = redondear(b_operandos);

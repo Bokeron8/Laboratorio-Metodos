@@ -2,23 +2,13 @@
 %
 % Problema: calcular e como suma de la serie
 %   e = 1 + 1/1! + 1/2! + 1/3! + ... + 1/N!
-% con N entero positivo, y observar que la precisión mejora cuanto mayor es N.
+% con N entero positivo, y observar cómo mejora la precisión al crecer N.
 %
-% Modelo matemático: es el desarrollo de Taylor de e^x en el origen evaluado
-% en x = 1. El algoritmo es de clase O(N): un acumulado por iteración, con un
-% factorial por término, calculado con la función factorial de Octave.
+% Es el desarrollo de Taylor de e^x en el origen evaluado en x = 1. O(N): un
+% acumulado por iteración.
 %
-% Sobre el factorial: para N grande, factorial(N) se desborda a Inf. Eso NO
-% arruina el resultado, porque 1/Inf vale exactamente 0 y los términos con N
-% mayor a 170 están muy por debajo de la precisión de un double, así que
-% sumarles cero es lo correcto. Se comprobó que reemplazar 1/factorial(i) por
-% un término iterativo t = t/i da un resultado idéntico para N = 20, 50, 170,
-% 171, 200 y 250, de modo que se conserva la expresión original.
-%
-% Estructura del problema:
-%   a) Calcular la serie con un N ingresado por el usuario.
-%   b) Comparar contra el valor exacto exp(1) y reportar el error.
-%   c) Probar con distintas cantidades de sumandos y sacar conclusiones.
+% A partir de N = 171, factorial(N) desborda a Inf y el término 1/Inf vale 0:
+% esos términos ya están por debajo de la precisión de un double.
 
 clc;
 
@@ -57,7 +47,6 @@ for i = 1:N
 endfor
 tiempo = toc;
 
-% El valor exacto contra el que se mide el error.
 exacto = exp(1);
 
 fprintf('Resultado de la serie = %s\n', sprintf('%.16f', total));
@@ -69,8 +58,6 @@ fprintf('Tiempo de ejecución: %.6f s\n', tiempo);
 % ----------------------------------------------------------------------
 % b) Barrido de distintas cantidades de sumandos
 % ----------------------------------------------------------------------
-% El enunciado pide probar con diferentes cantidades de sumandos. El barrido
-% muestra cómo el error decrece a medida que crece N.
 fprintf('\n--- b) Comportamiento según la cantidad de sumandos ---\n');
 fprintf('%-10s %-22s %-14s %s\n', 'N', 'e por la serie', 'Error abs.', 'Error rel.');
 

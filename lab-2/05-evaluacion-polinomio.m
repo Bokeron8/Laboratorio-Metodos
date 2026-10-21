@@ -1,33 +1,16 @@
 % 05-evaluacion-polinomio.m - Ejercicio 5 de la Guía 2: evaluación de un polinomio.
 %
-% Problema: evaluar
-%   f(x) = x^3 - 6x^2 + 3x - 0.149
-% en x = 4.71, usando aritmética de tres dígitos, registrando los valores en
-% una tabla SIN NORMALIZARLOS, y calcular el error absoluto y el relativo.
-% Luego reescribir la fórmula en forma anidada, recalcular los errores,
-% analizar cómo crecen o disminuyen y emitir conclusión.
+% Se evalúa f(x) = x^3 - 6x^2 + 3x - 0.149 en x = 4.71 con aritmética de tres
+% dígitos significativos, primero en forma directa y después en forma anidada
+% x(x(x - 6) + 3) - 0.149, comparando los errores.
 %
-% Estructura del problema:
-%   5.a) La tabla de tres filas (exacto / truncado / redondeado) con las
-%        columnas x, x^2, x^3, 6x^2, 3x, f(x), error absoluto, error relativo.
-%   5.b) La misma evaluación con la forma anidada x(x(x - 6) + 3) - 0.149.
+% "Tres dígitos" son tres dígitos significativos. El valor exacto de referencia
+% es f(4.71) = 104.487111 - 133.1046 + 14.13 - 0.149 = -14.636489, y es negativo:
+% el error relativo usa el valor absoluto del denominador, así que sale positivo.
 %
-% Modelo matemático: "tres dígitos" son tres dígitos SIGNIFICATIVOS. El
-% resultado exacto de referencia es
-%   f(4.71) = 104.487111 - 133.1046 + 14.13 - 0.149 = -14.636489
-%
-% Por qué truncar_n y redondear_n, y no truncar y redondear
-% -------------------------------------------------------
-% El enunciado dice explícitamente "sin normalizarlos". El punto 5.a usa por
-% lo tanto truncar_n.m y redondear_n.m, que operan sobre la mantisa y no
-% normalizan, y NO truncar.m y redondear.m, que sí normalizan. Son operaciones
-% distintas y confundirlas fue el error que existía en la versión anterior de
-% este ejercicio.
-%
-% Ojo también con el signo: f(4.71) es NEGATIVO. El error relativo se calcula
-% con el valor absoluto del denominador, así que sale positivo; la versión
-% anterior dividía por el valor con signo y obtenía un error relativo negativo,
-% lo que no tiene sentido.
+% El punto 5.a pide trabajar "sin normalizar", por eso usa truncar_n.m y
+% redondear_n.m, que operan sobre la mantisa sin renormalizar el resultado.
+% truncar.m y redondear.m normalizan y corresponden a los ejercicios 2 a 4.
 
 clc;
 
@@ -64,8 +47,8 @@ fprintf('  3x    = %.10g\n', ex_3x);
 fprintf('  f(x)  = %.10g\n', ex_f);
 
 % --- Fila truncada ---
-% Se trunca a tres dígitos significativos CADA resultado intermedio, que es lo
-% que significa hacer la cuenta con aritmética de tres dígitos.
+% Se trunca a tres dígitos significativos cada resultado intermedio, que es lo
+% que significa operar con aritmética de tres dígitos.
 tr_x = truncar_n(x, digitos);
 tr_x2 = truncar_n(tr_x * tr_x, digitos);
 tr_x3 = truncar_n(tr_x2 * tr_x, digitos);
@@ -106,8 +89,7 @@ fprintf('\nTabla de 5.a:\n\n');
 fprintf('%-22s %-9s %-9s %-9s %-8s %-7s %-10s %-12s %s\n', ...
         'Método / Caso', 'x', 'x^2', 'x^3', '6x^2', '3x', 'f(x)', 'Error abs.', 'Error rel.');
 
-% Una fila por caso, con las nueve columnas de la tabla requerida.
-% La primera columna va aparte porque es texto.
+% Una fila por caso; la primera columna es texto.
 etiquetas_filas = {'Exacto', 'Tres dígitos (truncados)', 'Tres dígitos (redondeados)'};
 tabla = [ x,    ex_x2, ex_x3, ex_6x2, ex_3x, ex_f, 0, 0;
           tr_x, tr_x2, tr_x3, tr_6x2, tr_3x, tr_f, ...
@@ -181,7 +163,6 @@ fprintf('%-22s %-12.4e %-12.4e %s\n', 'Redondeado, forma anidada', ...
         err_abs_redond_anidada, error_relativo(ex_f, anr_f), ...
         sprintf('x%.4f', err_abs_redond_directa / max(err_abs_redond_anidada, eps)));
 
-% ----------------------------------------------------------------------
 % ----------------------------------------------------------------------
 % Resumen
 % ----------------------------------------------------------------------

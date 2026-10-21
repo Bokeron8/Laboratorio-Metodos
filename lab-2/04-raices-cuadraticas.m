@@ -1,52 +1,18 @@
 % 04-raices-cuadraticas.m - Ejercicio 4 de la Guía 2: raíces de una cuadrática.
 %
-% Problema: las raíces de ax^2 + bx + c = 0 son
-%   x1 = (-b + sqrt(b^2 - 4ac)) / (2a)
-%   x2 = (-b - sqrt(b^2 - 4ac)) / (2a)
-% Considerando x^2 + 62.10x + 1 = 0, y sabiendo que los valores de referencia
-% son x1 = -0.01610723 y x2 = -62.08390:
+% Para x^2 + 62.10x + 1 = 0, con referencias x1 = -0.01610723 y
+% x2 = -62.08390, se calculan las raíces con la fórmula directa
+%   x1 = (-b + sqrt(Delta)) / (2a),  x2 = (-b - sqrt(Delta)) / (2a)
+% redondeando a cuatro dígitos, y luego con el numerador racionalizado
+%   x1 = 2c / (-b - sqrt(Delta)),  x2 = 2c / (-b + sqrt(Delta)).
 %
-% Estructura del problema:
-%   a) Calcular x1 y x2 con redondeo a cuatro dígitos, normalizando los valores
-%      con que se trabaja. Calcular los errores absolutos y relativos.
-%   b) Racionalizar el numerador de la fórmula para obtener una forma
-%      alternativa más precisa de x1, y obtener también una forma alternativa
-%      de x2. Comparar los errores de las nuevas aproximaciones.
+% Delta = b^2 - 4ac = 3852.41 y sqrt(Delta) = 62.0677855... El numerador de x1
+% es -b + sqrt(Delta) = -0.0322: una resta de números casi iguales que destruye
+% cifras significativas. Racionalizar traslada esa cancelación al denominador de
+% x2, así que cada forma es buena para una raíz y mala para la otra.
 %
-% Modelo matemático: Delta = b^2 - 4ac = 62.10^2 - 4 = 3852.41, y
-% sqrt(Delta) = 62.0677855... El detalle que hace interesante el ejercicio es que
-% las dos raíces son de magnitud muy distinta: una es casi cero y la otra es
-% casi -62.10.
-%
-% En la fórmula directa, el numerador de x1 es -b + sqrt(Delta) = -62.1 + 62.0678
-% = -0.0322: es una resta de dos números casi iguales, o sea una resta
-% catastrófica. Se restan cuatro dígitos para obtener un número de un solo
-% dígito, y quedan pocos dígitos correctos. En cambio el numerador de x2 es
-% -b - sqrt(Delta) = -124.17: es una suma de magnitudes, sin cancelación.
-%
-% Racionalizando el numerador:
-%   x1 = (-b + sqrt(Delta)) / (2a)
-% Se multiplica numerador y denominador por el conjugado (-b - sqrt(Delta)):
-%   x1 = [(-b + sqrt(Delta))(-b - sqrt(Delta))] / [2a(-b - sqrt(Delta))]
-%      = [b^2 - Delta] / [2a(-b - sqrt(Delta))]
-%      = [4ac] / [2a(-b - sqrt(Delta))]
-%      = 2c / (-b - sqrt(Delta))
-% y, simétricamente para la otra raíz:
-%   x2 = 2c / (-b + sqrt(Delta))
-%
-% O sea: la resta catastrófica que estaba en el NUMERADOR de x1 se muda al
-% DENOMINADOR de x2. La cancelación no se elimina, se cambia de lado. Por eso la
-% forma racionalizada es la buena para x1 y la mala para x2, exactamente al
-% revés que la forma directa. Ninguna de las dos formas sirve para las dos
-% raíces.
-%
-% Corrección respecto de la versión anterior: el código escribía
-% "redondear(paso6/2*a)". En Octave / y * tienen la MISMA prioridad y se
-% evalúan de izquierda a derecha, así que eso es (paso6/2)*a y no
-% paso6/(2*a). Con a = 1 el error no se nota, pero con a = 3 daría 15 en lugar
-% de 1.667. Se escribe siempre paso6/(2*a), con el paréntesis explícito.
-%
-% El redondeo vive en redondear.m y depende de normalizar.m.
+% La división por 2a lleva paréntesis explícito: en Octave / y * tienen la misma
+% prioridad y se evalúan de izquierda a derecha.
 
 clc;
 
@@ -157,15 +123,14 @@ fprintf('%-6s %-14.8f %-14.8f %-14.4e %.4e\n', 'x2', x2_racionalizada, referenci
 fprintf('\n--- Comparación de las dos formas ---\n\n');
 fprintf('%-6s %-18s %-18s %s\n', 'raíz', 'Error abs. directa', 'Error abs. rac.', 'Ganadora');
 
-% Se calculan los cuatro errores una vez y se reutilizan en la tabla y en las
-% conclusiones, para que los números citados no puedan desincronizarse.
+% Se calculan los cuatro errores una vez y se reutilizan en la tabla.
 err_x1_directa = error_absoluto(referencia_x1, x1_directa);
 err_x1_racionalizada = error_absoluto(referencia_x1, x1_racionalizada);
 err_x2_directa = error_absoluto(referencia_x2, x2_directa);
 err_x2_racionalizada = error_absoluto(referencia_x2, x2_racionalizada);
 
-% La ganadora es la de menor error absoluto. El texto se arma acá porque
-% Octave no permite llamar a una funcion definida mas abajo en un script.
+% La ganadora es la de menor error absoluto. El texto se arma acá porque Octave
+% no permite llamar a una función definida más abajo en un script.
 if (err_x1_racionalizada < err_x1_directa)
   ganadora_x1 = 'racionalizada';
 else

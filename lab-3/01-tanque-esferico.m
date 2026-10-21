@@ -1,22 +1,12 @@
 % 01-tanque-esferico.m - Ejercicio 1 de la Guía 3: raíces de una ecuación.
 %
-% Problema: tanque esférico de radio R = 3 m que debe contener V = 30 m^3.
-%   V = pi * h^2 * (3R - h)/3   con h = profundidad del agua en metros.
-% Se busca la profundidad h que cumple V = 30, es decir la raíz de
-%   f(h) = pi * h^2 * (3R - h)/3 - V = 0.
+% Un tanque esférico de radio R = 3 m debe contener V = 30 m^3. El volumen de
+% agua a profundidad h es
+%   V(h) = pi * h^2 * (3R - h)/3,
+% así que la profundidad buscada es la raíz de f(h) = V(h) - V = 0.
 %
-% Estructura del problema:
-%   a) Evaluación gráfica de las raíces con fplot.
-%   b) Separación de todas las raíces con el Método de Tanteo.
-%   c) Aproximación con Intervalo Medio e Interpolación Lineal, E < 0.001.
-%   d) Comparación de convergencia y tiempo de ejecución entre ambos métodos.
-%
-% Este script entrega los resultados crudos de cada método (raíz, f(raíz),
-% iteraciones y tiempo). La comparación entre ellos y las conclusiones van en
-% el informe, no acá.
-%
-% Los algoritmos viven en archivos aparte (tanteo.m, intervalo_medio.m,
-% interpolacion_lineal.m).
+% Se grafica f con fplot, se separan las raíces con Tanteo y se aproximan con
+% Intervalo Medio e Interpolación Lineal hasta E < 0.001.
 
 clc;
 
@@ -24,15 +14,13 @@ clc;
 % Datos del problema
 % ----------------------------------------------------------------------
 R = 3;   % radio del tanque en metros
-V = 30;  % volumen objetivo en metros cubicos
+V = 30;  % volumen objetivo en metros cúbicos
 
-% f(h) = volumen que hay a profundidad h, menos el volumen buscado.
-% Los operadores element-wise (.*, ./) son obligatorios: fplot evalúa vectores.
+% Los operadores .* y .^ son obligatorios: fplot evalúa f sobre vectores.
 f = @(h) pi * (h.^2) .* ((3 * R - h) / 3) - V;
 
-% Rango de búsqueda. h va de 0 (vacío) hasta 2R = 6 (lleno hasta el ecuador),
-% que es el rango donde la fórmula describe un volumen de agua real. Más allá del
-% ecuador el polinomio sigue dando valores, pero ya no son volúmenes posibles.
+% Rango de búsqueda: h va de 0 (vacío) a 2R = 6 (lleno hasta el ecuador).
+% Más allá del ecuador el polinomio sigue definido, pero ya no da volúmenes.
 h_min = 0;
 h_max = 2 * R;
 

@@ -1,51 +1,18 @@
 % 06-serie-pi.m - Ejercicio 6 de la Guía 1: la constante pi por la serie de Leibniz.
 %
-% Problema: calcular pi con n cifras exactas a partir del desarrollo en serie
+% Problema: calcular pi con n cifras exactas a partir del desarrollo
 %   pi = 4 * (1 - 1/3 + 1/5 - 1/7 + ...)
-%   - i.   Calcular la cantidad de términos necesarios para alcanzar 3 dígitos exactos.
-%   - ii.  Calcular la cantidad necesaria para 4 dígitos, y luego para 5.
-%          Comparar con el punto anterior teniendo en cuenta la convergencia y
-%          controlar los tiempos de ejecución.
+%   i.  Cantidad de términos necesarios para 3 dígitos exactos.
+%   ii. La misma cuenta para 4 y 5 dígitos, comparando el costo.
 %
-% Modelo matemático: la serie de Leibniz, que converge a velocidad 1/n. Si S_n
-% es la suma parcial de n términos, el resto está acotado por el primer término
-% omitido, así que el error absoluto de la aproximación 4*S_n satisface
-%   |pi - 4*S_n| <= 4 / (2n + 1)
-% es decir, el error decae como 1/n. Para ganar un dígito decimal hace falta
-% multiplicar n por 10. Esa es la razón de que el punto ii pida tanto tiempo de
-% cómputo y es lo que el problema requiere comparar.
+% La serie converge como 1/n: el resto queda acotado por el primer término
+% omitido, |pi - 4*S_n| <= 4/(2n + 1). Ganar un dígito decimal exige multiplicar
+% la cantidad de términos por 10.
 %
-% Criterio de "dígitos exactos"
-% -----------------------------
-% El enunciado dice "3 dígitos exactos", y la frase es ambigua: puede referirse
-% a dígitos DECIMALES (3.142...) o a CIFRAS SIGNIFICATIVAS (mantisa entera).
-% Se presentan las dos lecturas y el script dice explícitamente cuál está usando
-% en cada tabla.
-%
-% Ambas se resuelven con el mismo predicado: la aproximación coincide con el
-% valor de referencia una vez redondeada a esa precisión,
-%   redondeo(p, d) == redondeo(pi, d)
-% Para un número como pi, cuya primera cifra significativa es la de las
-% unidades, tener d decimales correctos equivale a tener d + 1 cifras
-% significativas correctas. Por eso las dos tablas salen desplazadas una
-% posición, y el script se apoya en esa equivalencia para no calcular dos veces
-% la misma cosa.
-%
-% Correcciones respecto de la versión original
-% -------------------------------------------
-% El código anterior no podía ejecutarse: el lazo "for i = 1:1:n" usaba la
-% variable n, pero la línea "n = input(...)" estaba comentada, de modo que
-% fallaba con 'n' undefined. Además la aritmética era incoherente: aplicaba
-% fix al denominador de un término pero no al del otro, de modo que la serie no
-% era la de Leibniz, y calculaba una variable valor_pi que nunca se usaba.
-%
-% Advertencia sobre los comentarios heredados
-% ------------------------------------------
-% La versión anterior anotaba a mano "3 digito 613", "4 digito 1690" y
-% "5 digitos 10800". Ninguno de esos tres números coincide con ninguna de las
-% dos lecturas, y tampoco se los puede reproducir con esta implementación. No
-% se los fuerza: abajo se reportan los valores efectivamente medidos, que son
-% los que se pueden defender.
+% El script informa el resultado con dos lecturas de "n dígitos exactos":
+%   A) n dígitos decimales: la aproximación redondeada a n decimales.
+%   B) n cifras significativas: como pi empieza en 3, equivale a n-1 decimales.
+% En ambos casos se compara contra pi redondeado a esa misma precisión.
 
 clc;
 
@@ -57,26 +24,17 @@ fprintf('Serie:  pi = 4 * (1 - 1/3 + 1/5 - 1/7 + ...)\n');
 % ----------------------------------------------------------------------
 % Búsqueda de la cantidad de términos para cada precisión
 % ----------------------------------------------------------------------
-% Se acumulan los términos una sola vez y, en cada paso, se registra en qué
-% momento se cumple por primera vez cada criterio. Es la forma más barata de
-% obtener las seis respuestas: el costo es el de la corrida más exigente, no
-% la suma de las seis.
+% La serie se acumula una sola vez y en cada paso se anota el primer n que
+% cumple cada criterio, así el costo es el de la corrida más exigente.
 %
-% Los criterios están anidados: si la aproximación coincide con pi redondeada a
-% d decimales, también coincide redondeada a d-1, porque redondear a menos
-% decimales es redondear el redondeo más fino. Por eso basta con vigilar la
-% precisión pendiente más gruesa: es la única que puede volverse verdadera, y
-% las más finas se irán registrando a continuación sin volver a evaluarlas.
+% Los criterios están anidados: coincidir con d decimales implica coincidir con
+% d-1, así que alcanza con vigilar la precisión pendiente más gruesa.
 %
-% Se cubre d = 1 a 5 decimales. Con eso alcanzan las dos lecturas: la de
-% dígitos decimales usa d = 3, 4, 5 y la de cifras significativas usa
-% d = 2, 3, 4, porque pi empieza con "3.". El máximo es 5 justamente para que
-% la búsqueda termine en el último caso pedido y no siga de más.
-% ----------------------------------------------------------------------
-% Redondeo al dígito d-ésimo decimal, sin depender de round(X, n), que no
-% existe en Octave: se escala, se redondea y se desescala. La escala y el
-% valor de referencia redondeado se precalculan una vez, fuera del lazo, para
-% que el tiempo que se mide sea el de la serie y no el de la instrumentación.
+% Se cubren d = 1 a 5 decimales, que alcanzan para las dos lecturas.
+%
+% El escalado reemplaza a round(X, n), que Octave no tiene: se multiplica por
+% 10^d, se redondea y se divide. Escalas y referencia se calculan una sola vez,
+% fuera del lazo.
 pi_referencia = pi;
 maximo_decimales = 5;
 escalas = 10 .^ (1:maximo_decimales);

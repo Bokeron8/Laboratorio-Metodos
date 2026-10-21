@@ -5,26 +5,16 @@ function resultado = fibonacci(n)
   % Salidas:
   %   resultado - valor del termino n
   %
-  % Convencion del repositorio: fibonacci(1) = 0 y fibonacci(2) = 1, es decir
-  % la sucesion es 0, 1, 1, 2, 3, 5, 8, ... (el termino 0 seria 1).
+  % Convencion: fibonacci(1) = 0 y fibonacci(2) = 1, es decir la sucesion es
+  % 0, 1, 1, 2, 3, 5, 8, ...
   %
-  % El enunciado de la Guía 1 pide los N primeros terminos con N = 200. Con la
-  % recursion ingenua esa cuenta no es viable: el numero de llamadas crece como
-  % phi^n y para n = 30 ya se demora alrededor de 8 segundos, de modo que
-  % n = 200 exigiria del orden de 5.6e41 llamadas.
+  % El calculo es iterativo y con cache persistente: cada termino se resuelve una
+  % sola vez y las consultas posteriores lo reutilizan, de modo que un barrido
+  % i = 1:N cuesta O(N). El cache se reinicia con "clear fibonacci".
   %
-  % Por eso el termino se calcula de forma iterativa y se guarda en un cache
-  % persistente: cada termino se resuelve una sola vez y las consultas
-  % posteriores reutilizan el resultado. Asi la funcion es O(n) y el barrido
-  % for i = 1:N del script 03-fibonacci.m es O(N) en total.
-  %
-  % El cache se reinicia con "clear fibonacci".
-  %
-  % Sobre la precision: los terminos son enteros exactos mientras que
-  % fibonacci(n) < 2^53 (aproximadamente n <= 78). A partir de ahi los enteros
-  % ya no son representables exactamente por un double, y el resultado es el
-  % double mas cercano al entero vrai. Esto no es una limitacion de esta
-  % implementacion sino de la aritmetica de punto flotante en general.
+  % Los terminos son enteros exactos mientras fibonacci(n) < 2^53 (n <= 78). A
+  % partir de ahi el resultado es el double mas cercano al entero: es una
+  % limitacion de la aritmetica de punto flotante, no de esta implementacion.
 
   if (nargin != 1)
     error("fibonacci: se requiere exactamente 1 argumento (n)");

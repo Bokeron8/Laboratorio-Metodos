@@ -1,6 +1,6 @@
 function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
   % INTERVALO_MEDIO - Bisección: parte el intervalo a la mitad y se queda con
-  % la mitad donde f cambia de signo. Converge siempre que haya cambio de signo.
+  % la mitad donde f cambia de signo.
   % Entradas:
   %   f        - función a la que se le busca la raíz, ej: @(x) x.^2 - 2
   %   a, b     - extremos del intervalo inicial (se pasa un valor por referencia)
@@ -9,9 +9,8 @@ function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
   % Salidas:
   %   raiz - punto medio del intervalo final, aproximación de la raíz
   %   iter - cantidad de iteraciones realizadas
-  % Nota: el método es INDEPENDIENTE de la velocidad de f, pero converge lento
-  % (~log2((b-a)/tol) iteraciones). Ese contraste con interpolación lineal es
-  % justamente lo que resulta interesante comparar.
+  % Converge siempre que haya cambio de signo, pero lento: unas log2((b-a)/tol)
+  % iteraciones, sin importar la forma de f.
 
   if (nargin < 4)
     error("intervalo_medio: se requieren al menos 4 argumentos (f, a, b, tol)");

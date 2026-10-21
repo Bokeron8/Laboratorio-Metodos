@@ -1,21 +1,10 @@
 % 02-punto-equilibrio-impresoras.m - Ejercicio 2 de la Guía 3: Newton-Raphson.
 %
-% Problema: un fabricante de impresoras tiene como utilidad total (en pesos)
+% Utilidad total de un fabricante de impresoras, en pesos:
 %   P(x) = 8x + 0.3x^2 - 0.0013x^3 - 372
-% Se pide el punto de equilibrio, es decir las raíces de
-%   F(x) = P(x) = 0.
-% Estructura del problema:
-%   a) Hallar las raíces en forma gráfica (fplot) y separarlas con Tanteo.
-%   b) Aproximar los dos puntos con Newton-Raphson y E < 1e-3, analizando antes
-%      las condiciones de convergencia en los intervalos iniciales.
-%
-% El enunciado propone los intervalos [24; 26] y [250; 252]. Tanteo los confirma.
-%
-% Este script entrega los resultados crudos (raíz, iteraciones, tiempo) y el
-% estado de cada condición de Fourier. La comparación entre intervalos y las
-% conclusiones van en el informe, no acá.
-%
-% Los algoritmos viven en tanteo.m y newton_raphson.m.
+% Los puntos de equilibrio son las raíces de P(x) = 0. Se grafican con fplot,
+% se separan con Tanteo y se aproximan con Newton-Raphson hasta E < 1e-3,
+% eligiendo x0 según las condiciones de convergencia.
 
 clc;
 
@@ -59,8 +48,7 @@ fprintf('\n--- a) Evaluación gráfica ---\n');
 fprintf('P(0) = %.2f pesos.\n', F(0));
 fprintf('P(300) = %.2f pesos.\n', F(300));
 
-% Separación de las raíces con Tanteo. El incremento se pide por teclado:
-% con uno chico se pueden separar las dos raíces en un solo barrido.
+% Separación de las raíces con Tanteo sobre el rango graficado.
 fprintf('\n--- Separación de raíces con Tanteo ---\n');
 intervalos = tanteo(F, x_min, x_max);
 
@@ -83,12 +71,10 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
   fprintf('\n============ Intervalo %d: [%.2f, %.2f] ============\n', k, a, b);
 
   % --- Condiciones de Fourier ---
-  % Son tres, y las tres tienen que cumplirse para que Newton-Raphson converja
-  % desde x0 hacia la raíz que hay dentro de [a, b]:
-  %   1. F(a)*F(b) < 0            -> la raíz está dentro del intervalo (Bolzano).
-  %   2. F'(x) != 0 en todo [a, b] -> se puede dividir por la derivada.
-  %   3. F''(x) no cambia de signo  -> la función es cóncava o convexa en el
-  %                                   intervalo, así que la raíz es simple.
+  % Se necesitan las tres para que Newton-Raphson converja hacia la raíz de [a, b]:
+  %   1. F(a)*F(b) < 0            (Bolzano: hay una raíz adentro).
+  %   2. F'(x) != 0 en [a, b]      (se puede dividir por la derivada).
+  %   3. F''(x) no cambia de signo (la raíz es simple, la tangente no oscila).
   fprintf('\nAnálisis de las condiciones de Fourier:\n');
 
   fa = F(a);
@@ -97,7 +83,7 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
           merge(fa * fb < 0, 'cambio de signo: la raíz está en el intervalo', ...
                 'SIN cambio de signo: no hay raíz garantizada'));
 
-  % F' se muestrea en el intervalo para verificar que no se anula.
+  % F' muestreada sobre el intervalo para ver si se anula.
   malla = linspace(a, b, 100);
   df_malla = dF(malla);
   derivada_nula = any(abs(df_malla) < 1e-8);
@@ -106,7 +92,7 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
           merge(derivada_nula, 'F'' SE ANULA: no se puede dividir', ...
                 'F'' no se anula: se puede dividir'));
 
-  % F'' también se muestrea para verificar que no cambia de signo.
+  % F'' muestreada para ver si cambia de signo en [a, b].
   d2f_malla = d2F(malla);
   d2f_cambio_signo = (min(d2f_malla) < 0 && max(d2f_malla) > 0);
   fprintf('  3. F''''(x) en [%.2f, %.2f]: min = %.4f, max = %.4f -> %s\n', ...
@@ -115,9 +101,8 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
                 'no cambia de signo: se cumple'));
 
   % --- Elección de x0 ---
-  % La condición de Fourier que elige dónde arrancar es F(x0)*F''(x0) > 0:
-  % se arranca en el extremo donde la función está más "hacia afuera" de la
-  % raíz, para que las tangentes no empujen la iteración al lado equivocado.
+  % Se arranca en el extremo donde F(x0)*F''(x0) > 0: ahí la tangente apunta
+  % hacia la raíz y la iteración no se escapa del intervalo.
   if (fa * d2F(a) > 0)
     x0 = a;
   else

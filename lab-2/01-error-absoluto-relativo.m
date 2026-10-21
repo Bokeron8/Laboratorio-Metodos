@@ -1,34 +1,26 @@
 % 01-error-absoluto-relativo.m - Ejercicio 1 de la Guía 2: errores de aproximación.
 %
 % Problema: calcular el error absoluto y el error relativo en seis
-% aproximaciones de p por p*.
-%
-% Estructura del problema:
-%   a) p = pi,    p* = 22/7
-%   b) p = pi,    p* = 3.1416
-%   c) p = e,     p* = 2.718
+% aproximaciones de p por p*:
+%   a) p = pi,      p* = 22/7
+%   b) p = pi,      p* = 3.1416
+%   c) p = e,       p* = 2.718
 %   d) p = raiz(2), p* = 1.414
-%   e) p = e^10,  p* = 22000
-%   f) p = 8!,    p* = 39900
+%   e) p = e^10,    p* = 22000
+%   f) p = 8!,      p* = 39900
 %
-% Modelo matemático:
-%   error absoluto  = |p - p*|
-%   error relativo  = |p - p*| / |p|
-% El absoluto mide la distancia en las unidades del problema; el relativo lo
-% divide por el propio valor, con lo que es adimensional y comparable entre
-% problemas de distinta magnitud. Esa es exactamente la diferencia que se ve en
-% los casos e) y f) del enunciado: 22000 y 39900 son aproximaciones bastante
-% relativo en términos absolutos, pero no tanto en términos relativos.
-%
-% Las dos fórmulas viven en error_absoluto.m y error_relativo.m; este script
-% arma la tabla y las conclusions.
+%   error absoluto = |p - p*|
+%   error relativo = |p - p*| / |p|
+% El absoluto mide la distancia en las unidades del problema; el relativo la
+% divide por el propio valor, así que es adimensional y comparable entre
+% problemas de distinta magnitud.
 
 clc;
 
 % ----------------------------------------------------------------------
 % Datos de los seis casos
 % ----------------------------------------------------------------------
-% Los casos se guardan en una matriz de 6x3 con [valor_exacto, aproximacion].
+% Cada fila es [valor_exacto, aproximacion].
 % El valor exacto se evalúa con la función de Octave correspondiente.
 casos = [ pi,     22 / 7;
           pi,     3.1416;
@@ -58,7 +50,6 @@ for k = 1:rows(casos)
   exacto = casos(k, 1);
   aproximado = casos(k, 2);
 
-  % Las dos llamadas van a los archivos de metodo, no a formulas sueltas aca.
   errores_absolutos(k) = error_absoluto(exacto, aproximado);
   errores_relativos(k) = error_relativo(exacto, aproximado);
 
@@ -70,9 +61,8 @@ endfor
 % ----------------------------------------------------------------------
 % Ordenamiento por error relativo
 % ----------------------------------------------------------------------
-% El enunciado pide comparar los resultados. La tabla ordena los casos de
-% peor a mejor aproximacion, que es la lectura que deja en claro que el error
-% absoluto y el relativo cuentan historias distintas.
+% Los casos se ordenan de peor a mejor error relativo: así se ve que el error
+% absoluto y el relativo no coinciden en el orden.
 fprintf('\n--- Ordenamiento por error relativo (de peor a mejor) ---\n\n');
 fprintf('%-14s %-16s %-16s\n', 'caso', 'Error absoluto', 'Error relativo');
 
