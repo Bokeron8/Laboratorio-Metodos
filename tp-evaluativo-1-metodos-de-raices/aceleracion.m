@@ -40,7 +40,7 @@ function [x_raiz, iter, convergio] = aceleracion(g, F, x0, tol)
   dg0 = abs(dg(x0));
   fprintf('\n--- Análisis de Convergencia (Aitken) ---\n');
   fprintf('  x0 = %.4f\n', x0);
-  fprintf('  |g''(x0)| = %.4f (nota: Aitken converge aun donde punto fijo simple diverge)\n', dg0);
+  fprintf('  |g''(x0)| = %.4f \n', dg0);
 
   x_act = x0;
   iter = 0;

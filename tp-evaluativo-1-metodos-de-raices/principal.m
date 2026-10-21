@@ -33,7 +33,7 @@ if (opcion == 2)
       disp("Funcion invalida, revise la sintaxis (ej: x.^2 - 2)");
     end_try_catch
   endwhile
-  G = F; % Newton trabaja directo sobre F, no hay funcion de iteracion separada
+  G = []; % Newton no usa funcion de iteracion separada
 else
   while (true)
     expr = input("Ingrese g(x) en terminos de x (ej: 200 + 40*log(400./(500-x))): ", "s");
@@ -137,7 +137,8 @@ while (true)
   disp('Rango invalido: deben ser numeros con el superior mayor que el inferior');
 endwhile
 
-hFig = figure('Name', ["Grafico de " nombre]);
+% Gráfico 1: Función original F(x) (para todos los métodos)
+hFig1 = figure('Name', ["Función F(x) - " nombre]);
 fplot(F, [x_min, x_max], 'b-', 'LineWidth', 2);
 grid on;
 hold on;
@@ -149,8 +150,24 @@ plot(x_raiz, 0, 'kx', 'MarkerSize', 8, 'LineWidth', 2);
 title(["Función original F(x) - " nombre]);
 xlabel('x');
 ylabel('F(x)');
-legend({"F(x)", "y = 0", "F(raiz)", "raiz"}, "Location", "northeast");
+legend({"F(x)", "y = 0", "F(raíz)", "raíz"}, "Location", "northeast");
 hold off;
-drawnow;
-% Se queda frenado hasta que cerras la ventana del grafico (no hace falta tocar teclas).
-waitfor(hFig);
+
+% Gráfico 2: Función de iteración g(x) (solo para Punto Fijo y Aitken)
+if (opcion != 2 && !isempty(G))
+  hFig2 = figure('Name', ["Función de iteración g(x) - " nombre]);
+  fplot(@(x) x, [x_min, x_max], 'r--', 'LineWidth', 1.5);
+  hold on;
+  grid on;
+  fplot(G, [x_min, x_max], 'b-', 'LineWidth', 2);
+  plot(x_raiz, x_raiz, 'ko', 'MarkerSize', 8, 'LineWidth', 2);
+  title(["Función de iteración g(x) - " nombre]);
+  legend({"y = x", "y = g(x)", "Punto fijo / Raíz"}, "Location", "northeast");
+  hold off;
+  drawnow;
+  waitfor(hFig1);
+  waitfor(hFig2);
+else
+  drawnow;
+  waitfor(hFig1);
+endif
