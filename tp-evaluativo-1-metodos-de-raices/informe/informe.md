@@ -66,7 +66,7 @@ la resuelve por iteración sucesiva: *x(k+1) = g(x(k))*. Para este problema, des
 La convergencia depende de la derivada de la función de iteración en el entorno del
 punto fijo. Si *|g'(x)| < 1*, la iteración converge y lo hace en forma lineal, con un
 factor de reducción del error cercano a *|g'(x)|*; si *|g'(x)| > 1*, diverge. Para este
-problema *g'(x) = 40/(500 − x)*, de modo que en *x0 = 200* resulta *|g'(200)| = 0.1333*.
+problema *g'(x) = 40/(500 − x)*, de modo que en *x0 = 200* resulta *|g'(200)| = 0.133333*.
 Al ser menor que uno, la convergencia está asegurada y el error se reduce
 aproximadamente en ese factor en cada paso: se gana algo menos de una cifra decimal por
 iteración. Esa es la razón por la que el método necesita más pasos que los otros dos.
@@ -201,27 +201,27 @@ Los datos ingresados fueron los mismos en los tres casos: *x0 = 200*, tolerancia
 {{IMG:img/pf-consola.png|Salida de consola del método de punto fijo con x0 = 200 y tolerancia 0.0001}}
 
 El método necesitó siete iteraciones para cumplir la tolerancia y llegó a
-*213.3245*. La tabla muestra el comportamiento lineal esperado: cada paso reduce el
+*213.324539*. La tabla muestra el comportamiento lineal esperado: cada paso reduce el
 error en un factor cercano a *0.13*, que es el valor de *|g'(200)|*. El error pasa de
-*11.5073* en la primera iteración a *0.0001* en la séptima.
+*11.507283* en la primera iteración a *0.000082* en la séptima.
 
 ### Newton-Raphson
 
 {{IMG:img/newton-consola.png|Salida de consola del método de Newton-Raphson con x0 = 200 y tolerancia 0.0001}}
 
-El método necesitó tres iteraciones y llegó a *213.3246*. La convergencia cuadrática se
-observa en la columna de error: *13.2776*, luego *0.0469*, luego *0.0000*. El salto de la
+El método necesitó tres iteraciones y llegó a *213.324553*. La convergencia cuadrática se
+observa en la columna de error: *13.277634*, luego *0.046918*, luego *0.000001*. El salto de la
 primera a la segunda iteración concentra la mayor parte de la corrección. El programa
 informó además que la condición de Fourier se cumple, con
-*F(x0)·F''(x0) = 0.1282*.
+*F(x0)·F''(x0) = 0.128206*.
 
 ### Aceleración de Aitken
 
 {{IMG:img/aitken-consola.png|Salida de consola de la aceleración de Aitken con x0 = 200 y tolerancia 0.0001}}
 
-El método necesitó tres iteraciones y llegó a *213.3246*, con la misma cantidad de pasos
+El método necesitó tres iteraciones y llegó a *213.324553*, con la misma cantidad de pasos
 que Newton-Raphson pero sin utilizar derivadas. La columna de error muestra el mismo
-patrón cuadrático: *13.3180*, *0.0066*, *0.0000*.
+patrón cuadrático: *13.317965*, *0.006588*, *0.000000*.
 
 ### Barrido de tolerancias
 

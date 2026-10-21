@@ -41,18 +41,18 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
   d2f0 = d2F(x0);
   cond_fourier = f0 * d2f0;
   fprintf('\n--- Análisis de Convergencia (Fourier) ---\n');
-  fprintf('  x0 = %.4f\n', x0);
-  fprintf('  F(x0) = %.4f\n', f0);
-  fprintf('  F''''(x0) = %.4f\n', d2f0);
+  fprintf('  x0 = %.6f\n', x0);
+  fprintf('  F(x0) = %.6f\n', f0);
+  fprintf('  F''''(x0) = %.6f\n', d2f0);
   if (cond_fourier > 0)
-    fprintf('  Condición F(x0) * F''''(x0) = %.4f -> Cumple (> 0): convergencia garantizada\n', cond_fourier);
+    fprintf('  Condición F(x0) * F''''(x0) = %.6f -> Cumple (> 0): convergencia garantizada\n', cond_fourier);
   else
-    fprintf('  Condición F(x0) * F''''(x0) = %.4f -> No cumple (<= 0): precaución\n', cond_fourier);
+    fprintf('  Condición F(x0) * F''''(x0) = %.6f -> No cumple (<= 0): precaución\n', cond_fourier);
   endif
 
   fprintf('\n--- Tabla de Iteraciones (Newton-Raphson) ---\n');
   fprintf('%-6s %-14s %-14s %-14s\n', 'Iter', 'x', 'f(x)', 'Error');
-  fprintf('%-6d %-14.4f %-14.4f %-14s\n', 0, x0, f0, '-');
+  fprintf('%-6d %-14.6f %-14.6f %-14s\n', 0, x0, f0, '-');
 
   error_k = 1;
   while (error_k > tol)
@@ -71,7 +71,7 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     fx_sig = F(x_sig);
 
     iter++;
-    fprintf('%-6d %-14.4f %-14.4f %-14.4f\n', iter, x_sig, fx_sig, error_k);
+    fprintf('%-6d %-14.6f %-14.6f %-14.6f\n', iter, x_sig, fx_sig, error_k);
 
     x_act = x_sig;
   endwhile

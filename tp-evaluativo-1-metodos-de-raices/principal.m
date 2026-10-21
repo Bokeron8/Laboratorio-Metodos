@@ -121,7 +121,7 @@ if (!convergio)
 endif
 
 % Muestra del resultado en consola.
-printf("\n>>> %s: raiz aproximada: %.4f\n", nombre, x_raiz);
+printf("\n>>> %s: raiz aproximada: %.6f\n", nombre, x_raiz);
 printf(">>> Cantidad de iteraciones: %d\n", iter);
 printf(">>> Tiempo de ejecucion: %.6f segundos\n", tiempo);
 

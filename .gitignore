@@ -24,3 +24,6 @@ herramientas/informe/.venv/
 
 # Artefactos generados del informe del TP.
 tp-evaluativo-1-metodos-de-raices/informe/img/
+
+# Archivo de bloqueo de LibreOffice mientras el .docx está abierto.
+.~lock.*#

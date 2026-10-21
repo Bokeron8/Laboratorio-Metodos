@@ -39,15 +39,15 @@ function [x_raiz, iter, convergio] = aceleracion(g, F, x0, tol)
 
   dg0 = abs(dg(x0));
   fprintf('\n--- Análisis de Convergencia (Aitken) ---\n');
-  fprintf('  x0 = %.4f\n', x0);
-  fprintf('  |g''(x0)| = %.4f \n', dg0);
+  fprintf('  x0 = %.6f\n', x0);
+  fprintf('  |g''(x0)| = %.6f \n', dg0);
 
   x_act = x0;
   iter = 0;
 
   fprintf('\n--- Tabla de Iteraciones (Aitken) ---\n');
   fprintf('%-6s %-14s %-14s %-14s\n', 'Iter', 'x', 'f(x)', 'Error');
-  fprintf('%-6d %-14.4f %-14.4f %-14s\n', 0, x0, F(x0), '-');
+  fprintf('%-6d %-14.6f %-14.6f %-14s\n', 0, x0, F(x0), '-');
 
   while (true)
     x1 = g(x_act);
@@ -66,7 +66,7 @@ function [x_raiz, iter, convergio] = aceleracion(g, F, x0, tol)
     error_k = abs(x_sig - x_act);
     fx_sig = F(x_sig);
 
-    fprintf('%-6d %-14.4f %-14.4f %-14.4f\n', iter, x_sig, fx_sig, error_k);
+    fprintf('%-6d %-14.6f %-14.6f %-14.6f\n', iter, x_sig, fx_sig, error_k);
 
     if (error_k < tol)
       break;
