@@ -15,3 +15,12 @@ __pycache__/
 
 # Octave guarda esto al recibir SIGTERM en una corrida interactiva.
 octave-workspace
+
+# Copia temporal de principal.m sin waitfor (la genera capturas.py).
+_principal_captura.m
+
+# Entorno Python de las herramientas de informe.
+herramientas/informe/.venv/
+
+# Artefactos generados del informe del TP.
+tp-evaluativo-1-metodos-de-raices/informe/img/

@@ -1,0 +1,20 @@
+{
+  "caratula": {
+    "logo": "../../herramientas/informe/logo-unne.jpg",
+    "universidad": "UNIVERSIDAD NACIONAL DEL NORDESTE",
+    "facultad": "FACULTAD DE CIENCIAS EXACTAS Y NATURALES Y DE AGRIMENSURA",
+    "asignatura": "Métodos Computacionales",
+    "titulo": "1° Trabajo de Evaluación: Métodos de Raíces de Ecuaciones",
+    "temas": [
+      "Tema 1: Modelos matemáticos. Resolución de problemas.",
+      "Tema 2: Aproximaciones Numéricas. Errores.",
+      "Tema 3: Raíces de Ecuaciones."
+    ],
+    "integrantes": [
+      "Bazzola, Gabriel — L.U. 60.151",
+      "Zambrano, Franco — L.U. 60.153"
+    ],
+    "comision": "Jueves de 15 a 17",
+    "anio": "2026"
+  }
+}
