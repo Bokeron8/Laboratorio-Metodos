@@ -73,14 +73,14 @@ fprintf('Referencias:  x1 = %.8f   x2 = %.8f\n', referencia_x1, referencia_x2);
 % ----------------------------------------------------------------------
 % Valores de partida
 % ----------------------------------------------------------------------
-% Se calcula el discriminante con aritmética de cuatro dígitos para mostrar de
-% entrada cuánto se pierde desde el principio.
-delta = redondear(b^2 - 4 * a * c);
-sqrt_delta = redondear(sqrt(delta));
+% Se calcula el discriminante con aritmética de cuatro dígitos para ver cuánto
+% se pierde desde el principio.
+delta = redondear(b^2 - 4 * a * c, digitos);
+sqrt_delta = redondear(sqrt(delta), digitos);
 
 fprintf('\n--- Discriminante con redondeo a %d dígitos ---\n', digitos);
-fprintf('b^2 = %.10g   ->  redondeado = %-10.10g\n', b^2, redondear(b^2));
-fprintf('4ac = %.10g   ->  redondeado = %-10.10g\n', 4 * a * c, redondear(4 * a * c));
+fprintf('b^2 = %.10g   ->  redondeado = %-10.10g\n', b^2, redondear(b^2, digitos));
+fprintf('4ac = %.10g   ->  redondeado = %-10.10g\n', 4 * a * c, redondear(4 * a * c, digitos));
 fprintf('Delta exacto = %.10g  ->  redondeado = %-10.10g\n', b^2 - 4 * a * c, delta);
 fprintf('sqrt(Delta) exacto = %.10g  ->  redondeado = %-10.10g\n', ...
         sqrt(b^2 - 4 * a * c), sqrt_delta);
@@ -92,13 +92,13 @@ fprintf('Valor exacto de la referencia -b = %.10g\n', -b);
 fprintf('\n--- a) Fórmula directa, con redondeo a %d dígitos ---\n', digitos);
 
 % x1 = (-b + sqrt(Delta)) / (2a)
-paso1 = redondear(-b);
-paso2 = redondear(-b + sqrt_delta);
-x1_directa = redondear(paso2 / (2 * a));
+paso1 = redondear(-b, digitos);
+paso2 = redondear(-b + sqrt_delta, digitos);
+x1_directa = redondear(paso2 / (2 * a), digitos);
 
 % x2 = (-b - sqrt(Delta)) / (2a)
-paso3 = redondear(-b - sqrt_delta);
-x2_directa = redondear(paso3 / (2 * a));
+paso3 = redondear(-b - sqrt_delta, digitos);
+x2_directa = redondear(paso3 / (2 * a), digitos);
 
 fprintf('\nx1 = (-b + sqrt(Delta)) / (2a)\n');
 fprintf('  -b                       = %-12.10g\n', paso1);
@@ -125,14 +125,14 @@ fprintf('  x1 = (-b + sqrt(Delta)) / (2a)  =  2c / (-b - sqrt(Delta))\n');
 fprintf('  x2 = (-b - sqrt(Delta)) / (2a)  =  2c / (-b + sqrt(Delta))\n');
 
 % x1 = 2c / (-b - sqrt(Delta))
-r1_numerador = redondear(2 * c);
-r1_denominador = redondear(-b - sqrt_delta);
-x1_racionalizada = redondear(r1_numerador / r1_denominador);
+r1_numerador = redondear(2 * c, digitos);
+r1_denominador = redondear(-b - sqrt_delta, digitos);
+x1_racionalizada = redondear(r1_numerador / r1_denominador, digitos);
 
 % x2 = 2c / (-b + sqrt(Delta))
-r2_numerador = redondear(2 * c);
-r2_denominador = redondear(-b + sqrt_delta);
-x2_racionalizada = redondear(r2_numerador / r2_denominador);
+r2_numerador = redondear(2 * c, digitos);
+r2_denominador = redondear(-b + sqrt_delta, digitos);
+x2_racionalizada = redondear(r2_numerador / r2_denominador, digitos);
 
 fprintf('\nx1 = 2c / (-b - sqrt(Delta))\n');
 fprintf('  2c                    = %-12.10g\n', r1_numerador);
@@ -191,9 +191,6 @@ fprintf('Para x2, la misma forma lo empeora por un factor de  %.4e\n', ...
 fprintf('\n--- Resumen ---\n');
 fprintf('No existe una única fórmula óptima. La forma directa es precisa para la raíz grande,\n');
 fprintf('mientras que la forma racionalizada (conjugada) evita la cancelación catastrófica para la raíz pequeña.\n');
-fprintf('cada una por separado, o calcular una raíz con la forma segura y obtener\n');
-fprintf('la otra con el producto de las raíces, x1 * x2 = c/a, que para este caso\n');
-fprintf('daría %.8f y no sufre ninguna resta.\n', c / a * referencia_x2);
 fprintf('\nEl enunciado pide comparar los errores "a partir de las nuevas\n');
 fprintf('aproximaciones", y la comparación muestra que la mejora de una raíz se\n');
 fprintf('paga exactamente con el empeoramiento de la otra. Ese intercambio es la\n');

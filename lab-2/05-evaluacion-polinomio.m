@@ -149,7 +149,7 @@ anr_t3 = redondear_n(anr_t2 + redondear_n(3, digitos), digitos);
 anr_t4 = redondear_n(x * anr_t3, digitos);
 anr_f = redondear_n(anr_t4 - redondear_n(0.149, digitos), digitos);
 
-fprintf('\nDetail de los pasos de la forma anidada:\n');
+fprintf('\nDetalle de los pasos de la forma anidada:\n');
 fprintf('  x - 6     exacto %-12.10g  trunc %-10.10g  redond %-10.10g\n', ...
         an_t1, ant_t1, anr_t1);
 fprintf('  x(x - 6)  exacto %-12.10g  trunc %-10.10g  redond %-10.10g\n', ...
@@ -188,6 +188,6 @@ fprintf('%-22s %-12.4e %-12.4e %s\n', 'Redondeado, forma anidada', ...
 fprintf('\n--- Resumen ---\n');
 fprintf('La forma anidada (Horner) reduce la cantidad de operaciones aritméticas\n');
 fprintf('y evita restas entre términos grandes, disminuyendo notablemente el error de redondeo y truncamiento frente a la forma directa.\n');
-fprintf('anidada (Horner) y no calcular las potencias por separado. Es el mismo\n');
-fprintf('polinomio y da el mismo valor exacto, pero en aritmetica finita da un\n');
-fprintf('resultado mucho mejor y sin esfuerzo adicional: menos calculos.\n');
+fprintf('Conviene evaluar el polinomio en forma anidada (Horner) y no calcular las\n');
+fprintf('potencias por separado: es el mismo polinomio y da el mismo valor exacto,\n');
+fprintf('pero en aritmética finita da un resultado mucho mejor sin esfuerzo adicional.\n');

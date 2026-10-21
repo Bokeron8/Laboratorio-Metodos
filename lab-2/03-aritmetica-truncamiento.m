@@ -46,7 +46,7 @@ fprintf('Los valores se normalizan antes de truncar, como en el ejercicio 2.\n')
 % ----------------------------------------------------------------------
 % a) Los cinco casos con truncamiento
 % ----------------------------------------------------------------------
-fprintf('\n--- a) Detail de cada caso con truncamiento ---\n');
+fprintf('\n--- a) Detalle de cada caso con truncamiento ---\n');
 
 fprintf('\nCaso a) 133 + 0.921\n');
 a_t = truncar(133) + truncar(0.921);

@@ -1,5 +1,5 @@
-function resultado = redondear(numero)
-  % REDONDEAR - Redondea un numero a tres digitos SIGNIFICATIVOS, normalizando.
+function resultado = redondear(numero, digitos)
+  % REDONDEAR - Redondea un número a n dígitos SIGNIFICATIVOS, normalizando.
   % Entradas:
   %   numero - valor a redondear
   % Salidas:
@@ -22,8 +22,15 @@ function resultado = redondear(numero)
   % hay que usar redondear_n.m: son operaciones distintas y confundirlas cambia
   % el resultado, asi que van en archivos separados a proposito.
 
-  if (nargin != 1)
-    error("redondear: se requiere exactamente 1 argumento (numero)");
+  if (nargin != 1 && nargin != 2)
+    error("redondear: se requiere 1 o 2 argumentos (numero, digitos)");
+  endif
+  if (nargin < 2)
+    digitos = 3;
+  if (!isnumeric(digitos) || !isscalar(digitos) || !isfinite(digitos) || ...
+      digitos != fix(digitos) || digitos < 1)
+    error("redondear: digitos debe ser un entero positivo (digitos >= 1)");
+  endif
   endif
   if (!isnumeric(numero) || !isscalar(numero) || !isfinite(numero))
     error("redondear: numero debe ser un escalar finito");
@@ -31,6 +38,6 @@ function resultado = redondear(numero)
 
   [exponente, mantisa] = normalizar(numero);
 
-  redondeado = round(mantisa * 10^3) / 10^3;
+  redondeado = round(mantisa * 10^digitos) / 10^digitos;
   resultado = redondeado * 10^exponente;
 endfunction
