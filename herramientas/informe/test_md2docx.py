@@ -200,16 +200,36 @@ class TestFormato(unittest.TestCase):
 
     def test_anchos_de_columna_por_contenido(self):
         datos = [
-            ["Método", "Orden de convergencia", "Condición suficiente", "Requiere derivada", "Evaluaciones por iteración"],
-            ["Punto fijo", "Lineal", "|g'(x0)| < 1", "No", "1 de g, 1 de F"],
-            ["Newton-Raphson", "Cuadrática", "F(x0)·F''(x0) > 0", "Sí, aproximada", "3 de F"],
+            ["Método", "Orden de convergencia", "Requiere derivada"],
+            ["Punto fijo", "Lineal", "No"],
+            ["Newton-Raphson", "Cuadrática", "Sí, aproximada"],
         ]
         anchos = md2docx._anchos_de_columna(datos)
-        self.assertEqual(len(anchos), 5)
+        self.assertEqual(len(anchos), 3)
         self.assertAlmostEqual(sum(anchos), 16.0, places=2)
-        # "convergencia" (12) y "Evaluaciones" (12) necesitan su ancho mínimo.
-        self.assertGreaterEqual(anchos[1], 0.21 * 12 + 0.45)
-        self.assertGreaterEqual(anchos[4], 0.21 * 12 + 0.45)
+        # "convergencia" (12, negrita) no puede quedar más angosta que su palabra.
+        self.assertGreaterEqual(anchos[1], 2.51 + 2 * 0.19)
+        # "Newton-Raphson" entra en una línea: 2,99 cm de texto + márgenes.
+        self.assertGreaterEqual(anchos[0], 2.99 + 2 * 0.19)
+
+    def test_anchos_siempre_suman_el_ancho_util(self):
+        datos = [
+            ["Método", "Tolerancia", "Iteraciones", "Raíz", "Tiempo prom. (ms)", "Tiempo/iter. (ms)"],
+            ["Punto fijo", "0.05", "4", "213.319634", "0.287", "0.072"],
+            ["Punto fijo", "0.002", "6", "213.324457", "0.357", "0.059"],
+            ["Punto fijo", "0.0001", "7", "213.324539", "0.392", "0.056"],
+            ["Newton-Raphson", "0.05", "2", "213.324552", "0.289", "0.145"],
+            ["Newton-Raphson", "0.002", "3", "213.324553", "0.338", "0.113"],
+            ["Newton-Raphson", "0.0001", "3", "213.324553", "0.340", "0.113"],
+            ["Aitken", "0.05", "2", "213.324553", "0.226", "0.113"],
+            ["Aitken", "0.002", "3", "213.324553", "0.270", "0.090"],
+            ["Aitken", "0.0001", "3", "213.324553", "0.268", "0.089"],
+        ]
+        anchos = md2docx._anchos_de_columna(datos)
+        self.assertAlmostEqual(sum(anchos), 16.0, places=2)
+        # "Tiempo" (negrita, 11 pt) mide 1,38 cm; con los márgenes de celda la
+        # columna necesita 1,76 cm o LibreOffice parte la palabra ("Tiemp/o").
+        self.assertGreaterEqual(anchos[4], 1.38 + 2 * 0.19)
 
     def test_codigo_monoespaciado(self):
         parrafos = [p for p in self.doc.paragraphs if p.text.strip() == "x = 1;"]

@@ -392,21 +392,48 @@ def _celdas(linea):
     return [c.strip().replace("\\|", "|") for c in re.split(r"(?<!\\)\|", cuerpo)]
 
 
+MARGEN_CELDA_CM = 0.19  # margen interno por lado que usan Word y LibreOffice
+FUENTES = {
+    False: "/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf",
+    True: "/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf",
+}
+
+
+def _ancho_palabra_cm(palabra, tam=11, negrita=False):
+    """Ancho real de una palabra en Arial 11.
+
+    Liberation Sans es métricamente compatible con Arial, así que medir con ella
+    reproduce el ancho que usa Word. Sin Pillow o sin la fuente, se estima con
+    el ancho medio de una letra.
+    """
+    try:
+        from PIL import ImageFont
+        fuente = ImageFont.truetype(FUENTES[negrita], tam * 96 / 72)
+        caja = fuente.getbbox(palabra)
+        return (caja[2] - caja[0]) / 96 * 2.54
+    except (ImportError, OSError):
+        return 0.23 * len(palabra) * (1.05 if negrita else 1.0)
+
+
 def _anchos_de_columna(datos, total_cm=16.0):
     """Reparte el ancho útil según el contenido.
 
     Con anchos fijos iguales, "convergencia" y "Evaluaciones" se partían a mitad
-    de palabra. El mínimo de cada columna sale de su palabra más larga; el resto
+    de palabra, y con una estimación por cantidad de letras "Tiempo" quedaba
+    apenas por debajo de su ancho real ("Tiemp/o"). El mínimo de cada columna es
+    el ancho medido de su palabra más larga más los márgenes de celda; el resto
     se reparte según el texto más largo de la columna.
     """
     columnas = list(zip(*datos))
     minimos, pesos = [], []
-    for celdas in columnas:
-        palabras = []
-        for celda in celdas:
-            palabras += re.sub(r"[*`]|\\\|", "", celda).split()
-        mas_larga = max((len(p) for p in palabras), default=4)
-        minimos.append(0.21 * mas_larga + 0.45)
+    for j, celdas in enumerate(columnas):
+        ancho_max = 0.0
+        for i, celda in enumerate(celdas):
+            for palabra in re.sub(r"[*`]|\\\|", "", celda).split():
+                # Los encabezados van en negrita: ocupan un poco más.
+                ancho_max = max(ancho_max, _ancho_palabra_cm(
+                    palabra, negrita=(i == 0)))
+        minimos.append(ancho_max + 2 * MARGEN_CELDA_CM)
         pesos.append(max((len(re.sub(r"[*`]", "", c)) for c in celdas), default=1))
 
     suma = sum(minimos)
