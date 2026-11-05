@@ -1,5 +1,16 @@
 % resolver_gauss.m
-% Función auxiliar para resolver Ax = b por Eliminación de Gauss con Pivoteo Parcial
+% =========================================================================
+% FUNCIÓN: resolver_gauss
+% DESCRIPCIÓN: Resuelve un sistema de ecuaciones lineales Ax = b mediante
+%              el Método de Eliminación de Gauss con Pivoteo Parcial.
+% PARÁMETROS DE ENTRADA:
+%   - A : Matriz de coeficientes (n x n)
+%   - b : Vector de términos independientes (n x 1 o 1 x n)
+% PARÁMETROS DE SALIDA:
+%   - x       : Vector solución (n x 1)
+%   - tiempo  : Tiempo de ejecución en segundos (medido con tic/toc)
+%   - Ab      : Matriz aumentada final (triangular superior)
+% =========================================================================
 
 function [x, tiempo, Ab] = resolver_gauss(A, b)
     if isrow(b)
@@ -17,6 +28,7 @@ function [x, tiempo, Ab] = resolver_gauss(A, b)
     Ab = [A, b];
 
     tic;
+    % Fase 1: Eliminación hacia adelante (Triangulación con pivoteo parcial)
     for k = 1:n-1
         [max_val, p] = max(abs(Ab(k:n, k)));
         p = p + k - 1;
@@ -39,6 +51,7 @@ function [x, tiempo, Ab] = resolver_gauss(A, b)
         error("El sistema no tiene solución única.");
     end
 
+    % Fase 2: Sustitución regresiva
     x = zeros(n, 1);
     x(n) = Ab(n, n+1) / Ab(n, n);
 

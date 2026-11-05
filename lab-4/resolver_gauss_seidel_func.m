@@ -1,5 +1,18 @@
 % resolver_gauss_seidel_func.m
-% Función auxiliar para resolver Ax = b por Gauss-Seidel
+% =========================================================================
+% FUNCIÓN: resolver_gauss_seidel_func
+% DESCRIPCIÓN: Resuelve Ax = b mediante el método iterativo de Gauss-Seidel.
+% PARÁMETROS DE ENTRADA:
+%   - A        : Matriz de coeficientes (n x n)
+%   - b        : Vector de términos independientes (n x 1)
+%   - x0       : Vector de aproximación inicial (n x 1)
+%   - tol      : Tolerancia de error relativa deseada
+%   - max_iter : Número máximo de iteraciones permitidas
+% PARÁMETROS DE SALIDA:
+%   - x      : Vector solución aproximada (n x 1)
+%   - iter   : Número de iteraciones realizadas hasta converger
+%   - tiempo : Tiempo de ejecución en segundos
+% =========================================================================
 
 function [x, iter, tiempo] = resolver_gauss_seidel_func(A, b, x0, tol, max_iter)
     if isrow(b)

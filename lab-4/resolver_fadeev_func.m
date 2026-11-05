@@ -1,5 +1,17 @@
 % resolver_fadeev_func.m
-% Función auxiliar para Faddeev-LeVerrier
+% =========================================================================
+% FUNCIÓN: resolver_fadeev_func
+% DESCRIPCIÓN: Implementa el método de Faddeev-LeVerrier para calcular
+%              los coeficientes del polinomio característico, autovalores
+%              y autovectores asociados de una matriz cuadrada A.
+% PARÁMETROS DE ENTRADA:
+%   - A : Matriz cuadrada (n x n)
+% PARÁMETROS DE SALIDA:
+%   - autovalores  : Vector con las raíces del polinomio característico
+%   - autovectores : Matriz con autovectores normalizados en columnas
+%   - coefs        : Coeficientes del polinomio característico
+%   - tiempo       : Tiempo de ejecución en segundos
+% =========================================================================
 
 function [autovalores, autovectores, coefs, tiempo] = resolver_fadeev_func(A)
     [n, m] = size(A);

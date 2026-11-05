@@ -1,5 +1,16 @@
 % resolver_gauss_jordan_func.m
-% Función auxiliar para resolver Ax = b por Gauss-Jordan con Pivoteo Parcial
+% =========================================================================
+% FUNCIÓN: resolver_gauss_jordan_func
+% DESCRIPCIÓN: Resuelve Ax = b utilizando el Método de Gauss-Jordan con
+%              Pivoteo Parcial, transformando la matriz en la identidad.
+% PARÁMETROS DE ENTRADA:
+%   - A : Matriz de coeficientes (n x n)
+%   - b : Vector de términos independientes (n x 1 o 1 x n)
+% PARÁMETROS DE SALIDA:
+%   - x       : Vector solución (n x 1)
+%   - tiempo  : Tiempo de ejecución en segundos
+%   - Ab      : Matriz aumentada final [I | x]
+% =========================================================================
 
 function [x, tiempo, Ab] = resolver_gauss_jordan_func(A, b)
     if isrow(b)

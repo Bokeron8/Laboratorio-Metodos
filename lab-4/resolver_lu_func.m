@@ -1,5 +1,18 @@
 % resolver_lu_func.m
-% Función auxiliar para Factorización LU (Doolittle) y resolución de Ax = b
+% =========================================================================
+% FUNCIÓN: resolver_lu_func
+% DESCRIPCIÓN: Resuelve Ax = b mediante Factorización LU (Método de Doolittle),
+%              factorizando A en L (triangular inferior) y U (triangular superior).
+% PARÁMETROS DE ENTRADA:
+%   - A : Matriz cuadrada de coeficientes (n x n)
+%   - b : Vector de términos independientes (n x 1 o 1 x n)
+% PARÁMETROS DE SALIDA:
+%   - x       : Vector solución final (n x 1)
+%   - L       : Matriz triangular inferior (n x n)
+%   - U       : Matriz triangular superior (n x n)
+%   - y       : Vector intermedio de sustitución progresiva L*y = b
+%   - tiempo  : Tiempo de ejecución en segundos
+% =========================================================================
 
 function [x, L, U, y, tiempo] = resolver_lu_func(A, b)
     if isrow(b)
