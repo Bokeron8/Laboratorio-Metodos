@@ -1,0 +1,10 @@
+{
+  "laboratorio": "lab-4",
+  "titulo": "Informe — Guía 6: Integración Numérica",
+  "subtitulo": "Métodos Computacionales · Laboratorio 4",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": []
+}

@@ -1,0 +1,41 @@
+{
+  "laboratorio": "lab-2",
+  "titulo": "Informe — Guía 2: Aproximaciones numéricas y errores",
+  "subtitulo": "Métodos Computacionales · Laboratorio 2 · Octave 6.4.0",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-error-absoluto-relativo.m",
+      "titulo": "Ejercicio 1 - Error absoluto y error relativo",
+      "entradas": ""
+    },
+    {
+      "tag": "ej2",
+      "script": "02-aritmetica-redondeo.m",
+      "titulo": "Ejercicio 2 - Aritmetica con redondeo",
+      "entradas": ""
+    },
+    {
+      "tag": "ej3",
+      "script": "03-aritmetica-truncamiento.m",
+      "titulo": "Ejercicio 3 - Aritmetica con truncamiento",
+      "entradas": ""
+    },
+    {
+      "tag": "ej4",
+      "script": "04-raices-cuadraticas.m",
+      "titulo": "Ejercicio 4 - Raices de una ecuacion cuadratica",
+      "entradas": ""
+    },
+    {
+      "tag": "ej5",
+      "script": "05-evaluacion-polinomio.m",
+      "titulo": "Ejercicio 5 - Evaluacion de un polinomio",
+      "entradas": ""
+    }
+  ]
+}

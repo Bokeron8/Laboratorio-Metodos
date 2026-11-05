@@ -1,0 +1,47 @@
+{
+  "laboratorio": "lab-1",
+  "titulo": "Informe — Guía 1: Introducción a los procesos algorítmicos",
+  "subtitulo": "Métodos Computacionales · Laboratorio 1 · Octave 6.4.0",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-suma-n-numeros.m",
+      "titulo": "Ejercicio 1 - Suma de N numeros positivos",
+      "entradas": "200"
+    },
+    {
+      "tag": "ej2",
+      "script": "02-suma-pares.m",
+      "titulo": "Ejercicio 2 - Suma de los valores pares",
+      "entradas": ""
+    },
+    {
+      "tag": "ej3",
+      "script": "03-fibonacci.m",
+      "titulo": "Ejercicio 3 - Primeros N terminos de Fibonacci",
+      "entradas": "200"
+    },
+    {
+      "tag": "ej4",
+      "script": "04-ecuacion-segundo-grado.m",
+      "titulo": "Ejercicio 4 - Ecuacion de segundo grado",
+      "entradas": ""
+    },
+    {
+      "tag": "ej5",
+      "script": "05-serie-e.m",
+      "titulo": "Ejercicio 5 - El numero e por serie",
+      "entradas": "20"
+    },
+    {
+      "tag": "ej6",
+      "script": "06-serie-pi.m",
+      "titulo": "Ejercicio 6 - La constante pi por serie de Leibniz",
+      "entradas": ""
+    }
+  ]
+}

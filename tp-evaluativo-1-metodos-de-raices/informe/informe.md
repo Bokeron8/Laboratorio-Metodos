@@ -196,6 +196,18 @@ Los datos ingresados fueron los mismos en los tres casos: *x0 = 200*, tolerancia
 *g(x) = 200 + 40·ln(400/(500 − x))* y la función original
 *F(x) = 5x − 200·ln(400/(500 − x)) − 1000*.
 
+### Método de tanteo
+
+Antes de aplicar cualquiera de los tres métodos se usó el tanteo para ubicar el
+intervalo donde la función cambia de signo. Se barrió el rango *[0, 400]* con un
+incremento *delta_x = 50* y se evaluó *F* en cada punto del barrido.
+
+{{IMG:img/tanteo-consola.png|Tabla de valores del método de tanteo con a = 0, b = 400 y delta_x = 50}}
+
+El único cambio de signo aparece entre *200* y *250*: *F(200) = −57.5364* y
+*F(250) = 155.9993*. Ese intervalo contiene la raíz y es el que delimita la búsqueda;
+*x0 = 200*, el valor inicial usado en las tres corridas siguientes, cae dentro de él.
+
 ### Punto fijo
 
 {{IMG:img/pf-consola.png|Salida de consola del método de punto fijo con x0 = 200 y tolerancia 0.0001}}

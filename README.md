@@ -85,7 +85,7 @@ prácticamente infinito.
 | Archivo | Firma | Qué hace |
 | :--- | :--- | :--- |
 | `normalizar.m` | `(x)` → `(exponente, resultado)` | Lleva el número a la forma `0.1 ≤ \|r\| < 1` |
-| `redondear.m` | `(x)` | Redondeo a tres dígitos **normalizado** |
+| `redondear.m` | `(x[, d])` | Redondeo a `d` dígitos significativos **normalizado** (3 por defecto) |
 | `truncar.m` | `(x)` | Truncamiento a tres dígitos **normalizado** |
 | `redondear_n.m` | `(x, n)` | Redondeo a n dígitos **sin normalizar** |
 | `truncar_n.m` | `(x, n)` | Truncamiento a n dígitos **sin normalizar** |

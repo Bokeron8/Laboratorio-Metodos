@@ -13,23 +13,13 @@ Métodos Computacionales · Laboratorio 3 · Octave 6.4.0
 ````octave
 % 01-tanque-esferico.m - Ejercicio 1 de la Guía 3: raíces de una ecuación.
 %
-% Problema: tanque esférico de radio R = 3 m que debe contener V = 30 m^3.
-%   V = pi * h^2 * (3R - h)/3   con h = profundidad del agua en metros.
-% Se busca la profundidad h que cumple V = 30, es decir la raíz de
-%   f(h) = pi * h^2 * (3R - h)/3 - V = 0.
+% Un tanque esférico de radio R = 3 m debe contener V = 30 m^3. El volumen de
+% agua a profundidad h es
+%   V(h) = pi * h^2 * (3R - h)/3,
+% así que la profundidad buscada es la raíz de f(h) = V(h) - V = 0.
 %
-% Estructura de la consigna:
-%   a) Evaluación gráfica de las raíces con fplot.
-%   b) Separación de todas las raíces con el Método de Tanteo.
-%   c) Aproximación con Intervalo Medio e Interpolación Lineal, E < 0.001.
-%   d) Comparación de convergencia y tiempo de ejecución entre ambos métodos.
-%
-% Este script entrega los resultados crudos de cada método (raíz, f(raíz),
-% iteraciones y tiempo). La comparación entre ellos y las conclusiones van en
-% el informe, no acá.
-%
-% Los algoritmos viven en archivos aparte (tanteo.m, intervalo_medio.m,
-% interpolacion_lineal.m).
+% Se grafica f con fplot, se separan las raíces con Tanteo y se aproximan con
+% Intervalo Medio e Interpolación Lineal hasta E < 0.001.
 
 clc;
 
@@ -37,15 +27,13 @@ clc;
 % Datos del problema
 % ----------------------------------------------------------------------
 R = 3;   % radio del tanque en metros
-V = 30;  % volumen objetivo en metros cubicos
+V = 30;  % volumen objetivo en metros cúbicos
 
-% f(h) = volumen que hay a profundidad h, menos el volumen buscado.
-% Los operadores element-wise (.*, ./) son obligatorios: fplot evalúa vectores.
+% Los operadores .* y .^ son obligatorios: fplot evalúa f sobre vectores.
 f = @(h) pi * (h.^2) .* ((3 * R - h) / 3) - V;
 
-% Rango de búsqueda. h va de 0 (vacío) hasta 2R = 6 (lleno hasta el ecuador),
-% que es el rango donde la fórmula describe un volumen de agua real. Más allá del
-% ecuador el polinomio sigue dando valores, pero ya no son volúmenes posibles.
+% Rango de búsqueda: h va de 0 (vacío) a 2R = 6 (lleno hasta el ecuador).
+% Más allá del ecuador el polinomio sigue definido, pero ya no da volúmenes.
 h_min = 0;
 h_max = 2 * R;
 
@@ -90,7 +78,7 @@ fprintf('\nSe separaron %d raíz/raíces.\n', rows(intervalos));
 % ----------------------------------------------------------------------
 % c) Aproximación con Intervalo Medio e Interpolación Lineal
 % ----------------------------------------------------------------------
-tol = input(sprintf('\nIngrese la cota de error a usar (la consigna pide 0.001): '));
+tol = input(sprintf('\nIngrese la cota de error a usar (se sugiere 0.001): '));
 
 for k = 1:rows(intervalos)
   a = intervalos(k, 1);
@@ -146,22 +134,11 @@ hold off;
 ````octave
 % 02-punto-equilibrio-impresoras.m - Ejercicio 2 de la Guía 3: Newton-Raphson.
 %
-% Problema: un fabricante de impresoras tiene como utilidad total (en pesos)
+% Utilidad total de un fabricante de impresoras, en pesos:
 %   P(x) = 8x + 0.3x^2 - 0.0013x^3 - 372
-% Se pide el punto de equilibrio, es decir las raíces de
-%   F(x) = P(x) = 0.
-% Estructura de la consigna:
-%   a) Hallar las raíces en forma gráfica (fplot) y separarlas con Tanteo.
-%   b) Aproximar los dos puntos con Newton-Raphson y E < 1e-3, analizando antes
-%      las condiciones de convergencia en los intervalos iniciales.
-%
-% La consigna propone los intervalos [24; 26] y [250; 252]. Tanteo los confirma.
-%
-% Este script entrega los resultados crudos (raíz, iteraciones, tiempo) y el
-% estado de cada condición de Fourier. La comparación entre intervalos y las
-% conclusiones van en el informe, no acá.
-%
-% Los algoritmos viven en tanteo.m y newton_raphson.m.
+% Los puntos de equilibrio son las raíces de P(x) = 0. Se grafican con fplot,
+% se separan con Tanteo y se aproximan con Newton-Raphson hasta E < 1e-3,
+% eligiendo x0 según las condiciones de convergencia.
 
 clc;
 
@@ -205,8 +182,7 @@ fprintf('\n--- a) Evaluación gráfica ---\n');
 fprintf('P(0) = %.2f pesos.\n', F(0));
 fprintf('P(300) = %.2f pesos.\n', F(300));
 
-% Separación de las raíces con Tanteo. El incremento se pide por teclado:
-% con uno chico se pueden separar las dos raíces en un solo barrido.
+% Separación de las raíces con Tanteo sobre el rango graficado.
 fprintf('\n--- Separación de raíces con Tanteo ---\n');
 intervalos = tanteo(F, x_min, x_max);
 
@@ -216,12 +192,12 @@ if (isempty(intervalos))
 endif
 
 fprintf('\nSe separaron %d punto(s) de equilibrio.\n', rows(intervalos));
-fprintf('Compare con los intervalos de la consigna: [24, 26] y [250, 252].\n');
+fprintf('Compare con los intervalos del problema: [24, 26] y [250, 252].\n');
 
 % ----------------------------------------------------------------------
 % b) Newton-Raphson con análisis previo de las condiciones de Fourier
 % ----------------------------------------------------------------------
-tol = input(sprintf('\nIngrese la cota de error a usar (la consigna pide 0.001): '));
+tol = input(sprintf('\nIngrese la cota de error a usar (se sugiere 0.001): '));
 
 for k = 1:rows(intervalos)  a = intervalos(k, 1);
   b = intervalos(k, 2);
@@ -229,12 +205,10 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
   fprintf('\n============ Intervalo %d: [%.2f, %.2f] ============\n', k, a, b);
 
   % --- Condiciones de Fourier ---
-  % Son tres, y las tres tienen que cumplirse para que Newton-Raphson converja
-  % desde x0 hacia la raíz que hay dentro de [a, b]:
-  %   1. F(a)*F(b) < 0            -> la raíz está dentro del intervalo (Bolzano).
-  %   2. F'(x) != 0 en todo [a, b] -> se puede dividir por la derivada.
-  %   3. F''(x) no cambia de signo  -> la función es cóncava o convexa en el
-  %                                   intervalo, así que la raíz es simple.
+  % Se necesitan las tres para que Newton-Raphson converja hacia la raíz de [a, b]:
+  %   1. F(a)*F(b) < 0            (Bolzano: hay una raíz adentro).
+  %   2. F'(x) != 0 en [a, b]      (se puede dividir por la derivada).
+  %   3. F''(x) no cambia de signo (la raíz es simple, la tangente no oscila).
   fprintf('\nAnálisis de las condiciones de Fourier:\n');
 
   fa = F(a);
@@ -243,7 +217,7 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
           merge(fa * fb < 0, 'cambio de signo: la raíz está en el intervalo', ...
                 'SIN cambio de signo: no hay raíz garantizada'));
 
-  % F' se muestrea en el intervalo para verificar que no se anula.
+  % F' muestreada sobre el intervalo para ver si se anula.
   malla = linspace(a, b, 100);
   df_malla = dF(malla);
   derivada_nula = any(abs(df_malla) < 1e-8);
@@ -252,7 +226,7 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
           merge(derivada_nula, 'F'' SE ANULA: no se puede dividir', ...
                 'F'' no se anula: se puede dividir'));
 
-  % F'' también se muestrea para verificar que no cambia de signo.
+  % F'' muestreada para ver si cambia de signo en [a, b].
   d2f_malla = d2F(malla);
   d2f_cambio_signo = (min(d2f_malla) < 0 && max(d2f_malla) > 0);
   fprintf('  3. F''''(x) en [%.2f, %.2f]: min = %.4f, max = %.4f -> %s\n', ...
@@ -261,9 +235,8 @@ for k = 1:rows(intervalos)  a = intervalos(k, 1);
                 'no cambia de signo: se cumple'));
 
   % --- Elección de x0 ---
-  % La condición de Fourier que elige dónde arrancar es F(x0)*F''(x0) > 0:
-  % se arranca en el extremo donde la función está más "hacia afuera" de la
-  % raíz, para que las tangentes no empujen la iteración al lado equivocado.
+  % Se arranca en el extremo donde F(x0)*F''(x0) > 0: ahí la tangente apunta
+  % hacia la raíz y la iteración no se escapa del intervalo.
   if (fa * d2F(a) > 0)
     x0 = a;
   else
@@ -311,24 +284,13 @@ hold off;
 ````octave
 % 03-publicidad-utilidad.m - Ejercicio 3 de la Guía 3: iteración y Aitken.
 %
-% Problema: una compañía gasta A = 200*ln(400/(500 - x)) pesos semanales en
-% publicidad para vender x unidades. Las unidades se venden a $5, así que la
-% utilidad neta es R(x) = 5x - A. Hay que vender las x que den R(x) = $1000:
-%   F(x) = 5x - 200*ln(400/(500 - x)) - 1000 = 0
+% Una compañía gasta A(x) = 200*ln(400/(500 - x)) pesos por semana en publicidad
+% para vender x unidades a $5. La utilidad neta es R(x) = 5x - A, y se busca la
+% x que da R(x) = 1000.
 %
-% Reordenando para convertirla en ecuación de punto fijo:
-%   5x = 1000 + 200*ln(400/(500 - x))
-%   x  = 200 + 40*ln(400/(500 - x))
-% es decir g(x) = 200 + 40*ln(400/(500 - x)), con x0 = 200.
-%
-% La consigna pide aplicar el método de iteración Y el mismo método acelerado
-% con Aitken, ambos con E < 1e-4, y graficar ambas curvas en un mismo gráfico.
-%
-% Este script entrega los resultados crudos de cada método (raíz, iteraciones,
-% tiempo) y el valor de |g'(x0)|. La comparación entre ambos y las conclusiones
-% van en el informe, no acá.
-%
-% Los algoritmos viven en iteracion.m y aceleracion.m.
+% Despejando x se llega a la ecuación de punto fijo
+%   g(x) = 200 + 40*ln(400/(500 - x)),  con x0 = 200,
+% que se resuelve por iteración simple y por Aitken, ambas hasta E < 1e-4.
 
 clc;
 
@@ -350,13 +312,11 @@ h = 1e-4;
 dg = @(x) (g(x + h) - g(x - h)) / (2 * h);
 
 fprintf('\n');
-x0      = input('Ingrese el valor inicial x0 (la consigna propone 200): ');
-tol     = input('Ingrese la cota de error a usar (la consigna pide 0.0001): ');
+x0      = input('Ingrese el valor inicial x0 (el problema propone 200): ');
+tol     = input('Ingrese la cota de error a usar (se sugiere 0.0001): ');
 
-% Condición de convergencia del punto fijo simple: |g'(x0)| < 1.
-% g'(x) = 40/(500 - x), que en x0 = 200 vale 0.133: converge, pero solo porque
-% x0 quedó en el lado izquierdo de x = 500. Cerca de 500 la derivada se dispara
-% y el método diverge, así que conviene mostrar el valor antes de correrlo.
+% Condición de convergencia del punto fijo: |g'(x0)| < 1. Acá g'(x) = 40/(500 - x)
+% vale 0.133 en x0 = 200, pero crece sin límite cuando x se acerca a 500.
 g_primo_x0 = dg(x0);
 fprintf("\n|g'(x0)| = |%.6f| = %.6f -> %s\n", g_primo_x0, abs(g_primo_x0), ...
         merge(abs(g_primo_x0) < 1, ...
@@ -415,10 +375,8 @@ fplot(@(x) x, rango, 'r--', 'LineWidth', 1.5);
 hold on;
 grid on;
 
-% Curva y = g(x).
 fplot(g, rango, 'b-', 'LineWidth', 2);
 
-% Punto fijo encontrado.
 if (ok_simple)
   plot(x_simple, x_simple, 'ko', 'MarkerSize', 8, 'LineWidth', 2);
 endif
@@ -450,16 +408,14 @@ hold off;
 
 ````octave
 function intervalos = tanteo(f, a, b)
-  % TANTEO - Separa raices barriendo [a, b] con paso delta_x y detectando cambios de signo.
+  % TANTEO - Separa raíces barriendo [a, b] con paso delta_x y detectando cambios
+  % de signo.
   % Entradas:
-  %   f - funcion a la que se le buscan raices, ej: @(x) x.^2 - 2
+  %   f - función a la que se le buscan raíces, ej: @(x) x.^2 - 2
   %   a - extremo inferior del barrido
   %   b - extremo superior del barrido
   % Salida:
-  %   intervalos - matriz de Nx2 con los [a, b] donde f cambia de signo (vacia si no hay)
-  % Nota: el paso delta_x se pide por teclado a proposito, porque la consigna pide
-  % probar el metodo con distintos incrementos y comparar que tan bien separa.
-  % El rango [a, b] lo fija el ejercicio, que es quien conoce el dominio fisico.
+  %   intervalos - matriz de Nx2 con los [a, b] donde f cambia de signo (vacía si no hay)
   if (nargin != 3)
     error("tanteo: se requieren 3 argumentos (f, a, b)");
   endif
@@ -469,7 +425,7 @@ function intervalos = tanteo(f, a, b)
 
   disp('--- METODO DE TANTEO ---');
 
-  % El paso debe ser un numero positivo menor que el ancho del intervalo.
+  % El paso debe ser un número positivo menor que el ancho del intervalo.
   while (true)
     delta_x = str2double(input('Ingrese el valor del incremento delta_x (ej. 0.5 o 0.1): ', 's'));
     if (isscalar(delta_x) && isfinite(delta_x) && delta_x > 0 && delta_x <= (b - a))
@@ -478,25 +434,25 @@ function intervalos = tanteo(f, a, b)
     disp('Paso invalido: debe ser un numero positivo no mayor que (b - a)');
   endwhile
 
-  % Punto de partida: se arranca en el extremo inferior.
+  % Punto de partida: extremo inferior del rango.
   x_act = a;
   f_act = f(x_act);
 
-  % Tabla de valores: muestra como evoluciona f en el barrido.
+  % Tabla de valores del barrido: x contra f(x).
   fprintf('\n--- Tabla de Valores del Método de Tanteo ---\n');
   fprintf('%-10s %-15s\n', 'x', 'f(x)');
   fprintf('%-10.4f %-15.4f\n', x_act, f_act);
 
-  % Acumulador de intervalos con cambio de signo: cada fila es un [x_act, x_sig].
+  % Cada fila acumulada es un [x_act, x_sig] con cambio de signo.
   intervalos_encontrados = [];
 
-  % Barrido: se avanza de a delta_x hasta cubrir [a, b].
+  % Barrido de [a, b] con paso delta_x.
   while (x_act + delta_x) <= b
     x_sig = x_act + delta_x; % siguiente punto del barrido
     f_sig = f(x_sig);
     fprintf('%-10.4f %-15.4f\n', x_sig, f_sig);
 
-    % Si f cambia de signo (o toca cero) hay una raiz entre x_act y x_sig.
+    % Si f cambia de signo (o toca cero) hay una raíz entre x_act y x_sig.
     if (f_act * f_sig) <= 0
       fprintf('>>> Se detectó cambio de signo en el intervalo: [%.4f, %.4f]\n', x_act, x_sig);
       intervalos_encontrados = [intervalos_encontrados; x_act, x_sig];
@@ -506,7 +462,7 @@ function intervalos = tanteo(f, a, b)
     f_act = f_sig;
   endwhile
 
-  % Informe final: lista los intervalos hallados o avisa si no hubo ninguno.
+  % Resumen del barrido.
   if isempty(intervalos_encontrados)
     disp('No se encontraron cambios de signo en el rango analizado.');
   else
@@ -514,7 +470,6 @@ function intervalos = tanteo(f, a, b)
     fprintf('[%g, %g]\n', intervalos_encontrados');
   endif
 
-  % Se devuelven los intervalos para que el que llama elija x0 dentro de uno.
   intervalos = intervalos_encontrados;
 endfunction
 ````
@@ -524,7 +479,7 @@ endfunction
 ````octave
 function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
   % INTERVALO_MEDIO - Bisección: parte el intervalo a la mitad y se queda con
-  % la mitad donde f cambia de signo. Converge siempre que haya cambio de signo.
+  % la mitad donde f cambia de signo.
   % Entradas:
   %   f        - función a la que se le busca la raíz, ej: @(x) x.^2 - 2
   %   a, b     - extremos del intervalo inicial (se pasa un valor por referencia)
@@ -533,9 +488,8 @@ function [raiz, iter] = intervalo_medio(f, a, b, tol, max_iter)
   % Salidas:
   %   raiz - punto medio del intervalo final, aproximación de la raíz
   %   iter - cantidad de iteraciones realizadas
-  % Nota: el método es INDEPENDIENTE de la velocidad de f, pero converge lento
-  % (~log2((b-a)/tol) iteraciones). Ese contraste con interpolación lineal es
-  % justamente lo que pide comparar la consigna.
+  % Converge siempre que haya cambio de signo, pero lento: unas log2((b-a)/tol)
+  % iteraciones, sin importar la forma de f.
 
   if (nargin < 4)
     error("intervalo_medio: se requieren al menos 4 argumentos (f, a, b, tol)");
@@ -601,10 +555,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
   %   raiz  - última intersección con el eje x calculada
   %   iter  - cantidad de iteraciones realizadas
   %   tabla - matriz Nx4 con [iter, a, b, c] por iteración, para mostrar el avance
-  % Nota: si f es muy curva en un extremo, la cuerda queda casi paralela al eje y
-  % un extremo se queda pegado sin avanzar.
-  % Converge MÁS RÁPIDO que bisección si f es suave, pero puede ser LENTA si f es
-  % convexa de forma extrema. Por eso se usa |c_n - c_(n-1)| y no (b-a)/2 como error.
+  % Suele converger más rápido que la bisección, pero si f es muy curva un extremo
+  % se queda pegado; por eso el error se mide como |c_n - c_(n-1)| y no como (b-a)/2.
 
   if (nargin < 4)
     error("interpolacion_lineal: se requieren al menos 4 argumentos (f, a, b, tol)");
@@ -633,9 +585,8 @@ function [raiz, iter, tabla] = interpolacion_lineal(f, a, b, tol, max_iter)
     f_a = f(a);
     f_b = f(b);
 
-    % Intersección de la cuerda con el eje x. La forma a - f(a)*(b-a)/(f(b)-f(a))
-    % es equivalente a la del enunciado pero evita pérdida de precisión cuando
-    % f(a) y f(b) son grandes y b-a chico.
+    % c = a - f(a)*(b-a)/(f(b)-f(a)): la misma cuerda, pero sin cancelar
+    % cuando f(a) y f(b) son grandes y b - a es chico.
     raiz = a - f_a * (b - a) / (f_b - f_a);
     f_raiz = f(raiz);
 
@@ -678,16 +629,14 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
   % Entradas:
   %   F   - funcion a la que se le busca la raiz, ej: @(x) x.^2 - 2
   %   x0  - valor inicial (elegir segun Fourier: F(x0)*F''(x0) > 0)
-  %   tol - tolerancia de parada, se frena cuando |x_sig - x_act| < tol
+  %   tol - tolerancia de parada: se frena cuando |x_sig - x_act| < tol
   % Salidas:
   %   x_raiz    - aproximacion de la raiz
   %   iter      - cantidad de iteraciones realizadas
   %   convergio - false si la derivada se anula (no se puede continuar)
   % Ejemplo:
-  %   F = @(x) x.^2 - 2;
-  %   [x, it, ok] = newton_raphson(F, 1, 1e-4);
+  %   F = @(x) x.^2 - 2;  [x, it, ok] = newton_raphson(F, 1, 1e-4);
 
-  % Validacion de tipos: F handle, x0 escalar finito, tol positiva.
   if (nargin != 3)
     error("newton_raphson: se requieren 3 argumentos (F, x0, tol)");
   endif
@@ -701,13 +650,11 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     error("newton_raphson: tol debe ser un numero positivo");
   endif
 
-  % Paso para aproximar la derivada primera por diferencia central.
+  % F'(x) se aproxima por diferencia central, con paso h.
   h = 1e-4;
 
-  % Primera derivada aproximada (Diferencia central).
   dF = @(x) (F(x + h) - F(x - h)) / (2 * h);
 
-  % Inicializacion: se parte de x0.
   x_act = x0;
   iter = 0;
 
@@ -719,8 +666,7 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     return;
   endif
 
-  % Bucle principal: en cada paso se calcula x_sig una sola vez
-  % y se frena cuando dos aproximaciones sucesivas difieran menos que tol.
+  % error_k arranca en 1 para entrar al bucle y se actualiza con |x_sig - x_act|.
   error_k = 1;
   while (error_k > tol)
     fx = F(x_act);
@@ -740,9 +686,6 @@ function [x_raiz, iter, convergio] = newton_raphson(F, x0, tol)
     iter++;
   endwhile
 
-  % Resultado: el ultimo x_act es la raiz aproximada y se marca como convergido.
-  % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
-  % El que llama decide si mostrar o graficar (ver 02-punto-equilibrio-impresoras.m).
   x_raiz = x_act;
   convergio = true;
 endfunction
@@ -756,16 +699,14 @@ function [x_raiz, iter, convergio] = iteracion(g, x0, tol)
   % Entradas:
   %   g   - funcion de iteracion, ej: @(x) 200 + 40*log(400/(500-x))
   %   x0  - valor inicial
-  %   tol - tolerancia de parada, se frena cuando |x_sig - x_act| < tol
+  %   tol - tolerancia de parada: se frena cuando |x_sig - x_act| < tol
   % Salidas:
   %   x_raiz    - aproximacion del punto fijo
   %   iter      - cantidad de iteraciones realizadas
-  %   convergio - true si |g'(x0)| < 1 y se alcanzo la tolerancia
-  % Ejemplo (usar ./ elemento a elemento para que fplot evalue vectores):
-  %   g = @(x) 200 + 40*log(400./(500-x));
-  %   [x, it, ok] = iteracion(g, 0, 1e-4);
+  %   convergio - true si se alcanzo la tolerancia
+  % Ejemplo (con ./ para que fplot evalue vectores):
+  %   g = @(x) 200 + 40*log(400./(500-x));  [x, it, ok] = iteracion(g, 0, 1e-4);
 
-  % Validacion de tipos: g handle, x0 escalar finito, tol positiva.
   if (nargin != 3)
     error("iteracion: se requieren 3 argumentos (g, x0, tol)");
   endif
@@ -779,13 +720,13 @@ function [x_raiz, iter, convergio] = iteracion(g, x0, tol)
     error("iteracion: tol debe ser un numero positivo");
   endif
 
-  % Paso para aproximar la derivada primera por diferencia central.
+  % Para chequear la condicion de convergencia |g'(x0)| < 1 hace falta g'(x0);
+  % se aproxima por diferencia central con paso h.
   h = 1e-4;
 
-  % Derivada aproximada de g: sirve para chequear la condicion de convergencia |g'(x0)| < 1.
   dg = @(x) (g(x + h) - g(x - h)) / (2 * h);
 
-  % Si no se cumple la condicion de convergencia, se avisa y se sale sin iterar.
+  % Si no se cumple la condicion, se avisa y se sale sin iterar.
   if (abs(dg(x0)) >= 1)
     disp("El metodo no converge");
     convergio = false;
@@ -794,12 +735,9 @@ function [x_raiz, iter, convergio] = iteracion(g, x0, tol)
     return;
   endif
 
-  % Inicializacion: se parte de x0.
   x_act = x0;
   iter = 0;
 
-  % Bucle principal: en cada paso se calcula x_sig = g(x_act) una sola vez
-  % y se frena cuando dos aproximaciones sucesivas difieran menos que tol.
   while (true)
     x_sig = g(x_act); % nuevo valor a partir del actual
     iter++;
@@ -809,9 +747,6 @@ function [x_raiz, iter, convergio] = iteracion(g, x0, tol)
     x_act = x_sig; % se avanza al siguiente punto
   endwhile
 
-  % Resultado: el ultimo x_sig es la raiz aproximada y se marca como convergido.
-  % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
-  % El que llama decide si mostrar o graficar (ver 03-publicidad-utilidad.m).
   x_raiz = x_sig;
   convergio = true;
 endfunction
@@ -821,25 +756,22 @@ endfunction
 
 ````octave
 function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
-  % ACELERACION - Aceleracion de Aitken delta-cuadrado.
-  % Acelera la iteracion de punto fijo x_{k+1} = g(x_k) con:
+  % ACELERACION - Aceleracion de Aitken delta-cuadrado para x = g(x).
   %   x1 = g(x_act), x2 = g(x1)
   %   x_sig = x_act - (x1 - x_act)^2 / (x2 - 2*x1 + x_act)
   % Entradas:
-  %   g   - funcion de iteracion, ej: @(x) 200 + 40*log(400/(500-x))
+  %   g   - funcion de iteracion, ej: @(x) 200 + 40*log(400./(500-x))
   %   x0  - valor inicial
-  %   tol - tolerancia de parada, se frena cuando |x_sig - x_act| < tol
+  %   tol - tolerancia de parada: se frena cuando |x_sig - x_act| < tol
   % Salidas:
-  %   x_raiz    - aproximacion del punto fijo acelerada
+  %   x_raiz    - aproximacion acelerada del punto fijo
   %   iter      - cantidad de iteraciones realizadas
   %   convergio - false si el denominador se anula (no se puede acelerar)
-  % Ejemplo (usar ./ elemento a elemento para que fplot evalue vectores):
-  %   g = @(x) 200 + 40*log(400./(500-x));
-  %   [x, it, ok] = aceleracion(g, 0, 1e-4);
-  % Nota: no se exige |g'(x0)| < 1 como en punto fijo simple, porque este metodo
-  % converge (cuadraticamente) aun donde el punto fijo diverge; solo pide den != 0.
+  % Ejemplo (con ./ para que fplot evalue vectores):
+  %   g = @(x) 200 + 40*log(400./(500-x));  [x, it, ok] = aceleracion(g, 0, 1e-4);
+  % No exige |g'(x0)| < 1: Aitken converge cuadraticamente aun donde el punto
+  % fijo simple diverge, siempre que el denominador no sea nulo.
 
-  % Validacion de tipos: g handle, x0 escalar finito, tol positiva.
   if (nargin != 3)
     error("aceleracion: se requieren 3 argumentos (g, x0, tol)");
   endif
@@ -853,12 +785,10 @@ function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
     error("aceleracion: tol debe ser un numero positivo");
   endif
 
-  % Inicializacion: se parte de x0.
   x_act = x0;
   iter = 0;
 
-  % Bucle principal: en cada paso se evalua g dos veces (x1 y x2)
-  % y se aplica la formula de Aitken para saltar mas cerca de la raiz.
+  % En cada paso se evalua g dos veces y se aplica la formula de Aitken.
   while (true)
     x1 = g(x_act); % primera iterada de punto fijo
     x2 = g(x1);    % segunda iterada de punto fijo
@@ -880,8 +810,6 @@ function [x_raiz, iter, convergio] = aceleracion(g, x0, tol)
     x_act = x_sig; % se avanza al valor acelerado
   endwhile
 
-  % Resultado: el ultimo x_sig es la raiz aproximada y se marca como convergido.
-  % Nota: esta funcion no imprime ni grafica, solo calcula y devuelve.
   x_raiz = x_sig;
   convergio = true;
 endfunction

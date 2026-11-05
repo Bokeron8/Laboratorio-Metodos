@@ -36,6 +36,12 @@ METODOS = {
     "aitken": {"opcion": "3", "titulo": "Aceleración de Aitken", "figuras": 2},
 }
 
+# El tanteo no es un método asignado sino el paso previo que ubica el intervalo
+# donde F cambia de signo. Se corre dentro de principal.m contestando "s" a la
+# pregunta de tanteo; la captura se corta antes del prompt de x0 para no mezclar
+# el x0 sugerido (225) con el x0 = 200 que usan las corridas del informe.
+TANTEO = {"titulo": "Método de tanteo", "a": "0", "b": "400", "delta_x": "50"}
+
 
 def copia_sin_waitfor():
     """Genera _principal_captura.m a partir de principal.m, sin los waitfor."""
@@ -88,7 +94,7 @@ def exportar_figuras(script, texto_entrada, base, cuantas):
                    timeout=120, cwd=str(script.parent))
 
 
-def recortar(texto):
+def recortar(texto, inicio_marca="--- Análisis", fin_marca="Ingrese el limite inferior"):
     """Deja solo el análisis, la tabla y el resultado.
 
     La pasada 1 también ejecuta los fplot, así que gnuplot vuelca el gráfico
@@ -97,11 +103,32 @@ def recortar(texto):
     hasta la pregunta del rango de gráfico.
     """
     lineas = texto.splitlines()
-    inicio = next((i for i, ln in enumerate(lineas) if ln.strip().startswith("--- Análisis")), None)
-    fin = next((i for i, ln in enumerate(lineas) if "Ingrese el limite inferior" in ln), len(lineas))
+    inicio = next((i for i, ln in enumerate(lineas) if ln.strip().startswith(inicio_marca)), None)
+    fin = next((i for i, ln in enumerate(lineas) if fin_marca in ln), len(lineas))
     if inicio is None:
         return texto
     return "\n".join(lineas[inicio:max(fin, inicio + 1)])
+
+
+def recortar_tanteo(texto):
+    """Recorta el bloque del tanteo: banner, tabla de valores e intervalos.
+
+    Acá el banner no arranca la línea: el prompt de input() no imprime salto de
+    línea, así que queda pegado al menú. Se busca el marcador dentro de la línea
+    y se descarta el prefijo. También se descarta el renglón de los prompts de
+    a, b y delta_x, que es el único que ensancha la imagen sin aportar datos: los
+    mismos valores están en el texto del informe y en el epígrafe.
+    """
+    lineas = texto.splitlines()
+    marca = "--- METODO DE TANTEO ---"
+    inicio = next((i for i, ln in enumerate(lineas) if marca in ln), None)
+    if inicio is None:
+        return texto
+    fin = next((i for i, ln in enumerate(lineas) if "Ingrese x0" in ln), len(lineas))
+    recorte = lineas[inicio:max(fin, inicio + 1)]
+    recorte[0] = recorte[0][recorte[0].index(marca):]
+    return "\n".join(ln for ln in recorte
+                     if not ln.lstrip().startswith("Ingrese el extremo inferior"))
 
 
 def capturar(metodo, script):
@@ -128,15 +155,40 @@ def capturar(metodo, script):
     print(f"  {metodo}: consola + {m['figuras']} figura(s)")
 
 
+def entradas_tanteo():
+    """Entradas para llegar al tanteo: opción 2 (solo pide F), tanteo sí, a, b, delta."""
+    lineas = ["2", EXPR_F, "s", TANTEO["a"], TANTEO["b"], TANTEO["delta_x"],
+              X0, TOL, *RANGO]
+    return "\n".join(lineas) + "\n"
+
+
+def capturar_tanteo(script):
+    from render_consola import main as render_main
+    base = HERE / "img" / "tanteo"
+    base.parent.mkdir(parents=True, exist_ok=True)
+
+    consola = recortar_tanteo(correr(script, entradas_tanteo()))
+    (HERE / "img" / "tanteo.consola.txt").write_text(consola, encoding="utf-8")
+
+    sys.argv = ["render_consola", str(HERE / "img" / "tanteo.consola.txt"),
+                str(base) + "-consola.png", TANTEO["titulo"]]
+    render_main()
+    (HERE / "img" / "tanteo.consola.txt").unlink(missing_ok=True)
+    print("  tanteo: consola")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--solo", choices=sorted(METODOS), action="append")
+    ap.add_argument("--solo", choices=sorted([*METODOS, "tanteo"]), action="append")
     args = ap.parse_args()
 
     script = copia_sin_waitfor()
     try:
-        for metodo in args.solo or ["pf", "newton", "aitken"]:
-            capturar(metodo, script)
+        for metodo in args.solo or ["pf", "newton", "aitken", "tanteo"]:
+            if metodo == "tanteo":
+                capturar_tanteo(script)
+            else:
+                capturar(metodo, script)
     finally:
         script.unlink(missing_ok=True)
 
