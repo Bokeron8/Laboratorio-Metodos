@@ -1,10 +1,47 @@
 {
   "laboratorio": "lab-4",
-  "titulo": "Informe — Guía 6: Integración Numérica",
-  "subtitulo": "Métodos Computacionales · Laboratorio 4",
+  "titulo": "Informe — Guía 4: Resolución de sistemas de ecuaciones lineales y autovalores",
+  "subtitulo": "Métodos Computacionales · Laboratorio 4 · Octave 6.4.0",
   "plantilla": "informe-plantilla.md",
   "salida_md": "informe.md",
   "salida_pdf": "informe.pdf",
   "figuras": "informe",
-  "capturas": []
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-agronomia.m",
+      "titulo": "Ejercicio 1 - Fórmula alimenticia (Gauss)",
+      "entradas": ""
+    },
+    {
+      "tag": "ej2",
+      "script": "02-gauss-seidel.m",
+      "titulo": "Ejercicio 2 - Gauss-Seidel",
+      "entradas": ""
+    },
+    {
+      "tag": "ej3",
+      "script": "03-descomposicion-lu.m",
+      "titulo": "Ejercicio 3 - Factorización LU",
+      "entradas": ""
+    },
+    {
+      "tag": "ej4",
+      "script": "04-componentes-electronicos.m",
+      "titulo": "Ejercicio 4 - Componentes electrónicos",
+      "entradas": ""
+    },
+    {
+      "tag": "ej5",
+      "script": "05-fadeev-leverrier.m",
+      "titulo": "Ejercicio 5 - Fadeev-Leverrier",
+      "entradas": ""
+    },
+    {
+      "tag": "ej6",
+      "script": "06-metodo-potencias.m",
+      "titulo": "Ejercicio 6 - Método de las potencias",
+      "entradas": ""
+    }
+  ]
 }

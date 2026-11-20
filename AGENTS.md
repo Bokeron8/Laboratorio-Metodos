@@ -12,7 +12,7 @@ las resuelve, más el generador de informes.
 
 | Carpeta | Contenido |
 | :--- | :--- |
-| `lab-1/` … `lab-6/` | Guías 1 a 6, con `consignas.md` y los scripts que las resuelven |
+| `lab-1/` … `lab-7/` | Guías 1 a 7, con `consignas.md` y los scripts que las resuelven |
 | `tp-evaluativo-1-metodos-de-raices/` | TP evaluativo 1: tanteo, Newton-Raphson, Aitken, con informe `.docx` |
 | `tp-evaluativo-2-gauss-interpolacion/` | TP evaluativo 2: Gauss-Jordan e interpolación inversa lineal |
 | `herramientas/informe/` | Pipeline de informes: capturas de Octave, inyección de código, PDF y DOCX |
@@ -76,10 +76,13 @@ y las trampas del pipeline.
 
 ## Estado conocido
 
-- `lab-4/`, `lab-5/`, `lab-6/` y `tp-evaluativo-2-gauss-interpolacion/` todavía
-  no tienen informe generado.
-- `herramientas/informe/lab-4.json` es un stub: título equivocado («Guía 6») y
-  `capturas` vacío. No lo uses como plantilla sin corregirlo.
+- Los laboratorios 4 a 7 y el `tp-evaluativo-2-gauss-interpolacion/` ya tienen
+  informe generado (labs: `herramientas/informe/lab-N.json`; TP2:
+  `tp-evaluativo-2-gauss-interpolacion/informe/generar.py`).
+- `lab-7/` resuelve la Guía 7 (ecuaciones diferenciales). Ojo: en el ejercicio 5
+  la consigna pide `y(1)` para `y' = x^2 + y^2` con `y(0) = 1`, pero esa solución
+  tiene una asíntota vertical en `x ≈ 0,97`: el valor no existe y el script lo
+  documenta.
 - El `README.md` de la raíz está desactualizado: no menciona `lab-4/` a `lab-6/`
   ni `tp-evaluativo-2-gauss-interpolacion/`.
 - `odd/` y `.atl/` están en `.gitignore`: son documentos de trabajo, no parte de

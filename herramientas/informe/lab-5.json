@@ -1,0 +1,35 @@
+{
+  "laboratorio": "lab-5",
+  "titulo": "Informe — Guía 5: Interpolación numérica",
+  "subtitulo": "Métodos Computacionales · Laboratorio 5 · Octave 6.4.0",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-intervalos-espaciados.m",
+      "titulo": "Ejercicio 1 - Interpolación en intervalos espaciados",
+      "entradas": ""
+    },
+    {
+      "tag": "ej2",
+      "script": "02-censo-poblacion.m",
+      "titulo": "Ejercicio 2 - Censo de población",
+      "entradas": ""
+    },
+    {
+      "tag": "ej3",
+      "script": "03-polinomio-lagrange.m",
+      "titulo": "Ejercicio 3 - Polinomio de Lagrange",
+      "entradas": ""
+    },
+    {
+      "tag": "ej4",
+      "script": "04-densidad-sodio.m",
+      "titulo": "Ejercicio 4 - Densidad del sodio",
+      "entradas": ""
+    }
+  ]
+}

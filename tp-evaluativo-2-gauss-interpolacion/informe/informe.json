@@ -1,0 +1,19 @@
+{
+  "caratula": {
+    "logo": "../../herramientas/informe/logo-unne.jpg",
+    "universidad": "UNIVERSIDAD NACIONAL DEL NORDESTE",
+    "facultad": "FACULTAD DE CIENCIAS EXACTAS Y NATURALES Y DE AGRIMENSURA",
+    "asignatura": "Métodos Computacionales",
+    "titulo": "2° Trabajo de Evaluación: Sistemas de Ecuaciones e Interpolación Numérica",
+    "temas": [
+      "Tema 4: Sistemas de Ecuaciones — Método de Gauss-Jordan con pivoteo parcial.",
+      "Tema 5: Interpolación Numérica — Interpolación lineal inversa."
+    ],
+    "integrantes": [
+      "Bazzola, Gabriel — L.U. 60.151",
+      "Zambrano, Franco — L.U. 60.153"
+    ],
+    "comision": "Grupo N° 8 · Jueves de 15 a 17",
+    "anio": "2026"
+  }
+}

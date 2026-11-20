@@ -1,0 +1,53 @@
+{
+  "laboratorio": "lab-7",
+  "titulo": "Informe — Guía 7: Integración numérica de ecuaciones diferenciales",
+  "subtitulo": "Métodos Computacionales · Laboratorio 7 · Octave 6.4.0",
+  "plantilla": "informe-plantilla.md",
+  "salida_md": "informe.md",
+  "salida_pdf": "informe.pdf",
+  "figuras": "informe",
+  "capturas": [
+    {
+      "tag": "ej1",
+      "script": "01-euler-y-euler-modificado.m",
+      "titulo": "Ejercicio 1 - Euler y Euler modificado",
+      "entradas": "0,1,0.2,0.6,0.001",
+      "drop_bloque": [["Presione Enter", 1]]
+    },
+    {
+      "tag": "ej2",
+      "script": "02-crecimiento-poblacional.m",
+      "titulo": "Ejercicio 2 - Crecimiento poblacional",
+      "entradas": "3,0.1,5,2,0.5,0.25",
+      "drop_bloque": [["Presione Enter", 1]]
+    },
+    {
+      "tag": "ej3",
+      "script": "03-runge-kutta.m",
+      "titulo": "Ejercicio 3 - Runge-Kutta de 2do y 4to orden",
+      "entradas": "0,1,0.2,0.6,0.001",
+      "drop_bloque": [["Presione Enter", 1]]
+    },
+    {
+      "tag": "ej4",
+      "script": "04-tanque-drenaje.m",
+      "titulo": "Ejercicio 4 - Vaciado de un tanque",
+      "entradas": "0.06,3,0.5",
+      "drop_bloque": [["Presione Enter", 1]]
+    },
+    {
+      "tag": "ej5",
+      "script": "05-milne-tabla.m",
+      "titulo": "Ejercicio 5 - Milne a partir de Runge-Kutta 2",
+      "entradas": "0.2,0.8,0.001",
+      "drop_bloque": [["Presione Enter", 1]]
+    },
+    {
+      "tag": "ej6",
+      "script": "06-milne-edo-lineal.m",
+      "titulo": "Ejercicio 6 - Euler modificado y Milne",
+      "entradas": "0.3,0.1,0.05,0.001",
+      "drop_bloque": [["Presione Enter", 1]]
+    }
+  ]
+}
