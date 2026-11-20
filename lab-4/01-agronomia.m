@@ -24,16 +24,17 @@ disp(A);
 fprintf('Vector de requerimientos b:\n');
 disp(b');
 
-% Resolver usando eliminación de Gauss (con pivoteo parcial)
-[x, tiempo, Ab] = resolver_gauss(A, b);
+% Resolver usando eliminación de Gauss con aritmética de 3 dígitos significativos
+[x, tiempo, Ab] = resolver_gauss_3digitos(A, b);
 
+fprintf('\n(Nota: Se utilizó aritmética de 3 dígitos significativos según la consigna 1.b)\n');
 fprintf('\n--- Resultados ---\n');
 fprintf('Tiempo de ejecución: %.6f segundos\n', tiempo);
-fprintf('Cantidad necesaria de cada material:\n');
-fprintf('  • Maíz (x1):        %.4f kg\n', x(1));
-fprintf('  • Desperdicio (x2): %.4f kg\n', x(2));
-fprintf('  • Alfalfa (x3):     %.4f kg\n', x(3));
-fprintf('  • Cebada (x4):      %.4f kg\n', x(4));
+fprintf('Cantidad necesaria de cada material (con 3 dígitos):\n');
+fprintf('  • Maíz (x1):        %.4g kg\n', x(1));
+fprintf('  • Desperdicio (x2): %.4g kg\n', x(2));
+fprintf('  • Alfalfa (x3):     %.4g kg\n', x(3));
+fprintf('  • Cebada (x4):      %.4g kg\n', x(4));
 
 costo_total = sum(x .* costos);
 fprintf('\nCosto total de la mezcla: $%.2f\n', costo_total);
